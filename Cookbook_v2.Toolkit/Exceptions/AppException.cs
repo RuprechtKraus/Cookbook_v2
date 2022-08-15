@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cookbook.Exceptions
+namespace Cookbook_v2.Toolkit.Exceptions
 {
     public class AppException : Exception
     {
