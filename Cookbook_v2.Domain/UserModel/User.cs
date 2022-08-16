@@ -12,9 +12,8 @@ namespace Cookbook_v2.Domain.UserModel
         public int RecipesCount { get; set; }
         public int LikesCount { get; set; }
         public int FavoritesCount { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-
+        public string PasswordHash { get; set; }
+        public string PasswordSalt { get; set; }
         public virtual List<Recipe> Recipes { get; set; }
     }
 }
