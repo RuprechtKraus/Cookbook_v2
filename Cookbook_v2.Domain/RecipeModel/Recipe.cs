@@ -15,7 +15,7 @@ namespace Cookbook_v2.Domain.RecipeModel
         public int CookingTimeInMinutes { get; set; }
         public int ServingsCount { get; set; }
         public string ImageUrl { get; set; }
-        public List<string> Tags { get; set; }
+        public string Tags { get; set; }
         public virtual List<RecipeStep> RecipeSteps { get; set; }
         public virtual List<RecipeIngredientsSection> IngredientsSections { get; set; }
     }
