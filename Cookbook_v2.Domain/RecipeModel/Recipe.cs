@@ -7,6 +7,8 @@ namespace Cookbook_v2.Domain.RecipeModel
 {
     public class Recipe : Entity
     {
+        public static readonly int s_titleMaxLength = 50;
+        public static readonly int s_descriptionMaxLength = 1000;
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
