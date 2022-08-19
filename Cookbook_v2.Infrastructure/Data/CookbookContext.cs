@@ -3,6 +3,8 @@ using Cookbook_v2.Domain.UserModel;
 using Cookbook_v2.Domain.RecipeModel;
 using Cookbook_v2.Domain.CategoryModel;
 using Cookbook_v2.Infrastructure.Data.UserModel.Configurations;
+using Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations;
+using Cookbook_v2.Infrastructure.Data.CategoryModel.Configurations;
 
 namespace Cookbook_v2.Infrastructure.Data
 {
@@ -23,6 +25,12 @@ namespace Cookbook_v2.Infrastructure.Data
         {
             base.OnModelCreating( builder );
             builder.ApplyConfiguration( new UserConfiguration() );
+            builder.ApplyConfiguration( new RecipeConfiguration() );
+            builder.ApplyConfiguration( new RecipeStepConfiguration() );
+            builder.ApplyConfiguration( new RecipeIngredientsSectionConfiguration() );
+            builder.ApplyConfiguration( new RecipeLikeConfiguration() );
+            builder.ApplyConfiguration( new FavoriteRecipeConfiguration() );
+            builder.ApplyConfiguration( new CategoryConfiguration() );
         }
     }
 }
