@@ -20,5 +20,9 @@ namespace Cookbook_v2.Domain.UserModel
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public virtual List<Recipe> Recipes { get; set; }
+
+        protected User()
+        {
+        }
     }
 }

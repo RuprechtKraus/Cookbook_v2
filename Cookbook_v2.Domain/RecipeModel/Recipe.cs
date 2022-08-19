@@ -18,5 +18,9 @@ namespace Cookbook_v2.Domain.RecipeModel
         public string Tags { get; set; }
         public virtual List<RecipeStep> RecipeSteps { get; set; }
         public virtual List<RecipeIngredientsSection> IngredientsSections { get; set; }
+
+        protected Recipe()
+        {
+        }
     }
 }

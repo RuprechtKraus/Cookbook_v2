@@ -8,5 +8,9 @@ namespace Cookbook_v2.Domain.RecipeModel
         public int RecipeId { get; set; }
         public string Title { get; set; }
         public string Ingredients { get; set; }
+
+        protected RecipeIngredientsSection()
+        {
+        }
     }
 }
