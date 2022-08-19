@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Cookbook_v2.Domain.RecipeStepModel;
+using Cookbook_v2.Domain.RecipeModel;
 
 namespace Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations
 {
