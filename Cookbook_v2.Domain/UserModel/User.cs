@@ -7,7 +7,7 @@ namespace Cookbook_v2.Domain.UserModel
     public class User : Entity
     {
         public string Name { get; set; }
-        public string Login { get; set; }
+        public string Username { get; set; }
         public string About { get; set; }
         public int RecipesCount { get; set; }
         public int LikesCount { get; set; }

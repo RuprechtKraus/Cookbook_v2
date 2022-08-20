@@ -1,5 +1,4 @@
 using Cookbook_v2.Domain.UserModel;
-using Cookbook_v2.Domain.RecipeModel;
 
 namespace Cookbook_v2.Domain.RecipeModel
 {
