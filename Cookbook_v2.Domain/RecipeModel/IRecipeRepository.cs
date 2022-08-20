@@ -11,7 +11,7 @@ namespace Cookbook_v2.Domain.RecipeModel
         Task<int> Add( Recipe recipe );
         Task Delete( int id );
         Task Delete( Recipe recipe );
-        Task AddLike( RecipeLike like );
-        Task DeleteLike( RecipeLike like );
+        Task AddLike( RecipeLike recipeLike );
+        Task DeleteLike( RecipeLike recipeLike );
     }
 }
