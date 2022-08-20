@@ -31,23 +31,23 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel
 
         public async Task<int> Add( User user )
         {
-            EntityEntry<User> entry = await _context.AddAsync( user );
+            EntityEntry<User> entry = await _context.Users.AddAsync( user );
             return entry.Entity.Id;
         }
 
-        public async Task AddFavoriteRecipe( User user, Recipe recipe )
+        public async Task AddFavoriteRecipe( FavoriteRecipe favRecipe )
         {
             await _context.FavoriteRecipes
-                .AddAsync( new FavoriteRecipe( user, recipe ) );
+                .AddAsync( favRecipe );
         }
 
-        public async Task RemoveFavoriteRecipe( User user, Recipe recipe )
+        public async Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe )
         {
-            FavoriteRecipe favRecipe = await _context.FavoriteRecipes
-                .SingleOrDefaultAsync( x => x.UserId == user.Id && x.RecipeId == recipe.Id );
+            FavoriteRecipe favRecipeToDelete = await _context.FavoriteRecipes
+                .SingleOrDefaultAsync( x => x.UserId == favRecipe.UserId && x.RecipeId == favRecipe.RecipeId );
             if ( favRecipe != null )
             {
-                _context.FavoriteRecipes.Remove( favRecipe );
+                _context.FavoriteRecipes.Remove( favRecipeToDelete );
             }
         }
     }

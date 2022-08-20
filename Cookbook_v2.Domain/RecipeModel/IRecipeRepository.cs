@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook_v2.Toolkit.Domain.Abstractions;
 
@@ -6,11 +7,11 @@ namespace Cookbook_v2.Domain.RecipeModel
     public interface IRecipeRepository : IRepository<Recipe>
     {
         Task<Recipe> GetById( int id );
-        Task<Recipe> GetByUsername( string username );
+        Task<IReadOnlyList<Recipe>> GetByUsername( string username );
         Task<int> Add( Recipe recipe );
         Task Delete( int id );
         Task Delete( Recipe recipe );
-        Task AddLike( int recipeId, int userId );
-        Task DeleteLike( int recipeId, int userId );
+        Task AddLike( RecipeLike like );
+        Task DeleteLike( RecipeLike like );
     }
 }

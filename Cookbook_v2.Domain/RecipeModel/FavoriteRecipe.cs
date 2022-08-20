@@ -10,12 +10,10 @@ namespace Cookbook_v2.Domain.RecipeModel
         public Recipe Recipe { get; set; }
         public int RecipeId { get; set; }
 
-        public FavoriteRecipe( User user, Recipe recipe )
+        public FavoriteRecipe( int userId, int recipeId)
         {
-            User = user;
-            UserId = user.Id;
-            Recipe = recipe;
-            RecipeId = recipe.Id;
+            UserId = userId;
+            RecipeId = recipeId;
         }
 
         protected FavoriteRecipe()

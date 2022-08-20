@@ -16,7 +16,7 @@ namespace Cookbook_v2.Infrastructure.Data.CategoryModel
 
         public async Task<IReadOnlyList<Category>> GetAll()
         {
-            return await _context.Categories.AsQueryable().ToListAsync();
+            return await _context.Categories.ToListAsync();
         }
     }
 }
