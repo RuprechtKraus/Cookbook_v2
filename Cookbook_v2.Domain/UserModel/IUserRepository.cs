@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Cookbook_v2.Domain.RecipeModel;
 using Cookbook_v2.Toolkit.Domain.Abstractions;
 
 namespace Cookbook_v2.Domain.UserModel
@@ -8,7 +9,7 @@ namespace Cookbook_v2.Domain.UserModel
         Task<User> GetById( int id );
         Task<User> GetByUsername( string username );
         Task<int> Add( User user );
-        Task AddFavoriteRecipe( int recipeId, int userId );
-        Task DeleteFavoriteRecipe( int recipeId, int userId );
+        Task AddFavoriteRecipe( FavoriteRecipe favRecipe );
+        Task DeleteFavoriteRecipe( FavoriteRecipe favRecipe );
     }
 }

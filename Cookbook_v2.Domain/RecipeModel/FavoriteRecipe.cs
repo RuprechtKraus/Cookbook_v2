@@ -3,7 +3,7 @@ using Cookbook_v2.Domain.RecipeModel;
 
 namespace Cookbook_v2.Domain.RecipeModel
 {
-    public class RecipeFavorite
+    public class FavoriteRecipe
     {
         public Recipe Recipe { get; set; }
         public int RecipeId { get; set; }
