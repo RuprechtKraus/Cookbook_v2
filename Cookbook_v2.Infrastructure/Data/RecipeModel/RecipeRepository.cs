@@ -52,14 +52,14 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel
             return Task.CompletedTask;
         }
 
-        public async Task AddLike( RecipeLike like )
+        public async Task AddLike( RecipeLike recipeLike )
         {
-            await _context.RecipeLikes.AddAsync( like );
+            await _context.RecipeLikes.AddAsync( recipeLike );
         }
 
-        public Task DeleteLike( RecipeLike like )
+        public Task DeleteLike( RecipeLike recipeLike )
         {
-            _context.RecipeLikes.Remove( like );
+            _context.RecipeLikes.Remove( recipeLike );
             return Task.CompletedTask;
         }
     }
