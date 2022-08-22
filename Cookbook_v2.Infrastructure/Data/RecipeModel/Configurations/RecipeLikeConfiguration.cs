@@ -9,6 +9,7 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations
         public void Configure( EntityTypeBuilder<RecipeLike> builder )
         {
             builder.ToTable( "RecipeLike" );
+
             builder.HasKey( x => new { x.UserId, x.RecipeId } );
 
             builder.HasOne( x => x.User )

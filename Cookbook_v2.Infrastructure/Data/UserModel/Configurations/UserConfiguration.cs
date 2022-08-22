@@ -34,7 +34,7 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel.Configurations
             builder.HasMany( x => x.Recipes )
                 .WithOne()
                 .HasForeignKey( x => x.UserId )
-                .OnDelete( DeleteBehavior.Cascade );
+                .OnDelete( DeleteBehavior.ClientCascade );
         }
     }
 }

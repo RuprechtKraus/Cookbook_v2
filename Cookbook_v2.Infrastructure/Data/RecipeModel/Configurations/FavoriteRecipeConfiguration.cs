@@ -9,6 +9,7 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations
         public void Configure( EntityTypeBuilder<FavoriteRecipe> builder )
         {
             builder.ToTable( "FavoriteRecipe" );
+
             builder.HasKey( x => new { x.UserId, x.RecipeId } );
 
             builder.HasOne( x => x.User )

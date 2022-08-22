@@ -9,6 +9,7 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations
         public void Configure( EntityTypeBuilder<RecipeIngredientsSection> builder )
         {
             builder.ToTable( "RecipeIngredientsSection" );
+
             builder.HasKey( x => x.Id );
 
             builder.Property( x => x.Title )
