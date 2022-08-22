@@ -19,11 +19,16 @@ namespace Cookbook_v2.Infrastructure.Data
             return services;
         }
 
-        public static IServiceCollection AddDatabase<T>( this IServiceCollection services, string connectionString )
-            where T : DbContext
+        public static IServiceCollection AddDbContext<T>(
+            this IServiceCollection services,
+            string connectionString,
+            string migrationAssembly ) where T : DbContext
         {
             return services
-                .AddDbContext<T>( x => x.UseSqlServer( connectionString ) );
+                .AddDbContext<T>(
+                    x => x.UseSqlServer(
+                        connectionString,
+                        c => c.MigrationsAssembly( migrationAssembly ) ) );
         }
     }
 }

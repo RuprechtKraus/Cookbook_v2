@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Cookbook_v2.Infrastructure.Data;
 using Cookbook_v2.Infrastructure.Data.Startup;
+using Cookbook_v2.Toolkit.Extensions;
 
 namespace Cookbook_v2.Api
 {
@@ -50,9 +52,9 @@ namespace Cookbook_v2.Api
 
         public void ConfigureDatabase( IServiceCollection services )
         {
-            services.AddDatabase<CookbookContext>(
-                Configuration.GetConnectionString( "CookbookConnection" )
-                );
+            string connectionString = Configuration.GetConnectionString( "CookbookConnection" );
+            string migrationAssembly = Configuration.GetMigrationAssembly( "CookbookMigrations" );
+            services.AddDbContext<CookbookContext>( connectionString, migrationAssembly );
         }
     }
 }
