@@ -4,4 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cookbook_v2.Infrastructure\Cookbook_v2.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
