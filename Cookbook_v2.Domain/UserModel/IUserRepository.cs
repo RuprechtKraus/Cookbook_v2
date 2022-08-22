@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Cookbook_v2.Domain.RecipeModel;
 using Cookbook_v2.Toolkit.Domain.Abstractions;
-using Cookbook_v2.Domain.RecipeModel;
 
 namespace Cookbook_v2.Domain.UserModel
 {

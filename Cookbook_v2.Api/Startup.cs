@@ -3,50 +3,56 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Cookbook_v2.Infrastructure.Data;
+using Cookbook_v2.Infrastructure.Data.Startup;
 
 namespace Cookbook_v2.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+
+        public Startup( IConfiguration configuration )
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices( IServiceCollection services )
         {
-            services.AddRazorPages();
+            services.AddControllers();
+            ConfigureInfrastructure( services );
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
         {
-            if (env.IsDevelopment())
+            if ( env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler( "/Error" );
             }
-
-            app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints( endpoints =>
             {
-                endpoints.MapRazorPages();
-            });
+                endpoints.MapDefaultControllerRoute();
+            } );
+        }
+
+        public void ConfigureInfrastructure( IServiceCollection services )
+        {
+            ConfigureDatabase( services );
+            services.AddBaseServices();
+        }
+
+        public void ConfigureDatabase( IServiceCollection services )
+        {
+            services.AddDatabase<CookbookContext>(
+                Configuration.GetConnectionString( "CookbookConnection" )
+                );
         }
     }
 }
