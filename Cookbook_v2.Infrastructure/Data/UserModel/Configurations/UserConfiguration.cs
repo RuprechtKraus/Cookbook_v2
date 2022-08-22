@@ -10,7 +10,9 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel.Configurations
         public void Configure( EntityTypeBuilder<User> builder )
         {
             builder.ToTable( "User" );
+
             builder.HasKey( x => x.Id );
+            builder.HasIndex( x => x.Username );
 
             builder.Property( x => x.Name )
                 .HasMaxLength( User.s_nameMaxLength )
@@ -29,7 +31,7 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel.Configurations
             builder.Property( x => x.PasswordSalt )
                 .IsRequired();
 
-            builder.HasMany<Recipe>()
+            builder.HasMany( x => x.Recipes )
                 .WithOne()
                 .HasForeignKey( x => x.UserId )
                 .OnDelete( DeleteBehavior.Cascade );

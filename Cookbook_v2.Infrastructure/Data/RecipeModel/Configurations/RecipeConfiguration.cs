@@ -9,7 +9,9 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations
         public void Configure( EntityTypeBuilder<Recipe> builder )
         {
             builder.ToTable( "Recipe" );
+
             builder.HasKey( x => x.Id );
+            builder.HasIndex( x => x.Title );
 
             builder.Property( x => x.Title )
                 .HasMaxLength( Recipe.s_titleMaxLength )
