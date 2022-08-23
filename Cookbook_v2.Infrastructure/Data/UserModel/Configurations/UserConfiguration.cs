@@ -28,9 +28,6 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel.Configurations
             builder.Property( x => x.PasswordHash )
                 .IsRequired();
 
-            builder.Property( x => x.PasswordSalt )
-                .IsRequired();
-
             builder.HasMany( x => x.Recipes )
                 .WithOne()
                 .HasForeignKey( x => x.UserId )

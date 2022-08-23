@@ -9,7 +9,7 @@ using Cookbook_v2.Api.MessageContracts.CategoryModel;
 namespace Cookbook_v2.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route( "api/[controller]" )]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -22,7 +22,7 @@ namespace Cookbook_v2.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IReadOnlyList<CategoryDto> categories = (await _categoryRepository.GetAll())
+            IReadOnlyList<CategoryDto> categories = ( await _categoryRepository.GetAll() )
                 .Select( x => x.ToDto() )
                 .ToList();
             return Ok( categories );

@@ -29,10 +29,9 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel
             return user;
         }
 
-        public async Task<int> Add( User user )
+        public async Task Add( User user )
         {
-            EntityEntry<User> entry = await _context.Users.AddAsync( user );
-            return entry.Entity.Id;
+            await _context.Users.AddAsync( user );
         }
 
         public async Task AddFavoriteRecipe( FavoriteRecipe favRecipe )

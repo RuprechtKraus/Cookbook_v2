@@ -8,7 +8,7 @@ namespace Cookbook_v2.Domain.UserModel
     {
         Task<User> GetById( int id );
         Task<User> GetByUsername( string username );
-        Task<int> Add( User user );
+        Task Add( User user );
         Task AddFavoriteRecipe( FavoriteRecipe favRecipe );
         Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe );
     }

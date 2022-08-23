@@ -31,10 +31,9 @@ namespace Cookbook_v2.Infrastructure.Data.RecipeModel
             return recipes;
         }
 
-        public async Task<int> Add( Recipe recipe )
+        public async Task Add( Recipe recipe )
         {
-            EntityEntry<Recipe> entity = await _context.Recipes.AddAsync( recipe );
-            return entity.Entity.Id;
+            await _context.Recipes.AddAsync( recipe );
         }
 
         public async Task Delete( int id )

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Cookbook_v2.Infrastructure.Data;
 using Cookbook_v2.Infrastructure.Data.Startup;
 using Cookbook_v2.Toolkit.Extensions;
+using Cookbook_v2.Toolkit.Middleware.Exceptions;
 
 namespace Cookbook_v2.Api
 {
@@ -37,6 +38,8 @@ namespace Cookbook_v2.Api
             }
 
             app.UseRouting();
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints( endpoints =>
             {

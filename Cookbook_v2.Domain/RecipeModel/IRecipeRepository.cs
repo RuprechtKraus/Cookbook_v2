@@ -8,7 +8,7 @@ namespace Cookbook_v2.Domain.RecipeModel
     {
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUsername( string username );
-        Task<int> Add( Recipe recipe );
+        Task Add( Recipe recipe );
         Task Delete( int id );
         Task Delete( Recipe recipe );
         Task AddLike( RecipeLike recipeLike );
