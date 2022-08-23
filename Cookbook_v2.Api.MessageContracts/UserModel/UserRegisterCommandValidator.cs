@@ -14,37 +14,78 @@ namespace Cookbook_v2.Api.MessageContracts.UserModel
 
         public UserRegisterCommandValidator()
         {
+            ConfigureNameRules();
+            ConfigureUsernameRules();
+            ConfigureAboutRules();
+            ConfigurePasswordRules();
+            ConfigureRepeatPasswordRules();
+        }
+
+        private void ConfigureNameRules()
+        {
             RuleFor( x => x.Name )
                 .NotEmpty()
-                .WithMessage( ValidationMessage.Required( s_nameFieldName ) )
-                .MaximumLength( s_nameMaxLength )
-                .WithMessage( ValidationMessage.MaxLength( s_nameFieldName, s_nameMaxLength ) );
+                .WithMessage( ValidationMessage.Required( s_nameFieldName ) );
 
+            When( x => !string.IsNullOrWhiteSpace( x.Name ), () =>
+            {
+                RuleFor( x => x.Name )
+                    .MaximumLength( s_nameMaxLength )
+                    .WithMessage( ValidationMessage.MaxLength( s_nameFieldName, s_nameMaxLength ) );
+            } );
+        }
+
+        private void ConfigureUsernameRules()
+        {
             RuleFor( x => x.Username )
                 .NotEmpty()
-                .WithMessage( ValidationMessage.Required( s_usernameFieldName ) )
-                .MinimumLength( s_usernameMinLength )
-                .WithMessage( ValidationMessage.MinLength( s_usernameFieldName, s_usernameMinLength ) )
-                .MaximumLength( s_usernameMaxLength )
-                .WithMessage( ValidationMessage.MaxLength( s_usernameFieldName, s_usernameMaxLength ) );
+                .WithMessage( ValidationMessage.Required( s_usernameFieldName ) );
 
+            When( x => !string.IsNullOrWhiteSpace( x.Username ), () =>
+            {
+                RuleFor( x => x.Username )
+                    .MinimumLength( s_usernameMinLength )
+                    .WithMessage( ValidationMessage.MinLength( s_usernameFieldName, s_usernameMinLength ) )
+                    .MaximumLength( s_usernameMaxLength )
+                    .WithMessage( ValidationMessage.MaxLength( s_usernameFieldName, s_usernameMaxLength ) );
+            } );
+        }
+
+        private void ConfigureAboutRules()
+        {
             RuleFor( x => x.About )
                 .MaximumLength( s_aboutMaxLength )
                 .WithMessage( ValidationMessage.MaxLength( s_aboutFieldName, s_aboutMaxLength ) );
+        }
 
+        private void ConfigurePasswordRules()
+        {
             RuleFor( x => x.Password )
                 .NotEmpty()
-                .WithMessage( ValidationMessage.Required( s_passwordFieldName ) )
-                .MinimumLength( s_passwordMinLength )
-                .WithMessage( ValidationMessage.MinLength( s_passwordFieldName, s_passwordMinLength ) )
-                .MaximumLength( s_passwordMaxLength )
-                .WithMessage( ValidationMessage.MaxLength( s_passwordFieldName, s_passwordMaxLength ) );
+                .WithMessage( ValidationMessage.Required( s_passwordFieldName ) );
 
+            When( x => !string.IsNullOrWhiteSpace( x.Password ), () =>
+            {
+                RuleFor( x => x.Password )
+                    .MinimumLength( s_passwordMinLength )
+                    .WithMessage( ValidationMessage.MinLength( s_passwordFieldName, s_passwordMinLength ) )
+                    .MaximumLength( s_passwordMaxLength )
+                    .WithMessage( ValidationMessage.MaxLength( s_passwordFieldName, s_passwordMaxLength ) );
+            } );
+        }
+
+        private void ConfigureRepeatPasswordRules()
+        {
             RuleFor( x => x.RepeatPassword )
                 .NotEmpty()
-                .WithMessage( ValidationMessage.Required( s_repeatPasswordFieldName ) )
-                .Equal( x => x.Password )
-                .WithMessage( ValidationMessage.Equal( s_repeatPasswordFieldName, s_passwordFieldName ) );
+                .WithMessage( ValidationMessage.Required( s_repeatPasswordFieldName ) );
+
+            When( x => !string.IsNullOrWhiteSpace( x.RepeatPassword ), () =>
+            {
+                RuleFor( x => x.RepeatPassword )
+                    .Equal( x => x.Password )
+                    .WithMessage( ValidationMessage.Equal( s_repeatPasswordFieldName, s_passwordFieldName ) );
+            } );
         }
     }
 }
