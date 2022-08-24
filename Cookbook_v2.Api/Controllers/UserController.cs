@@ -31,7 +31,7 @@ namespace Cookbook_v2.Api.Controllers
 
             if ( !validationResult.IsValid )
             {
-                throw new RegistrationException( validationResult.ToDictionary(), "Fields validation failed" );
+                throw new RegistrationException( "Fields validation failed" );
             }
 
             if ( await _userRepository.GetByUsername( registerCommand.Username ) != null )
