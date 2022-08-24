@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Cookbook_v2.Api.Authorization;
+using Cookbook_v2.Domain.UserModel;
 using Cookbook_v2.Infrastructure.Data;
 using Cookbook_v2.Infrastructure.Data.Startup;
 using Cookbook_v2.Infrastructure.Web.Middleware;
+using Cookbook_v2.Toolkit;
 using Cookbook_v2.Toolkit.Extensions;
+using Cookbook_v2.Toolkit.Web.Abstractions;
 
 namespace Cookbook_v2.Api
 {
@@ -23,6 +27,8 @@ namespace Cookbook_v2.Api
         {
             services.AddControllers();
             ConfigureInfrastructure( services );
+            ConfigureAuthenticationOptions( services );
+            services.AddSingleton<IJwtUtils<User>, JwtUtils>();
         }
 
         public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
@@ -39,6 +45,7 @@ namespace Cookbook_v2.Api
             app.UseRouting();
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints( endpoints =>
             {
@@ -50,6 +57,12 @@ namespace Cookbook_v2.Api
         {
             ConfigureDatabase( services );
             services.AddBaseServices();
+        }
+
+        public void ConfigureAuthenticationOptions( IServiceCollection services )
+        {
+            services.Configure<AuthenticationOptions>( 
+                Configuration.GetSection( "AuthenticationOptions" ) );
         }
 
         public void ConfigureDatabase( IServiceCollection services )

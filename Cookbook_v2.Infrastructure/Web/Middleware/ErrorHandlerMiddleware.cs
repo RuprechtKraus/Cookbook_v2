@@ -43,6 +43,10 @@ namespace Cookbook_v2.Infrastructure.Web.Middleware
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse( "Registration Error", exception.Message );
                     break;
+                case AuthenticationException:
+                    response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    errorResponse = new ErrorResponse( "Authentication Error", exception.Message );
+                    break;
                 case AppException:
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse( "Application Error", exception.Message );

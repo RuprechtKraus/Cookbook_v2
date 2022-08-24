@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Cookbook_v2.Toolkit.Extensions
 {
-    public static class AppsettingsExtension
+    public static class AppsettingsExtensions
     {
         /// <summary>
         /// Сокращение для GetSection("MigrationAssemblies")[name]

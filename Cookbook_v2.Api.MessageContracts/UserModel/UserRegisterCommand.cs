@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using Cookbook_v2.Domain.UserModel;
-
 namespace Cookbook_v2.Api.MessageContracts.UserModel
 {
     public class UserRegisterCommand
