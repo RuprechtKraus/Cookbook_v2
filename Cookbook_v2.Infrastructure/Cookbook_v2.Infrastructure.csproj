@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cookbook_v2.Api.MessageContracts\Cookbook_v2.Api.MessageContracts.csproj" />
     <ProjectReference Include="..\Cookbook_v2.Domain\Cookbook_v2.Domain.csproj" />
   </ItemGroup>
 

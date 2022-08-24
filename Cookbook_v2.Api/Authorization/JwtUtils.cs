@@ -45,7 +45,7 @@ namespace Cookbook_v2.Api.Authorization
 
                 var jwtToken = (JwtSecurityToken) validatedToken;
                 var username = jwtToken.Claims
-                    .SingleOrDefault( x => x.Type == ClaimTypes.Name ).Value;
+                    .SingleOrDefault( x => x.Type == "Username" ).Value;
 
                 return username;
             }
@@ -61,7 +61,7 @@ namespace Cookbook_v2.Api.Authorization
             int expiration = _authOptions.Expiration;
             return new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity( new[] { new Claim( ClaimTypes.Name, username ) } ),
+                Subject = new ClaimsIdentity( new[] { new Claim( "Username", username ) } ),
                 Expires = DateTime.UtcNow.AddDays( expiration ),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey( key ),

@@ -6,6 +6,7 @@ using Cookbook_v2.Toolkit.Domain.Abstractions;
 using Cookbook_v2.Toolkit.Exceptions;
 using Cookbook_v2.Api.Authorization.Attributes;
 using Cookbook_v2.Toolkit.Web.Abstractions;
+using Cookbook_v2.Infrastructure.Services.Abstractions;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -14,18 +15,18 @@ namespace Cookbook_v2.Api.Controllers
     [Route( "api/[controller]" )]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IJwtUtils<User> _jwtUtils;
+        private readonly IUserService _userService;
 
-        public UserController( 
-            IUserRepository userRepository, 
-            IUnitOfWork unitOfWork,
-            IJwtUtils<User> jwtUtils)
+        public UserController( IUserService userService )
         {
-            _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
-            _jwtUtils = jwtUtils;
+            _userService = userService;
+        }
+
+        [HttpGet( "{id}" )]
+        public async Task<IActionResult> Get( int id )
+        {
+            User user = await _userService.GetById( id );
+            return Ok( user );
         }
 
         [CookbookAllowAnonymous]
@@ -33,29 +34,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> RegisterUser(
             [FromBody] UserRegisterCommand registerCommand )
         {
-            FluentValidation.Results.ValidationResult validationResult =
-                await new UserRegisterCommandValidator().ValidateAsync( registerCommand );
-
-            if ( !validationResult.IsValid )
-            {
-                throw new RegistrationException( "Fields validation failed" );
-            }
-
-            if ( await _userRepository.GetByUsername( registerCommand.Username ) != null )
-            {
-                throw new RegistrationException( "Username is already taken" );
-            }
-
-            User user = Domain.UserModel.User.Builder
-                .CreateUser(
-                    registerCommand.Name,
-                    registerCommand.Username,
-                    registerCommand.About,
-                    registerCommand.Password );
-
-            await _userRepository.Add( user );
-            await _unitOfWork.SaveAsync();
-
+            User user = await _userService.RegisterUser( registerCommand );
             return Ok( user.Id );
         }
 
@@ -64,30 +43,8 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> AuthenticateUser(
             [FromBody] UserAuthenticateCommand authCommand )
         {
-            FluentValidation.Results.ValidationResult validationResult =
-                await new UserAuthenticateCommandValidator().ValidateAsync( authCommand );
-
-            if ( !validationResult.IsValid )
-            {
-                throw new AuthenticationException( "Fields validation failed" );
-            }
-
-            User user = await _userRepository.GetByUsername( authCommand.Username );
-
-            if ( user == null || !BCrypt.Net.BCrypt.Verify( authCommand.Password, user.PasswordHash ) )
-            {
-                throw new AuthenticationException( "Incorrect username or password" );
-            }
-
-            UserAuthenticatedResponse response = new UserAuthenticatedResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Username = user.Username,
-                Token = _jwtUtils.GenerateToken( user )
-            };
-
-            return Ok( response );
+            UserAuthenticatedResponse authUser = await _userService.AuthenticateUser( authCommand );
+            return Ok( authUser );
         }
     }
 }

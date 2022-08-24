@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Cookbook_v2.Domain.UserModel;
 using Cookbook_v2.Domain.RecipeModel;
 
@@ -36,8 +35,7 @@ namespace Cookbook_v2.Infrastructure.Data.UserModel
 
         public async Task AddFavoriteRecipe( FavoriteRecipe favRecipe )
         {
-            await _context.FavoriteRecipes
-                .AddAsync( favRecipe );
+            await _context.FavoriteRecipes.AddAsync( favRecipe );
         }
 
         public async Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe )
