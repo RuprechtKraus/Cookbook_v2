@@ -22,13 +22,6 @@ namespace Cookbook_v2.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet( "{id}" )]
-        public async Task<IActionResult> Get( int id )
-        {
-            User user = await _userService.GetById( id );
-            return Ok( user );
-        }
-
         [CookbookAllowAnonymous]
         [HttpPost( "register" )]
         public async Task<IActionResult> RegisterUser(
