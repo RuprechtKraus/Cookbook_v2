@@ -1,10 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Cookbook_v2.Domain.UserModel;
-using Cookbook_v2.Domain.RecipeModel;
 using Cookbook_v2.Domain.CategoryModel;
-using Cookbook_v2.Infrastructure.Data.UserModel.Configurations;
-using Cookbook_v2.Infrastructure.Data.RecipeModel.Configurations;
-using Cookbook_v2.Infrastructure.Data.CategoryModel.Configurations;
+using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Infrastructure.Data.Configurations;
 
 namespace Cookbook_v2.Infrastructure.Data
 {

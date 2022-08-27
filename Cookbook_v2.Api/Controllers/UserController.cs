@@ -1,12 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Cookbook_v2.Api.MessageContracts.UserModel;
-using Cookbook_v2.Domain.UserModel;
-using Cookbook_v2.Toolkit.Domain.Abstractions;
-using Cookbook_v2.Toolkit.Exceptions;
 using Cookbook_v2.Api.Authorization.Attributes;
-using Cookbook_v2.Toolkit.Web.Abstractions;
-using Cookbook_v2.Infrastructure.Services.Abstractions;
+using Cookbook_v2.Infrastructure.Services.Interfaces;
+using Cookbook_v2.Application.Commands.UserModel;
+using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Application.Responses.UserModel;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -25,7 +23,7 @@ namespace Cookbook_v2.Api.Controllers
         [CookbookAllowAnonymous]
         [HttpPost( "register" )]
         public async Task<IActionResult> RegisterUser(
-            [FromBody] UserRegisterDto registerCommand )
+            [FromBody] RegisterUserCommand registerCommand )
         {
             User user = await _userService.RegisterUser( registerCommand );
             return Ok( user.Id );
@@ -34,9 +32,9 @@ namespace Cookbook_v2.Api.Controllers
         [CookbookAllowAnonymous]
         [HttpPost( "authenticate" )]
         public async Task<IActionResult> AuthenticateUser(
-            [FromBody] UserAuthenticateDto authCommand )
+            [FromBody] AuthenticateUserCommand authCommand )
         {
-            UserAuthenticatedDto authUser = await _userService.AuthenticateUser( authCommand );
+            AuthenticateUserResponse authUser = await _userService.AuthenticateUser( authCommand );
             return Ok( authUser );
         }
     }

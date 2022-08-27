@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Cookbook_v2.Api.Authorization;
-using Cookbook_v2.Domain.UserModel;
-using Cookbook_v2.Infrastructure.Data;
-using Cookbook_v2.Infrastructure.Data.Startup;
 using Cookbook_v2.Infrastructure.Web.Middleware;
-using Cookbook_v2.Toolkit;
+using Cookbook_v2.Infrastructure;
+using Cookbook_v2.Application;
 using Cookbook_v2.Toolkit.Extensions;
-using Cookbook_v2.Toolkit.Web.Abstractions;
+using Cookbook_v2.Api.Middleware;
+using Cookbook_v2.Application.Authentication;
 
 namespace Cookbook_v2.Api
 {
@@ -26,9 +24,9 @@ namespace Cookbook_v2.Api
         public void ConfigureServices( IServiceCollection services )
         {
             services.AddControllers();
-            ConfigureInfrastructure( services );
-            ConfigureAuthenticationOptions( services );
-            services.AddSingleton<IJwtUtils<User>, JwtUtils>();
+            services.ConfigureAuthenticationOptions( Configuration );
+            services.AddAppliactionServices();
+            ConfigureDatabase(services);
         }
 
         public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
@@ -53,15 +51,9 @@ namespace Cookbook_v2.Api
             } );
         }
 
-        public void ConfigureInfrastructure( IServiceCollection services )
-        {
-            ConfigureDatabase( services );
-            services.AddBaseServices();
-        }
-
         public void ConfigureAuthenticationOptions( IServiceCollection services )
         {
-            services.Configure<AuthenticationOptions>( 
+            services.Configure<AuthenticationOptions>(
                 Configuration.GetSection( "AuthenticationOptions" ) );
         }
 
@@ -69,7 +61,7 @@ namespace Cookbook_v2.Api
         {
             string connectionString = Configuration.GetConnectionString( "CookbookConnection" );
             string migrationAssembly = Configuration.GetMigrationAssembly( "CookbookMigrations" );
-            services.AddDbContext<CookbookContext>( connectionString, migrationAssembly );
+            services.AddDefaultInfrastructureDependencies( connectionString, migrationAssembly );
         }
     }
 }

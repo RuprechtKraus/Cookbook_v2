@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Cookbook_v2.Toolkit.Domain.Abstractions;
+using Cookbook_v2.Domain.UoW.Interfaces;
+using Cookbook_v2.Infrastructure.Data;
 
-namespace Cookbook_v2.Infrastructure.Data.UoW
+namespace Cookbook_v2.Infrastructure.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
