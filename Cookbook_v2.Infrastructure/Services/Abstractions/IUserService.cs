@@ -11,7 +11,7 @@ namespace Cookbook_v2.Infrastructure.Services.Abstractions
         public Task<User> GetByUsername( string username );
         public Task AddFavoriteRecipe( FavoriteRecipe favRecipe );
         public Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe );
-        public Task<User> RegisterUser( UserRegisterCommand registerCommand );
-        public Task<UserAuthenticatedResponse> AuthenticateUser( UserAuthenticateCommand authCommand );
+        public Task<User> RegisterUser( UserRegisterDto registerCommand );
+        public Task<UserAuthenticatedDto> AuthenticateUser( UserAuthenticateDto authCommand );
     }
 }

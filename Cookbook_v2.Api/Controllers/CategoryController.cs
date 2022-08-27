@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cookbook_v2.Domain.CategoryModel;
-using Cookbook_v2.Api.Converters.CategoryModel;
 using Cookbook_v2.Api.MessageContracts.CategoryModel;
+using Cookbook_v2.Api.Converters;
 
 namespace Cookbook_v2.Api.Controllers
 {

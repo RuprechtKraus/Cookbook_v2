@@ -1,6 +1,6 @@
 namespace Cookbook_v2.Api.MessageContracts.UserModel
 {
-    public class UserRegisterCommand
+    public class UserRegisterDto
     {
         public string Name { get; set; }
         public string Username { get; set; }

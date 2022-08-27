@@ -48,7 +48,7 @@ namespace Cookbook_v2.Infrastructure.Services
             await _userRepository.RemoveFavoriteRecipe( favRecipe );
         }
 
-        public async Task<User> RegisterUser( UserRegisterCommand registerCommand )
+        public async Task<User> RegisterUser( UserRegisterDto registerCommand )
         {
             FluentValidation.Results.ValidationResult validationResult =
                 await new UserRegisterCommandValidator().ValidateAsync( registerCommand );
@@ -76,7 +76,7 @@ namespace Cookbook_v2.Infrastructure.Services
             return user;
         }
 
-        public async Task<UserAuthenticatedResponse> AuthenticateUser( UserAuthenticateCommand authCommand )
+        public async Task<UserAuthenticatedDto> AuthenticateUser( UserAuthenticateDto authCommand )
         {
             FluentValidation.Results.ValidationResult validationResult =
                 await new UserAuthenticateCommandValidator().ValidateAsync( authCommand );
@@ -93,7 +93,7 @@ namespace Cookbook_v2.Infrastructure.Services
                 throw new AuthenticationException( "Incorrect username or password" );
             }
 
-            UserAuthenticatedResponse authUser = new UserAuthenticatedResponse
+            UserAuthenticatedDto authUser = new UserAuthenticatedDto
             {
                 Id = user.Id,
                 Name = user.Name,

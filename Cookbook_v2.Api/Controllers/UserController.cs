@@ -25,7 +25,7 @@ namespace Cookbook_v2.Api.Controllers
         [CookbookAllowAnonymous]
         [HttpPost( "register" )]
         public async Task<IActionResult> RegisterUser(
-            [FromBody] UserRegisterCommand registerCommand )
+            [FromBody] UserRegisterDto registerCommand )
         {
             User user = await _userService.RegisterUser( registerCommand );
             return Ok( user.Id );
@@ -34,9 +34,9 @@ namespace Cookbook_v2.Api.Controllers
         [CookbookAllowAnonymous]
         [HttpPost( "authenticate" )]
         public async Task<IActionResult> AuthenticateUser(
-            [FromBody] UserAuthenticateCommand authCommand )
+            [FromBody] UserAuthenticateDto authCommand )
         {
-            UserAuthenticatedResponse authUser = await _userService.AuthenticateUser( authCommand );
+            UserAuthenticatedDto authUser = await _userService.AuthenticateUser( authCommand );
             return Ok( authUser );
         }
     }
