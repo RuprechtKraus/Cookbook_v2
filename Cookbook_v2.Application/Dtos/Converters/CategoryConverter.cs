@@ -1,7 +1,7 @@
 using Cookbook_v2.Domain.CategoryModel;
 using Cookbook_v2.Api.MessageContracts.CategoryModel;
 
-namespace Cookbook_v2.Api.Converters.CategoryModel
+namespace Cookbook_v2.Api.Converters
 {
     public static class CategoryConverter
     {

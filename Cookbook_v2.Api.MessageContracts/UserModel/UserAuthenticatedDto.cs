@@ -1,6 +1,6 @@
 namespace Cookbook_v2.Api.MessageContracts.UserModel
 {
-    public class UserAuthenticatedResponse
+    public class UserAuthenticatedDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
