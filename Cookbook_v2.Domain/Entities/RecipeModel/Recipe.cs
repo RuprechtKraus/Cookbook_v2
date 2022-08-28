@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cookbook_v2.Domain.Entities.TagModel;
 
 namespace Cookbook_v2.Domain.Entities.RecipeModel
 {
@@ -12,9 +13,9 @@ namespace Cookbook_v2.Domain.Entities.RecipeModel
         public int CookingTimeInMinutes { get; set; }
         public int ServingsCount { get; set; }
         public string ImageName { get; set; }
-        public string Tags { get; set; }
         public virtual List<RecipeStep> RecipeSteps { get; set; }
         public virtual List<RecipeIngredientsSection> IngredientsSections { get; set; }
+        public virtual List<Tag> Tags { get; set; }
 
         // Workaround for EF
         protected Recipe()

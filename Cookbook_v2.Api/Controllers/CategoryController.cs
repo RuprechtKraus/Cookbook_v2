@@ -22,9 +22,8 @@ namespace Cookbook_v2.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IReadOnlyList<CategoryDto> categories = ( await _categoryRepository.GetAll() )
-                .Select( x => x.ToDto() )
-                .ToList();
+            IEnumerable<CategoryDto> categories = ( await _categoryRepository.GetAll() )
+                .Select( x => x.ToDto() );
             return Ok( categories );
         }
     }

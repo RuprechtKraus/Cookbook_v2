@@ -47,7 +47,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.FavoriteRecipe", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.FavoriteRecipe", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -62,7 +62,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("FavoriteRecipe", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.Recipe", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,9 +84,6 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.Property<int>("ServingsCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tags")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TimesFavorited")
                         .HasColumnType("int");
 
@@ -103,14 +100,12 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Title");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Recipe", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeIngredientsSection", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeIngredientsSection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +131,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("RecipeIngredientsSection", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeLike", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeLike", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -151,7 +146,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("RecipeLike", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeStep", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeStep", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,7 +172,42 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("RecipeStep", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.UserModel.User", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeTag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TagId", "RecipeId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("RecipeTag", (string)null);
+                });
+
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.TagModel.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("Tag", (string)null);
+                });
+
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.UserModel.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -219,79 +249,86 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.FavoriteRecipe", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.FavoriteRecipe", b =>
                 {
-                    b.HasOne("Cookbook_v2.Domain.RecipeModel.Recipe", "Recipe")
+                    b.HasOne("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", null)
                         .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cookbook_v2.Domain.UserModel.User", "User")
+                    b.HasOne("Cookbook_v2.Domain.Entities.UserModel.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.Recipe", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", b =>
                 {
-                    b.HasOne("Cookbook_v2.Domain.UserModel.User", null)
+                    b.HasOne("Cookbook_v2.Domain.Entities.UserModel.User", null)
                         .WithMany("Recipes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeIngredientsSection", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeIngredientsSection", b =>
                 {
-                    b.HasOne("Cookbook_v2.Domain.RecipeModel.Recipe", null)
+                    b.HasOne("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", null)
                         .WithMany("IngredientsSections")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeLike", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeLike", b =>
                 {
-                    b.HasOne("Cookbook_v2.Domain.RecipeModel.Recipe", "Recipe")
+                    b.HasOne("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", null)
                         .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cookbook_v2.Domain.UserModel.User", "User")
+                    b.HasOne("Cookbook_v2.Domain.Entities.UserModel.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.RecipeStep", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeStep", b =>
                 {
-                    b.HasOne("Cookbook_v2.Domain.RecipeModel.Recipe", null)
+                    b.HasOne("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", null)
                         .WithMany("RecipeSteps")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.RecipeModel.Recipe", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.RecipeTag", b =>
+                {
+                    b.HasOne("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", null)
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cookbook_v2.Domain.Entities.TagModel.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.RecipeModel.Recipe", b =>
                 {
                     b.Navigation("IngredientsSections");
 
                     b.Navigation("RecipeSteps");
                 });
 
-            modelBuilder.Entity("Cookbook_v2.Domain.UserModel.User", b =>
+            modelBuilder.Entity("Cookbook_v2.Domain.Entities.UserModel.User", b =>
                 {
                     b.Navigation("Recipes");
                 });

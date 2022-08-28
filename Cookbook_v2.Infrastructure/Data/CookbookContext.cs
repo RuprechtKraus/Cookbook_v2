@@ -29,6 +29,8 @@ namespace Cookbook_v2.Infrastructure.Data
             builder.ApplyConfiguration( new RecipeLikeConfiguration() );
             builder.ApplyConfiguration( new FavoriteRecipeConfiguration() );
             builder.ApplyConfiguration( new CategoryConfiguration() );
+            builder.ApplyConfiguration( new TagConfiguration() );
+            builder.ApplyConfiguration( new RecipeTagConfiguration() );
         }
     }
 }

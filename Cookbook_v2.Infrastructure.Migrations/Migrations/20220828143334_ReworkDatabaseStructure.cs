@@ -4,7 +4,7 @@
 
 namespace Cookbook_v2.Infrastructure.Migrations.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class ReworkDatabaseStructure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,11 +16,24 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IconUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    IconName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tag",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tag", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,8 +48,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     RecipesCount = table.Column<int>(type: "int", nullable: false),
                     LikesCount = table.Column<int>(type: "int", nullable: false),
                     FavoritesCount = table.Column<int>(type: "int", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,8 +68,7 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                     TimesFavorited = table.Column<int>(type: "int", nullable: false),
                     CookingTimeInMinutes = table.Column<int>(type: "int", nullable: false),
                     ServingsCount = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,15 +170,34 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RecipeTag",
+                columns: table => new
+                {
+                    TagId = table.Column<int>(type: "int", nullable: false),
+                    RecipeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecipeTag", x => new { x.TagId, x.RecipeId });
+                    table.ForeignKey(
+                        name: "FK_RecipeTag_Recipe_RecipeId",
+                        column: x => x.RecipeId,
+                        principalTable: "Recipe",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecipeTag_Tag_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tag",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FavoriteRecipe_RecipeId",
                 table: "FavoriteRecipe",
                 column: "RecipeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipe_Title",
-                table: "Recipe",
-                column: "Title");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipe_UserId",
@@ -188,6 +218,16 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                 name: "IX_RecipeStep_RecipeId",
                 table: "RecipeStep",
                 column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecipeTag_RecipeId",
+                table: "RecipeTag",
+                column: "RecipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_Name",
+                table: "Tag",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_Username",
@@ -213,7 +253,13 @@ namespace Cookbook_v2.Infrastructure.Migrations.Migrations
                 name: "RecipeStep");
 
             migrationBuilder.DropTable(
+                name: "RecipeTag");
+
+            migrationBuilder.DropTable(
                 name: "Recipe");
+
+            migrationBuilder.DropTable(
+                name: "Tag");
 
             migrationBuilder.DropTable(
                 name: "User");

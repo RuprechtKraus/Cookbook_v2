@@ -35,6 +35,10 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
                 .WithOne()
                 .HasForeignKey( x => x.RecipeId )
                 .OnDelete( DeleteBehavior.Cascade );
+
+            builder.HasMany( x => x.Tags )
+                .WithMany( x => x.Recipes )
+                .UsingEntity<RecipeTag>();
         }
     }
 }
