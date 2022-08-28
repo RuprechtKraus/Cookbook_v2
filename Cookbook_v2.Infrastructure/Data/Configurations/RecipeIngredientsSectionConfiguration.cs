@@ -13,7 +13,7 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
             builder.HasKey( x => x.Id );
 
             builder.Property( x => x.Title )
-                .HasMaxLength( RecipeIngredientsSection.s_titleMaxLength )
+                .HasMaxLength( 50 )
                 .IsRequired();
         }
     }

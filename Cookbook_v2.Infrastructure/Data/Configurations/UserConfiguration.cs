@@ -14,15 +14,15 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
             builder.HasIndex( x => x.Username );
 
             builder.Property( x => x.Name )
-                .HasMaxLength( User.s_nameMaxLength )
+                .HasMaxLength( 128 )
                 .IsRequired();
 
             builder.Property( x => x.Username )
-                .HasMaxLength( User.s_usernameMaxLength )
+                .HasMaxLength( 128 )
                 .IsRequired();
 
             builder.Property( x => x.About )
-                .HasMaxLength( User.s_aboutMaxLength );
+                .HasMaxLength( 1000 );
 
             builder.Property( x => x.PasswordHash )
                 .IsRequired();

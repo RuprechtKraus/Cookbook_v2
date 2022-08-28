@@ -14,11 +14,11 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
             builder.HasIndex( x => x.Title );
 
             builder.Property( x => x.Title )
-                .HasMaxLength( Recipe.s_titleMaxLength )
+                .HasMaxLength( 50 )
                 .IsRequired();
 
             builder.Property( x => x.Description )
-                .HasMaxLength( Recipe.s_descriptionMaxLength )
+                .HasMaxLength( 1000 )
                 .IsRequired();
 
             builder.Property( x => x.CookingTimeInMinutes )

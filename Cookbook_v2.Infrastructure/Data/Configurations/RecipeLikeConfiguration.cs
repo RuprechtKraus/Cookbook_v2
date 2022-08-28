@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Domain.Entities.UserModel;
 
 namespace Cookbook_v2.Infrastructure.Data.Configurations
 {
@@ -12,12 +13,12 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
 
             builder.HasKey( x => new { x.UserId, x.RecipeId } );
 
-            builder.HasOne( x => x.User )
+            builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey( x => x.UserId )
                 .OnDelete( DeleteBehavior.Cascade );
 
-            builder.HasOne( x => x.Recipe )
+            builder.HasOne<Recipe>()
                 .WithMany()
                 .HasForeignKey( x => x.RecipeId )
                 .OnDelete( DeleteBehavior.Cascade );

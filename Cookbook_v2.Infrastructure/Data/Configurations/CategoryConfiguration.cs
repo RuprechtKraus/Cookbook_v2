@@ -13,11 +13,11 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
             builder.HasKey( x => x.Id );
 
             builder.Property( x => x.Name )
-                .HasMaxLength( Category.s_maxNameLength )
+                .HasMaxLength( 50 )
                 .IsRequired();
 
             builder.Property( x => x.Description )
-                .HasMaxLength( Category.s_maxDescriptionLength )
+                .HasMaxLength( 200 )
                 .IsRequired();
         }
     }

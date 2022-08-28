@@ -16,7 +16,7 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
                 .IsRequired();
 
             builder.Property( x => x.Description )
-                .HasMaxLength( RecipeStep.s_descriptionMaxLength )
+                .HasMaxLength( 500 )
                 .IsRequired();
         }
     }
