@@ -23,6 +23,7 @@ namespace Cookbook_v2.Domain.Entities.UserModel
         public string PasswordHash { get; set; }
         public virtual List<Recipe> Recipes { get; set; }
 
+        // Workaround for EF
         protected User()
         {
         }

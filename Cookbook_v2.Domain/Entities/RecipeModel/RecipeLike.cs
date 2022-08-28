@@ -15,6 +15,7 @@ namespace Cookbook_v2.Domain.Entities.RecipeModel
             RecipeId = recipeId;
         }
 
+        // Workaround for EF
         protected RecipeLike()
         {
         }

@@ -9,5 +9,10 @@ namespace Cookbook_v2.Domain.CategoryModel
         public string Name { get; set; }
         public string Description { get; set; }
         public string IconName { get; set; }
+
+        // Workaround for EF
+        protected Category()
+        {
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace Cookbook_v2.Domain.Entities.RecipeModel
         public virtual List<RecipeStep> RecipeSteps { get; set; }
         public virtual List<RecipeIngredientsSection> IngredientsSections { get; set; }
 
+        // Workaround for EF
         protected Recipe()
         {
         }

@@ -7,6 +7,7 @@ namespace Cookbook_v2.Domain.Entities.RecipeModel
         public int Index { get; set; }
         public string Description { get; set; }
 
+        // Workaround for EF
         protected RecipeStep()
         {
         }

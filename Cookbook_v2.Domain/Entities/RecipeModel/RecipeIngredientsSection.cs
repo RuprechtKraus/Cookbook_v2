@@ -7,6 +7,7 @@ namespace Cookbook_v2.Domain.Entities.RecipeModel
         public string Title { get; set; }
         public string Ingredients { get; set; }
 
+        // Workaround for EF
         protected RecipeIngredientsSection()
         {
         }
