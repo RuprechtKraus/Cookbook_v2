@@ -11,7 +11,6 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
             builder.ToTable( "Recipe" );
 
             builder.HasKey( x => x.Id );
-            builder.HasIndex( x => x.Title );
 
             builder.Property( x => x.Title )
                 .HasMaxLength( 50 )
