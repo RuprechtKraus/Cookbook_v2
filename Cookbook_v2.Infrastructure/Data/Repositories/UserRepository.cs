@@ -34,19 +34,15 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             await _context.Users.AddAsync( user );
         }
 
-        public async Task AddFavoriteRecipe( FavoriteRecipe favRecipe )
+        public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            await _context.FavoriteRecipes.AddAsync( favRecipe );
+            await _context.FavoriteRecipes.AddAsync( favoriteRecipe );
         }
 
-        public async Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe )
+        public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            FavoriteRecipe favRecipeToDelete = await _context.FavoriteRecipes
-                .SingleOrDefaultAsync( x => x.UserId == favRecipe.UserId && x.RecipeId == favRecipe.RecipeId );
-            if ( favRecipe != null )
-            {
-                _context.FavoriteRecipes.Remove( favRecipeToDelete );
-            }
+            _context.FavoriteRecipes.Remove( favoriteRecipe );
+            return Task.CompletedTask;
         }
     }
 }
