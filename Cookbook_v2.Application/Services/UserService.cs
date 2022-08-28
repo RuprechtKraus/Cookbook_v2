@@ -38,14 +38,14 @@ namespace Cookbook_v2.Infrastructure.Services
             return user ?? throw new KeyNotFoundException( "User not found" );
         }
 
-        public async Task AddFavoriteRecipe( FavoriteRecipe favRecipe )
+        public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            await _userRepository.AddFavoriteRecipe( favRecipe );
+            await _userRepository.AddFavoriteRecipe( favoriteRecipe );
         }
 
-        public async Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe )
+        public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            await _userRepository.RemoveFavoriteRecipe( favRecipe );
+            return _userRepository.RemoveFavoriteRecipe( favoriteRecipe );
         }
 
         public async Task<User> RegisterUser( RegisterUserCommand registerCommand )
