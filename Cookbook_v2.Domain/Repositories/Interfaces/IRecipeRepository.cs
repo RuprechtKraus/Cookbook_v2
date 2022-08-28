@@ -9,7 +9,6 @@ namespace Cookbook_v2.Domain.Repositories.Interfaces
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUsername( string username );
         Task Add( Recipe recipe );
-        Task Delete( int id );
         Task Delete( Recipe recipe );
         Task AddLike( RecipeLike recipeLike );
         Task DeleteLike( RecipeLike recipeLike );

@@ -36,15 +36,6 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             await _context.Recipes.AddAsync( recipe );
         }
 
-        public async Task Delete( int id )
-        {
-            Recipe recipe = await _context.Recipes.SingleOrDefaultAsync( x => x.Id == id );
-            if ( recipe != null )
-            {
-                await Delete( recipe );
-            }
-        }
-
         public Task Delete( Recipe recipe )
         {
             _context.Recipes.Remove( recipe );
