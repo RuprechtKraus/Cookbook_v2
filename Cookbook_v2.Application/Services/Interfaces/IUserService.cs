@@ -3,9 +3,9 @@ using Cookbook_v2.Application.Responses.UserModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.UserModel;
 
-namespace Cookbook_v2.Infrastructure.Services.Interfaces
+namespace Cookbook_v2.Application.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserService : IService<User>
     {
         public Task<User> GetById( int id );
         public Task<User> GetByUsername( string username );

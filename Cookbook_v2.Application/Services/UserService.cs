@@ -5,15 +5,15 @@ using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Application.Commands.UserModel;
 using Cookbook_v2.Application.Responses.UserModel;
 using Cookbook_v2.Application.JsonWebTokenUtils;
-using Cookbook_v2.Infrastructure.Services.Interfaces;
+using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Toolkit.Exceptions;
 
-namespace Cookbook_v2.Infrastructure.Services
+namespace Cookbook_v2.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IJwtUtils<User> _jwtUtils;
 
         public UserService(
