@@ -1,0 +1,18 @@
+<app-modal-window id="login-modal" (modalClosed)="clearForm()">
+    <h4 class="login__header">Войти</h4>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="login__input-group">
+            <input class="login__input" [ngClass]="{ 'input_invalid': submitted && FormControls.login.errors }"
+            type="text" formControlName="login" maxlength="20" placeholder="Логин">
+            <input [type]="'password'" class="login__input" [ngClass]="{ 'input_invalid': submitted && FormControls.password.errors }"
+            type="text" formControlName="password" maxlength="20" placeholder="Пароль">
+        </div>
+        <div class="login__btn-group">
+            <button [disabled]="loading" [ngClass]="{ 'btn_disabled': loading }" type="submit" class="button-filled login__btn">Войти</button>
+            <button type="button" class="button-outlined login__btn" (click)="close()">Отмена</button>
+        </div>
+      </form>
+      <div class="login__no-account">
+        <a class="login__register" (click)="openRegistrationModal()">У меня еще не аккаунта</a>
+      </div>
+</app-modal-window>

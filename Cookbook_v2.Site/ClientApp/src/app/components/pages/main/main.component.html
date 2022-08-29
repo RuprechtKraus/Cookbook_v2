@@ -1,0 +1,116 @@
+<img class="header_image" src="../../../assets/images/header-image.jpg" alt="header-image">
+
+<div class="wave-container wave-1">
+  <img class="background-wave" src="../../../assets/images/wave-1.png" alt="background-wave">
+</div>
+
+<div class="wave-container wave-2">
+  <img class="background-wave" src="../../../assets/images/wave-2.png" alt="background-wave">
+</div>
+
+<section class="header_content">
+
+  <h1 class="header_title">Готовь и делись рецептами</h1>
+  <p class="header_text">Никаких кулинарных книг и блокнотов! Храни все любимые рецепты в одном месте.</p>
+
+  <div class="header-buttons">
+
+    <button class="button-filled add-recipe-btn" (click)="goToRecipeCreationPage()">
+      <div class="add-recipe-btn_inner">
+        <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="#FFFFFF"/>
+        </svg>
+        Добавить рецепт
+      </div>
+    </button>
+
+    <button *ngIf="!isLoggedIn" class="button-outlined login-btn" (click)="openModal('login-modal')">
+      Войти
+    </button>
+
+  </div>
+
+</section>
+
+<section class="smart-sort">
+
+  <h1 class="smart-sort_title">Умная сортировка по тегам</h1>
+  <p class="smart-sort_text">Добавляй рецепты и указывай наиболее популярные теги. Это позволит быстро находить любые категории.</p>
+
+  <div class="categories-list">
+
+    <div class="category" *ngFor="let category of categories">
+      <div class="category_icon" [style.background-image]="'url(' + category.iconURL + ')'"></div>
+      <h2 class="category_title">{{ category.name }}</h2>
+      <p class="category_desc">{{ category.description }}</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="recipe-of-the-day">
+  <div class="recipe-of-the-day_inner">
+
+    <div class="recipe-of-the-day_image-container">
+
+      <img class="recipe-of-the-day_image" src="../../../../assets/images/recipe-of-the-day.jpg" alt="Recipe of the day">
+      
+      <div class="recipe-of-the-day_author">
+        @glazest
+      </div>
+
+    </div>
+
+    <div class="recipe-of-the-day_content">
+
+      <div class="recipe-of-the-day_top-bar">
+
+        <span class="info-element likes">
+          <div class="recipe-of-the-day_top-bar_icon likes_icon"></div> 
+          356
+        </span>
+
+        <span class="info-element cooking-time">
+          <div class="recipe-of-the-day_top-bar_icon timer_icon"></div> 
+          35 минут
+        </span>
+
+      </div>
+
+      <div class="recipe-of-the-day_icon">
+        <img src="../../../assets/icons/ic-yammy.svg" alt="yammy">
+      </div>
+
+      <h1 class="recipe-of-the-day_title">Тыквенный супчик на кокосовом молоке</h1>
+      <p class="recipe-of-the-day_desc">Если у вас осталась тыква, и вы не знаете что с ней сделать, то это решение для вас! Ароматный, согревающий суп-пюре на кокосовом молоке. Можно даже в Пост!</p>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="recipe-search">
+
+  <h1 class="recipe-search_title">Поиск рецептов</h1>
+  <p class="recipe-search_desc">Введите примерное название блюда, а мы по тегам найдем его</p>
+
+  <div class="search-form-container">
+
+    <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <input id="search" class="search-field" type="search" maxlength="256" placeholder="Название блюда..." formControlName="searchText">
+      <button class="search-btn" type="submit">Поиск</button>
+    </form>
+
+    <div class="tags">
+      <a class="tag">Мясо</a>
+      <a class="tag">Деликатесы</a>
+      <a class="tag">Пироги</a>
+      <a class="tag">Рыба</a>
+    </div>
+
+  </div>
+
+</section>
+
+<app-unauthorized-modal></app-unauthorized-modal>

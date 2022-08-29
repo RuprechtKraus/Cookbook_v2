@@ -8,7 +8,8 @@ using Cookbook_v2.Infrastructure;
 using Cookbook_v2.Application;
 using Cookbook_v2.Toolkit.Extensions;
 using Cookbook_v2.Api.Middleware;
-using Cookbook_v2.Application.Authentication;
+using Cookbook_v2.Application.Settings;
+using Cookbook_v2.Application.Extensions;
 
 namespace Cookbook_v2.Api
 {
@@ -24,9 +25,9 @@ namespace Cookbook_v2.Api
         public void ConfigureServices( IServiceCollection services )
         {
             services.AddControllers();
-            services.ConfigureAuthenticationOptions( Configuration );
             services.AddAppliactionServices();
-            ConfigureDatabase(services);
+            ConfigureApplication( services );
+            ConfigureDatabase( services );
         }
 
         public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
@@ -51,10 +52,9 @@ namespace Cookbook_v2.Api
             } );
         }
 
-        public void ConfigureAuthenticationOptions( IServiceCollection services )
+        public void ConfigureApplication( IServiceCollection services )
         {
-            services.Configure<AuthenticationOptions>(
-                Configuration.GetSection( "AuthenticationOptions" ) );
+            services.ConfigureApplicationSettings( Configuration );
         }
 
         public void ConfigureDatabase( IServiceCollection services )

@@ -1,0 +1,377 @@
+* 
+{
+  margin: 0;
+  padding: 0;
+}
+
+html, body, .app-root {
+  height: 100%;
+}
+
+body 
+{
+  background-color: #FEFEFB;
+}
+
+body.modal_open
+{
+    overflow: hidden;
+}
+
+.container
+{
+  display: flex;
+  flex-direction: column;
+
+  max-width: 1440px;
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 0 120px;
+  
+  box-sizing: border-box;
+}
+
+.ellipsis-text
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Background waves */
+
+.background-wave
+{
+  position: relative;
+}
+
+
+.wave-container
+{
+  position: absolute;
+  max-width: 1440px;
+
+  left: 220px;
+  z-index: -999;
+}
+
+.wave-1
+{
+  top: 495px;
+}
+
+.wave-2
+{
+  top: 1430px;
+}
+
+/* Buttons */
+
+.button-filled
+{
+  background: #FDB100;
+  border-radius: 16px;
+  box-sizing: border-box;
+  border-style: none;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+
+  height: 50px;
+  width: 100px;
+
+  color: #FFFFFF;
+}
+
+.button-filled:hover
+{
+  background: #e7a200;
+}
+
+.button-outlined
+{
+  border: 1px solid #FDB100;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-color: transparent;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+
+  text-align: center;
+
+  color: #FDB100;
+
+  height: 50px;
+  width: 100px;
+}
+
+.button-outlined:hover
+{
+  background-color: #FDB100;
+  color: #FFFFFF;
+}
+
+.btn_disabled
+{
+    pointer-events: none;
+    background: #a3a6ac;
+}
+
+/* Search */
+
+.recipe-search_title
+{
+  margin-bottom: 16px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 42px;
+  line-height: 51px;
+  text-align: center;
+
+  color: #25292D;
+}
+
+.recipe-search_desc
+{
+  margin-bottom: 64px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 32px;
+
+  text-align: center;
+  font-feature-settings: 'case' on;
+
+  color: #4A525A;
+}
+
+.recipe-search
+{
+  max-width: 884px;
+  margin: 0 auto;
+}
+
+.search-form
+{
+  display: flex;
+
+  margin-bottom: 24px;
+}
+
+.search-field
+{
+  height: 73px;
+
+  flex-grow: 4;
+
+  padding-left: 32px;
+  margin-right: 16px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 8px 42px rgba(34, 39, 47, 0.04);
+  border-radius: 16px;
+  border-style: none;
+  box-sizing: border-box;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-transform: capitalize;
+
+  color: rgba(37, 41, 45, 0.5)
+}
+
+.search-field:focus
+{
+  outline: none;
+}
+
+.search-btn
+{
+  height: 73px;
+
+  flex-grow: 1;
+
+  justify-content: center;
+
+  background: #FDB100;
+  border-radius: 16px;
+  border-style: none;
+  box-sizing: border-box;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: capitalize;
+
+  color: #FFFFFF;
+}
+
+.search-btn:hover
+{
+  background-color: #e7a200;
+}
+
+.tag
+{
+  margin-right: 15px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #808080;
+}
+
+.tag:hover
+{
+  color: #535353;
+  text-decoration: underline;
+}
+
+/* Pages' header */
+.page-header 
+{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.page-header_buttons 
+{
+  display: flex;
+  justify-content: center;
+}
+
+.page-header_main-button 
+{
+  width: 278px;
+  height: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-header_main-button-icon 
+{
+  height: 18px;
+  width: 18px;
+  margin-right: 21px;
+}
+
+.page-header_title 
+{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 42px;
+  line-height: 62px;
+
+  color: #25292D;
+}
+
+/* Remove button (cross) */
+
+.remove-btn
+{
+  background-image: url("assets/icons/cross.svg");
+  background-color: transparent;
+
+  height: 14px;
+  width: 14px;
+
+  border: none;
+
+  transition: transform .2s ease-in-out;
+}
+
+.remove-btn:hover
+{
+  transform: scale(1.2);
+}
+
+/* Blank fields */
+
+.blank-field
+{
+  border: 1px solid rgba(145, 150, 161, 0.4);
+  box-sizing: border-box;
+  padding: 11px 24px;
+  border-radius: 16px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+
+  color: rgba(37, 41, 45, 0.5);
+}
+
+.blank-field:focus
+{
+  outline: none;
+}
+
+/* Recipe card clickable */
+
+.recipe-card__clickable .recipe-card
+{
+  transition: transform .2s ease-in-out;
+}
+
+.recipe-card__clickable:hover .recipe-card
+{
+  box-shadow: 0 0 10px darkgrey;
+  transform: scale(1.01);
+}
+
+/* Go back button */
+
+.back-button-container 
+{
+  margin-bottom: 11px;
+}
+
+.ic-back
+{
+  margin-right: 13px;
+}
+
+.back-button
+{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #FDB100;
+}
+
+.back-button:hover
+{
+  filter: brightness(0.9);
+}

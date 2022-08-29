@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Repositories.Interfaces;
@@ -12,6 +13,11 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
         public TagRepository( CookbookContext context )
         {
             _context = context;
+        }
+
+        public async Task<IReadOnlyList<Tag>> GetAll()
+        {
+            return await _context.Tags.ToListAsync();
         }
 
         public async Task<Tag> GetByName( string name )

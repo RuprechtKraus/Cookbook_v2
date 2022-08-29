@@ -1,0 +1,109 @@
+<div class="back-button-container">
+  <span class="back-button" (click)="onGoBackClick()">
+    <object class="ic-back" data="../../assets/icons/left-arrow.svg" type="image/svg+xml"></object>
+    Назад</span>
+</div>
+
+<div class="page-header">
+  <h1 class="page-header_title">Добавить новый рецепт</h1>
+  <div class="page-header_buttons">
+    <button class="button-filled page-header_main-button" (click)="onSubmit()">
+      Опубликовать
+    </button>
+  </div>
+</div>
+
+<div class="recipe-blank">
+  <div id="image-area" class="recipe-blank_pic-upload" (click)="imageUpload.click()">
+    <img *ngIf="imageUploaded" class="recipe-blank__image" [src]="'data:image/jpg;base64,' + recipe.imageBase64">
+    <input type="file" class="image-input" #imageUpload accept="image/jpeg, image/png"
+      (change)="onImageUploaded($event)" />
+    <div *ngIf="!imageUploaded" class="upload-area">
+      <object class="upload-area_icon" data="../../assets/icons/ic-upload.svg" type="image/svg+xml"></object>
+      <div class="upload-area_text">Загрузите фото готового блюда</div>
+    </div>
+  </div>
+
+  <div class="recipe-blank-right">
+    <div class="recipe-form">
+      <input class="title-field blank-field" [required]="true" [(ngModel)]="recipe.name" maxlength="60"
+        placeholder="Название рецепта" />
+      <textarea class="desc-field blank-field" [required]="true" [(ngModel)]="recipe.description" maxlength="150"
+        placeholder="Краткое описание рецепта (150 символов)"></textarea>
+
+      <div class="tag-field blank-field">
+        <mat-chip-list class="tag-list" #tagList>
+          <mat-chip class="tag" *ngFor="let tag of recipe.tags" title="{{ tag }}" (removed)="removeTag(tag)">
+            <span class="ellipsis-text">{{ tag }}</span>
+            <mat-icon class="remove-tag-icon" matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        <input class="tag-input" placeholder="Добавить теги" [maxLength]="20" [matChipInputFor]="tagList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTag($event)" />
+      </div>
+
+      <div class="info-wrapper">
+        <div class="dish-info time-info">
+          <div class="time-field blank-field">
+            <select class="select-option" [(ngModel)]="recipe.cookingTimeInMinutes" [required]="true">
+              <option [value]="null" hidden>Время готовки</option>
+              <option *ngFor="let option of timeOptions" [ngValue]="option.value">
+                {{ option.viewValue }}
+              </option>
+            </select>
+          </div>
+          <span class="dish-info_text">Минут</span>
+        </div>
+
+        <div class="dish-info servings-info">
+          <div class="time-field blank-field">
+            <select class="select-option" [(ngModel)]="recipe.servingsAmount" [required]="true">
+              <option [value]="null" hidden>Порций в блюде</option>
+              <option *ngFor="let option of servingOptions" [ngValue]="option.value">
+                {{ option.viewValue }}
+              </option>
+            </select>
+          </div>
+          <span class="dish-info_text">Персон</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="steps-and-ingredients">
+  <div>
+    <div class="ingredients-title">Ингридиенты</div>
+    <div class="ingredients-container">
+      <div *ngFor="let section of recipe.ingredientsSections" class="ingredients-blank-wrapper">
+        <app-ingredients-blank (remove)="removeIngredientsSection($event)" [section]="section"
+          [removable]="recipe.ingredientsSections.length > 1"></app-ingredients-blank>
+      </div>
+    </div>
+    <button class="button-outlined add-blank" (click)="addIngredientsSection()">
+      <object class="add-icon" data="../../assets/icons/plus.svg" type="image/svg+xml"></object>
+      Добавить заголовок
+    </button>
+  </div>
+
+  <div class="steps-container">
+    <div class="step" *ngFor="
+        let step of recipe.recipeSteps;
+        let i = index
+        trackBy: trackByIndex
+      ">
+      <div class="step-top">
+        <div class="step-index">Шаг {{ i + 1 }}</div>
+        <button class="remove-btn" *ngIf="canRemoveStep" (click)="removeStep(step)"></button>
+      </div>
+      <textarea [(ngModel)]="recipe.recipeSteps[i].description" class="blank-field step-desc" maxlength="1000"
+        placeholder="Описание шага"></textarea>
+    </div>
+    <div class="add-wrapper">
+      <button class="button-outlined add-blank" (click)="addStep()">
+        <object class="add-icon" data="../../assets/icons/plus.svg" type="image/svg+xml"></object>
+        Добавить шаг
+      </button>
+    </div>
+  </div>
+</div>

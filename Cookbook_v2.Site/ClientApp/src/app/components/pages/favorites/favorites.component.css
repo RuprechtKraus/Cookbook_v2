@@ -1,0 +1,16 @@
+.no-favs-message
+{
+  margin-top: 117px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+
+  text-align: center;
+
+  color: #FDB100;
+
+  opacity: 0.5;
+}

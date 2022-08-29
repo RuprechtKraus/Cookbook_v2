@@ -1,0 +1,147 @@
+.page-header_main-button-icon
+{
+  filter: brightness(0) invert(1);
+}
+
+/* Recipe preview */
+
+.delete-recipe-btn {
+  width: 60px;
+  height: 60px;
+  margin-right: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid rgba(145, 150, 161, 0.7);
+  box-sizing: border-box;
+  border-radius: 16px;
+}
+
+.delete-recipe-btn:hover {
+  background-color: rgba(145, 150, 161, 0.7);
+}
+
+.delete-recipe-btn:hover .delete-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Recipe container */
+
+.recipe-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.recipe-details_ingredients {
+  width: 100%;
+  max-width: 300px;
+}
+
+.recipe-details_steps {
+  width: 100%;
+  max-width: 790px;
+}
+
+.bon-appetit {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 40px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+
+  text-transform: capitalize;
+
+  color: #FDB100;
+
+  opacity: 0.5;
+}
+
+/* Recipe ingredients */
+
+.ingredients_title {
+  margin-bottom: 20px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 30px;
+
+  text-transform: capitalize;
+
+  color: #FDB100;
+}
+
+.ingredients_category_title {
+  margin-bottom: 10px;
+  
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  color: #4A525A;
+}
+
+.ingredients_category_list {
+  margin-bottom: 20px;
+}
+
+.ingredients_item {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 30px;
+
+  color: #4A525A;
+}
+
+/* Recipe steps */
+
+.step {
+  min-height: 80px;
+  padding: 50px 73px;
+  margin-bottom: 20px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 16px 72px rgba(34, 39, 47, 0.05);
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+
+.step-number {
+  margin-bottom: 10px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  color: #4A525A;
+}
+
+.step-desc {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 30px;
+
+  color: #4A525A;
+}

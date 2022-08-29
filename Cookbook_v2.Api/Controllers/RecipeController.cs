@@ -19,7 +19,7 @@ namespace Cookbook_v2.Api.Controllers
             _recipeService = recipeService;
         }
 
-        [CookbookAllowAnonymous]
+        [CookbookAllowAnonymous] // TODO: Удалить
         [HttpPost( "create" )]
         public async Task<IActionResult> CreateRecipe(
             [FromBody] CreateRecipeCommand createCommand )

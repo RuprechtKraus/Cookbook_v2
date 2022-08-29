@@ -34,6 +34,12 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             await _context.Users.AddAsync( user );
         }
 
+        public Task Update( User user )
+        {
+            _context.Users.Update( user );
+            return Task.CompletedTask;
+        }
+
         public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
             await _context.FavoriteRecipes.AddAsync( favoriteRecipe );

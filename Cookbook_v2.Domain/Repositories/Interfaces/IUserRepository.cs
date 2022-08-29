@@ -9,7 +9,9 @@ namespace Cookbook_v2.Domain.Repositories.Interfaces
         Task<User> GetById( int id );
         Task<User> GetByUsername( string username );
         Task Add( User user );
+        Task Update( User user );
         Task AddFavoriteRecipe( FavoriteRecipe favRecipe );
         Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe );
+
     }
 }

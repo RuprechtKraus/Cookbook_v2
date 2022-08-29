@@ -1,0 +1,72 @@
+:host
+{
+    display: none;
+}
+
+.modal
+{
+    position: fixed;
+
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 700px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: #FFFFFF;
+    box-shadow: 0px 16px 72px rgba(34, 39, 47, 0.05);
+    border-radius: 24px;
+
+    z-index: 1000;
+
+    overflow: auto;
+}
+
+.modal__body
+{
+    margin: 62px;
+}
+
+.modal__btn-close
+{
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+    
+    top: 27px;
+    right: 25px;
+    
+    background: none;
+    border: none;
+
+    fill: #9196A1;
+    fill-opacity: 0.4;
+}
+
+.modal__btn-close:hover
+{
+    fill-opacity: 1;
+}
+
+.modal-background
+{
+    position: fixed;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: #000;
+    opacity: 0.75;
+
+    z-index: 999;
+}
+
+body.modal_open
+{
+    overflow: hidden;
+}

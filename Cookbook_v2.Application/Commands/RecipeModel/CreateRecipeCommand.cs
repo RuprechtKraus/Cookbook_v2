@@ -10,11 +10,11 @@ namespace Cookbook_v2.Application.Commands.RecipeModel
 
         [Required( ErrorMessage = "Title required" )]
         [MaxLength( 50, ErrorMessage = "Title maximum length is 50" )]
-        public string? Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required( ErrorMessage = "Description required" )]
         [MaxLength( 1000, ErrorMessage = "Description maximum length is 1000" )]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required( ErrorMessage = "Cooking time required" )]
         public int CookingTimeInMinutes { get; set; }
