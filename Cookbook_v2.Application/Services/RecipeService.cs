@@ -60,7 +60,7 @@ namespace Cookbook_v2.Application.Services
                 await CreateRecipeTagList( createCommand.Tags )
                 );
 
-            await IncreaseUserRecipeCount( createCommand.UserId );
+            await IncrementUserRecipeCount( createCommand.UserId );
             await _recipeRepository.Add( recipe );
             await _unitOfWork.SaveAsync();
 
@@ -69,12 +69,23 @@ namespace Cookbook_v2.Application.Services
 
         public async Task DeleteById( int id )
         {
-            throw new MissingMethodException( "Method not implemented" );
+            Recipe recipe = await _recipeRepository.GetById( id );
+            if ( recipe == null )
+            {
+                throw new KeyNotFoundException( "Recipe not found" );
+            }
+            await Delete( recipe );
         }
 
-        public Task Delete( Recipe recipe )
+        public async Task Delete( Recipe recipe )
         {
-            throw new MissingMethodException( "Method not implemented" );
+            if ( recipe == null )
+            {
+                throw new ArgumentNullException( nameof( recipe ) );
+            }
+            await _recipeRepository.Delete( recipe );
+            await DecrementUserRecipeCount( recipe.UserId );
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task AddLike( int userId, int recipeId )
@@ -91,7 +102,7 @@ namespace Cookbook_v2.Application.Services
         {
             if ( base64Image != null )
             {
-                return await ImageService.CreateAndSaveImageFromBase64( base64Image, 
+                return await ImageService.CreateAndSaveImageFromBase64( base64Image,
                     _imagesSettings.RecipeImagesDirectory );
             }
             return "default_recipe_image.jpg";
@@ -106,14 +117,14 @@ namespace Cookbook_v2.Application.Services
             return result;
         }
 
-        private async Task IncreaseUserRecipeCount( int userId )
+        private async Task IncrementUserRecipeCount( int userId )
         {
             User user = await _userRepository.GetById( userId );
             user.RecipesCount++;
             await _userRepository.Update( user );
         }
 
-        private async Task DecreaseUserRecipeCount( int userId )
+        private async Task DecrementUserRecipeCount( int userId )
         {
             User user = await _userRepository.GetById( userId );
             user.RecipesCount--;

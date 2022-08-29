@@ -7,11 +7,6 @@ namespace Cookbook_v2.Application.Services
 {
     public static class ImageService
     {
-        /// <summary>
-        /// Создает изображение из формата base64 и сохраняет его по указанному пути
-        /// </summary>
-        /// <param name="base64">Закодированное изображение</param>
-        /// <param name="path">Путь для сохранения изображения</param>
         /// <returns>Имя сохраненного изображения</returns>
         public static async Task<string> CreateAndSaveImageFromBase64( string base64, string path )
         {
@@ -31,14 +26,12 @@ namespace Cookbook_v2.Application.Services
             return imageName;
         }
 
-        /// <summary>
-        /// Удаляет изображение по указанному пути
-        /// </summary>
-        /// <param name="path">Путь к изображению</param>
-        /// <returns></returns>
         public static void DeleteImage( string path )
         {
-            throw new NotImplementedException( "Method not implemented" );
+            if ( File.Exists( path ) )
+            {
+                File.Delete( path );
+            }
         }
 
         public static string GetImageFormat( string base64 )

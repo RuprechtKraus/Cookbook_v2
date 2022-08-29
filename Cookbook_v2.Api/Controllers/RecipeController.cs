@@ -14,18 +14,24 @@ namespace Cookbook_v2.Api.Controllers
     {
         private readonly IRecipeService _recipeService;
 
-        public RecipeController( IRecipeService recipeService  )
+        public RecipeController( IRecipeService recipeService )
         {
             _recipeService = recipeService;
         }
 
-        [CookbookAllowAnonymous] // TODO: Удалить
         [HttpPost( "create" )]
         public async Task<IActionResult> CreateRecipe(
             [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
             return Ok( recipe.Id );
+        }
+
+        [HttpDelete( "delete/{id}" )]
+        public async Task<IActionResult> DeleteRecipe( int id )
+        {
+            await _recipeService.DeleteById( id );
+            return Ok();
         }
     }
 }
