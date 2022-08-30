@@ -1,16 +1,16 @@
-﻿using System;
+using Cookbook_v2.Toolkit.Exceptions;
 
 namespace Cookbook_v2.Toolkit.Exceptions
 {
     public class RegistrationException : AppException
     {
-        public RegistrationException() 
+        public RegistrationException()
             : base()
         {
         }
 
-        public RegistrationException(string message)
-            : base(message)
+        public RegistrationException( string message )
+            : base( message )
         {
         }
     }
