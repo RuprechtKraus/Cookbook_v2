@@ -5,6 +5,8 @@ using Cookbook_v2.Application.Commands.UserModel;
 using Cookbook_v2.Application.Responses.UserModel;
 using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Application.Dtos.UserModel;
+using Cookbook_v2.Application.Helpers.Converters;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -21,6 +23,15 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
+        [HttpGet( "details/{id}" )]
+        public async Task<IActionResult> Details( int id )
+        {
+            UserDetailsDto details = ( await _userService.GetById( id ) )
+                .ToUserDetailsDto();
+            return Ok( details );
+        }
+
+        [CookbookAllowAnonymous]
         [HttpPost( "register" )]
         public async Task<IActionResult> RegisterUser(
             [FromBody] RegisterUserCommand registerCommand )
@@ -34,7 +45,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> AuthenticateUser(
             [FromBody] AuthenticateUserCommand authenticateCommand )
         {
-            AuthenticateUserResponse authenticatedUser = 
+            AuthenticateUserResponse authenticatedUser =
                 await _userService.AuthenticateUser( authenticateCommand );
             return Ok( authenticatedUser );
         }
