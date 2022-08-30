@@ -8,8 +8,6 @@ using Cookbook_v2.Infrastructure;
 using Cookbook_v2.Application;
 using Cookbook_v2.Toolkit.Extensions;
 using Cookbook_v2.Api.Middleware;
-using Cookbook_v2.Application.Settings;
-using Cookbook_v2.Application.Extensions;
 
 namespace Cookbook_v2.Api
 {
