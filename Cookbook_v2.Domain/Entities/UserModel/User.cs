@@ -12,7 +12,6 @@ namespace Cookbook_v2.Domain.Entities.UserModel
         public int RecipesCount { get; set; }
         public int LikesCount { get; set; }
         public int FavoritesCount { get; set; }
-        [JsonIgnore]
         public string PasswordHash { get; set; }
         public virtual List<Recipe> Recipes { get; set; }
 
