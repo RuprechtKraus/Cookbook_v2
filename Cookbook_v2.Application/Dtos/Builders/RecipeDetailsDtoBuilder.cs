@@ -9,7 +9,6 @@ namespace Cookbook_v2.Application.Dtos.Builders
     {
         private readonly IUserRepository _userRepository;
         private readonly IRecipeRepository _recipeRepository;
-        private RecipeDetailsDto? _result;
 
         public RecipeDetailsDtoBuilder( 
             IUserRepository userRepository, 
@@ -19,12 +18,12 @@ namespace Cookbook_v2.Application.Dtos.Builders
             _recipeRepository = recipeRepository;
         }
 
-        public async Task<RecipeDetailsDtoBuilder> Build( int recipeId )
+        public async Task<RecipeDetailsDto> Build( int recipeId )
         {
             Recipe recipe = await _recipeRepository.GetById( recipeId );
             string authorUsername = ( await _userRepository.GetById( recipe.UserId )).Username;
 
-            _result = new RecipeDetailsDto
+            return new RecipeDetailsDto
             {
                 Id = recipe.Id,
                 Title = recipe.Title,
@@ -39,13 +38,6 @@ namespace Cookbook_v2.Application.Dtos.Builders
                 RecipeSteps = recipe.RecipeSteps.ToDtoList(),
                 IngredientsSections = recipe.IngredientsSections.ToDtoList()
             };
-
-            return this;
-        }
-
-        public RecipeDetailsDto? GetResult()
-        {
-            return _result;
         }
     }
 }
