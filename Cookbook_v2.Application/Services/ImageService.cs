@@ -22,9 +22,8 @@ namespace Cookbook_v2.Application.Services
             byte[] bytes = Convert.FromBase64String( base64 );
             string imageFormat = GetImageFormat( base64 );
             string imageName = Path.ChangeExtension(
-                Path.GetRandomFileName(), imageFormat ).ToLower();
-            string imagePath = Path.Combine(
-                _imagesSettings.RecipeImagesDirectory, imageName );
+                Path.GetRandomFileName(), imageFormat );
+            string imagePath = GetRecipeImagePath( imageName );
 
             using var fs = new FileStream( imagePath, FileMode.Create );
             await fs.WriteAsync( bytes );
@@ -35,14 +34,13 @@ namespace Cookbook_v2.Application.Services
 
         public void DeleteImage( string imageName )
         {
-            string path = Path.Combine(
-                _imagesSettings.RecipeImagesDirectory, imageName );
+            string path = GetRecipeImagePath( imageName );
             if ( File.Exists( path ) )
             {
                 File.Delete( path );
             }
         }
-        
+
         public string GetRecipeImagePath( string imageName )
         {
             return Path.Combine( _imagesSettings.RecipeImagesDirectory, imageName );

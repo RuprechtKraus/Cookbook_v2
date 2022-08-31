@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cookbook_v2.Api.Authorization.Attributes;
 using Cookbook_v2.Application.Commands.RecipeModel;
@@ -19,6 +21,24 @@ namespace Cookbook_v2.Api.Controllers
             _recipeService = recipeService;
         }
 
+        [CookbookAllowAnonymous]
+        [HttpGet( "previews" )]
+        public async Task<IActionResult> GetPreviews()
+        {
+            IReadOnlyList<Recipe> recipes;
+
+            if ( TryGetUserId( out int userId ) )
+            {
+                recipes = await _recipeService.GetByUserId( userId );
+            }
+            else
+            {
+                recipes = await _recipeService.GetAll();
+            }
+
+            return Ok();
+        }
+
         [HttpPost( "create" )]
         public async Task<IActionResult> CreateRecipe(
             [FromBody] CreateRecipeCommand createCommand )
@@ -32,6 +52,18 @@ namespace Cookbook_v2.Api.Controllers
         {
             await _recipeService.DeleteById( id );
             return Ok();
+        }
+
+        private bool TryGetUserId( out int userId )
+        {
+            if ( Request.QueryString.HasValue &&
+                Request.Query[ "userId" ].Any() &&
+                int.TryParse( Request.Query[ "userId" ], out userId ) )
+            {
+                return true;
+            }
+            userId = 0;
+            return false;
         }
     }
 }

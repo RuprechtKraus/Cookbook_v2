@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 
 import { CategoriesService } from '../../../services/categories.service';
-import { Category } from '../../../interfaces/category';
+import { CategoryDto } from '../../../dtos/category-dto';
 import { ModalWindowService } from '../../shared/modal-window/modal-window.service';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  categories?: Category[] = [];
+  categories?: CategoryDto[] = [];
   searchForm = this._formBuilder.group({
     searchText: '',
   });

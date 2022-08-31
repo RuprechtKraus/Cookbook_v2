@@ -26,6 +26,15 @@ namespace Cookbook_v2.Api
             services.AddAppliactionServices();
             ConfigureApplication( services );
             ConfigureDatabase( services );
+
+            services.AddCors( options =>
+            {
+                options.AddPolicy( "AllowSpecificOrigins",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5000");
+                    } );
+            } );
         }
 
         public void Configure( IApplicationBuilder app, IWebHostEnvironment env )
@@ -43,6 +52,7 @@ namespace Cookbook_v2.Api
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
+            app.UseCors( "AllowSpecificOrigins" );
 
             app.UseEndpoints( endpoints =>
             {

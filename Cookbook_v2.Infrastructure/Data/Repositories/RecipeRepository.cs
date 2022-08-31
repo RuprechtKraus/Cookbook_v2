@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using System.Linq;
 
 namespace Cookbook_v2.Infrastructure.Data.Repositories
 {
@@ -15,6 +16,15 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             _context = context;
         }
 
+        public async Task<IReadOnlyList<Recipe>> GetAll()
+        {
+            return await _context.Recipes
+                .Include( x => x.IngredientsSections )
+                .Include( x => x.RecipeSteps )
+                .Include( x => x.Tags )
+                .AsSplitQuery().ToListAsync();
+        }
+
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _context.Recipes
@@ -22,13 +32,13 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             return recipe;
         }
 
-        public async Task<IReadOnlyList<Recipe>> GetByUsername( string username )
+        public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
             IReadOnlyList<Recipe> recipes = ( await _context.Users
                 .Include( x => x.Recipes ).ThenInclude( x => x.RecipeSteps )
                 .Include( x => x.Recipes ).ThenInclude( x => x.IngredientsSections )
                 .Include( x => x.Recipes ).ThenInclude( x => x.Tags )
-                .SingleOrDefaultAsync( x => x.Username == username ) ).Recipes;
+                .SingleOrDefaultAsync( x => x.Id == id ) ).Recipes;
             return recipes;
         }
 

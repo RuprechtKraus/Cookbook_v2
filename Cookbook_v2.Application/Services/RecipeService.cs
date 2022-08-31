@@ -33,15 +33,20 @@ namespace Cookbook_v2.Application.Services
             _imageService = imageService;
         }
 
+        public async Task<IReadOnlyList<Recipe>> GetAll()
+        {
+            return await _recipeRepository.GetAll();
+        }
+
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _recipeRepository.GetById( id );
             return recipe ?? throw new KeyNotFoundException( "Recipe not found" );
         }
 
-        public async Task<IReadOnlyList<Recipe>> GetByUsername( string username )
+        public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
-            return await _recipeRepository.GetByUsername( username );
+            return await _recipeRepository.GetByUserId( id );
         }
 
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )
@@ -83,10 +88,12 @@ namespace Cookbook_v2.Application.Services
             {
                 throw new ArgumentNullException( nameof( recipe ) );
             }
+
+            string imageName = recipe.ImageName;
             await _recipeRepository.Delete( recipe );
-            _imageService.DeleteImage( recipe.ImageName );
             await DecrementUserRecipeCount( recipe.UserId );
             await _unitOfWork.SaveAsync();
+            _imageService.DeleteImage( imageName );
         }
 
         public async Task AddLike( int userId, int recipeId )

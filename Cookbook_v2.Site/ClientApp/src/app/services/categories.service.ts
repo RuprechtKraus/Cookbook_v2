@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../interfaces/category';
+import { CategoryDto } from '../dtos/category-dto';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class CategoriesService {
     private _http: HttpClient
   ) { }
 
-  getCategories(): Observable<Category[]> {
-    return this._http.get<Category[]>('api/category');
+  getCategories(): Observable<CategoryDto[]> {
+    return this._http.get<CategoryDto[]>('http://localhost:5010/api/category');
   }
 }

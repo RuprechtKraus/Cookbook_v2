@@ -27,7 +27,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> Details( int id )
         {
             UserDetailsDto details = ( await _userService.GetById( id ) )
-                .ToUserDetailsDto();
+                .ToDetailsDto();
             return Ok( details );
         }
 

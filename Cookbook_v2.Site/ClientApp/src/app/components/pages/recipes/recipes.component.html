@@ -1,9 +1,9 @@
 <div class="wave-container wave-1">
-  <img class="background-wave" src="assets/images/wave-1.png" alt="background-wave">
+  <img class="background-wave" src="assets/static images/wave-1.png" alt="background-wave">
 </div>
 
 <div class="wave-container wave-2">
-  <img class="background-wave" src="assets/images/wave-2.png" alt="background-wave">
+  <img class="background-wave" src="assets/static images/wave-2.png" alt="background-wave">
 </div>
 
 <div class="back-button-container">
@@ -23,7 +23,7 @@
 <section class="categories-section">
   <div class="categories-list">
     <div class="category" *ngFor="let category of categories">
-      <div class="category_icon" [style.background-image]="'url(' + category.iconURL + ')'"></div>
+      <div class="category_icon" [style.background-image]="'url(../../../../assets/icons/' + category.iconName + ')'"></div>
       <h2 class="category_title">{{ category.name }}</h2>
     </div>
   </div>

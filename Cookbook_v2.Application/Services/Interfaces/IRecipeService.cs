@@ -5,8 +5,9 @@ namespace Cookbook_v2.Application.Services.Interfaces
 {
     public interface IRecipeService : IService<Recipe>
     {
+        Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
-        Task<IReadOnlyList<Recipe>> GetByUsername( string username );
+        Task<IReadOnlyList<Recipe>> GetByUserId( int id );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );

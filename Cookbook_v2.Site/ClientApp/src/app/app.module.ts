@@ -28,6 +28,7 @@ import { LoginModalComponent } from './components/shared/login-modal/login-modal
 import { RegistrationModalComponent } from './components/shared/registration-modal/registration-modal.component';
 import { UnauthorizedModalComponent } from './components/shared/unauthorized-modal/unauthorized-modal.component';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { CorsInterceptor } from './helpers/cors.interceptor';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
     NgSelectModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

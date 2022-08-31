@@ -5,7 +5,7 @@ namespace Cookbook_v2.Application.Helpers.Converters
 {
     public static class UserConverter
     {
-        public static UserDetailsDto ToUserDetailsDto( this User user )
+        public static UserDetailsDto ToDetailsDto( this User user )
         {
             return new UserDetailsDto
             {

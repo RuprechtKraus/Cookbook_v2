@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UntypedFormBuilder } from "@angular/forms";
 
-import { Category } from "../../../interfaces/category";
+import { CategoryDto } from "../../../dtos/category-dto";
 import { CategoriesService } from "../../../services/categories.service";
 import { RecipesService } from "../../../services/recipes.service";
 import { LocationService } from "../../../services/location.service";
@@ -9,7 +9,6 @@ import { RecipePreview } from "src/app/interfaces/recipe";
 import { AccountService } from "src/app/services/account.service";
 import { Router } from "@angular/router";
 import { ModalWindowService } from "../../shared/modal-window/modal-window.service";
-import { RecipeCardComponent } from "../../shared/recipe-card/recipe-card.component";
 
 @Component({
   selector: "app-recipes",
@@ -17,7 +16,7 @@ import { RecipeCardComponent } from "../../shared/recipe-card/recipe-card.compon
   styleUrls: ["./recipes.component.css"],
 })
 export class RecipesComponent implements OnInit {
-  categories: Category[] = [];
+  categories: CategoryDto[] = [];
   recipePreviews: RecipePreview[] = [];
   searchForm = this._formBuilder.group({
     searchText: "",
@@ -36,7 +35,7 @@ export class RecipesComponent implements OnInit {
   ngOnInit() {
     this._categoriesService
       .getCategories()
-      .subscribe((categories: Category[]) => (this.categories = categories));
+      .subscribe((categories: CategoryDto[]) => (this.categories = categories));
     this._recipesService
       .getRecipePreviews()
       .subscribe((recipes: RecipePreview[]) => (this.recipePreviews = recipes));
