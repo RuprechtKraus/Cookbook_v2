@@ -1,5 +1,6 @@
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 
 namespace Cookbook_v2.Application.Dtos.Builders
@@ -20,6 +21,7 @@ namespace Cookbook_v2.Application.Dtos.Builders
         public async Task<RecipePreviewDto> Build( int recipeId )
         {
             Recipe recipe = await _recipeRepository.GetById( recipeId );
+            recipe.ThrowNotFoundIfNull( "Recipe not found" );
             string authorUsername = ( await _userRepository.GetById( recipe.UserId ) ).Username;
 
             return new RecipePreviewDto

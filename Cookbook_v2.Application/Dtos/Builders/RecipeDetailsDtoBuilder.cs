@@ -1,6 +1,8 @@
 using Cookbook_v2.Application.Dtos.RecipeModel;
+using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 
 namespace Cookbook_v2.Application.Dtos.Builders
@@ -10,8 +12,8 @@ namespace Cookbook_v2.Application.Dtos.Builders
         private readonly IUserRepository _userRepository;
         private readonly IRecipeRepository _recipeRepository;
 
-        public RecipeDetailsDtoBuilder( 
-            IUserRepository userRepository, 
+        public RecipeDetailsDtoBuilder(
+            IUserRepository userRepository,
             IRecipeRepository recipeRepository )
         {
             _userRepository = userRepository;
@@ -21,7 +23,8 @@ namespace Cookbook_v2.Application.Dtos.Builders
         public async Task<RecipeDetailsDto> Build( int recipeId )
         {
             Recipe recipe = await _recipeRepository.GetById( recipeId );
-            string authorUsername = ( await _userRepository.GetById( recipe.UserId )).Username;
+            recipe.ThrowNotFoundIfNull( "Recipe not found" );
+            string authorUsername = ( await _userRepository.GetById( recipe.UserId ) ).Username;
 
             return new RecipeDetailsDto
             {
