@@ -28,6 +28,10 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _context.Recipes
+                .Include( x => x.IngredientsSections )
+                .Include( x => x.RecipeSteps )
+                .Include( x => x.Tags )
+                .AsSplitQuery()
                 .SingleOrDefaultAsync( x => x.Id == id );
             return recipe;
         }

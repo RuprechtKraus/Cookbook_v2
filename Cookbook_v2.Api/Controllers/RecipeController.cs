@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cookbook_v2.Api.Authorization.Attributes;
 using Cookbook_v2.Application.Commands.RecipeModel;
+using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,14 @@ namespace Cookbook_v2.Api.Controllers
         public RecipeController( IRecipeService recipeService )
         {
             _recipeService = recipeService;
+        }
+
+        [CookbookAllowAnonymous]
+        [HttpGet( "details/{id}" )]
+        public async Task<IActionResult> GetDetails( int id )
+        {
+            RecipeDetailsDto details = await _recipeService.GetRecipeDetailsDtoById(id);
+            return Ok(details);
         }
 
         [CookbookAllowAnonymous]

@@ -65,6 +65,11 @@ namespace Cookbook_v2.Application.Services
             return await builder.Build( id );
         }
 
+        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviews()
+        {
+
+        }
+
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )
         {
             string imageName = await CreateRecipeImage( createCommand.ImageBase64 );
