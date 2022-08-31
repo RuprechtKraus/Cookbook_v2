@@ -1,14 +1,13 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
+using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
 using Cookbook_v2.Application.Services.Interfaces;
-using Cookbook_v2.Application.Settings;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Entities.UserModel;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.UoW.Interfaces;
-using Microsoft.Extensions.Options;
 
 namespace Cookbook_v2.Application.Services
 {
