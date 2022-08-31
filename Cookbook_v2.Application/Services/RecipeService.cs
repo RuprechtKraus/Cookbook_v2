@@ -4,11 +4,13 @@ using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
 using Cookbook_v2.Application.Services.Interfaces;
+using Cookbook_v2.Application.Settings;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Entities.UserModel;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.UoW.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace Cookbook_v2.Application.Services
 {
@@ -54,6 +56,11 @@ namespace Cookbook_v2.Application.Services
         public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
             return await _recipeRepository.GetByUserId( id );
+        }
+
+        public async Task<RecipeDetailsDto> GetRecipeDetailsDto( int id )
+        {
+            throw new MissingMethodException();
         }
 
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )

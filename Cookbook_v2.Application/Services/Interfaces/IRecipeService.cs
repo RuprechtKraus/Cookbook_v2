@@ -1,4 +1,5 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
+using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 
 namespace Cookbook_v2.Application.Services.Interfaces
@@ -8,6 +9,7 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUserId( int id );
+        Task<RecipeDetailsDto> GetRecipeDetailsDto( int id );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );
