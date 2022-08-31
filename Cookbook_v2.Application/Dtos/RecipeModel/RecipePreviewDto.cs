@@ -1,6 +1,6 @@
 namespace Cookbook_v2.Application.Dtos.RecipeModel
 {
-    public class RecipeDetailsDto
+    public class RecipePreviewDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = "";
@@ -11,11 +11,5 @@ namespace Cookbook_v2.Application.Dtos.RecipeModel
         public int ServingsCount { get; set; }
         public string ImageName { get; set; } = "";
         public string AuthorUsername { get; set; } = "";
-        public ICollection<string> Tags { get; set; } = 
-            new List<string>();
-        public ICollection<RecipeStepDto> RecipeSteps { get; set; } = 
-            new List<RecipeStepDto>();
-        public ICollection<RecipeIngredientSectionDto> IngredientsSections { get; set; } = 
-            new List<RecipeIngredientSectionDto>();
     }
 }

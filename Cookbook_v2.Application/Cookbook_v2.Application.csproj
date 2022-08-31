@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Cookbook_v2.Toolkit\Cookbook_v2.Toolkit.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Builders\" />
-  </ItemGroup>
-
 </Project>
