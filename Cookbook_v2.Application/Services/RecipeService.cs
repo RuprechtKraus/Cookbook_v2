@@ -58,9 +58,11 @@ namespace Cookbook_v2.Application.Services
             return await _recipeRepository.GetByUserId( id );
         }
 
-        public async Task<RecipeDetailsDto> GetRecipeDetailsDto( int id )
+        public async Task<RecipeDetailsDto> GetRecipeDetailsDtoById( int id )
         {
-            throw new MissingMethodException();
+            RecipeDetailsDtoBuilder builder = new RecipeDetailsDtoBuilder( 
+                _userRepository, _recipeRepository );
+            return await builder.Build( id );
         }
 
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )

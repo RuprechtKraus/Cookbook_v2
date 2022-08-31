@@ -9,7 +9,7 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUserId( int id );
-        Task<RecipeDetailsDto> GetRecipeDetailsDto( int id );
+        Task<RecipeDetailsDto> GetRecipeDetailsDtoById( int id );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );
