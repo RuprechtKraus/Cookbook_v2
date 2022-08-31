@@ -24,6 +24,7 @@ namespace Cookbook_v2.Api
         {
             services.AddControllers();
             services.AddAppliactionServices();
+            services.AddDtoBuilders();
             ConfigureApplication( services );
             ConfigureDatabase( services );
 

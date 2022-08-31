@@ -10,19 +10,15 @@ namespace Cookbook_v2.Application.Dtos.Builders
     public class RecipeDetailsDtoBuilder
     {
         private readonly IUserRepository _userRepository;
-        private readonly IRecipeRepository _recipeRepository;
 
         public RecipeDetailsDtoBuilder(
-            IUserRepository userRepository,
-            IRecipeRepository recipeRepository )
+            IUserRepository userRepository )
         {
             _userRepository = userRepository;
-            _recipeRepository = recipeRepository;
         }
 
-        public async Task<RecipeDetailsDto> Build( int recipeId )
+        public async Task<RecipeDetailsDto> Build( Recipe recipe )
         {
-            Recipe recipe = await _recipeRepository.GetById( recipeId );
             recipe.ThrowNotFoundIfNull( "Recipe not found" );
             string authorUsername = ( await _userRepository.GetById( recipe.UserId ) ).Username;
 

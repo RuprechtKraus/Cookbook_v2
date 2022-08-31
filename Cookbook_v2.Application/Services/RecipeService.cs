@@ -1,4 +1,5 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
+using Cookbook_v2.Application.Dtos.Builders;
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
@@ -18,19 +19,25 @@ namespace Cookbook_v2.Application.Services
         private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
+        private readonly RecipeDetailsDtoBuilder _recipeDetailsDtoBuilder;
+        private readonly RecipePreviewDtoBuilder _recipePreviewDtoBuilder;
 
         public RecipeService(
             IRecipeRepository recipeRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
-            IImageService imageService )
+            IImageService imageService,
+            RecipeDetailsDtoBuilder recipeDetailsDtoBuilder,
+            RecipePreviewDtoBuilder recipePreviewDtoBuilder )
         {
             _recipeRepository = recipeRepository;
             _userRepository = userRepository;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _imageService = imageService;
+            _recipeDetailsDtoBuilder = recipeDetailsDtoBuilder;
+            _recipePreviewDtoBuilder = recipePreviewDtoBuilder;
         }
 
         public async Task<IReadOnlyList<Recipe>> GetAll()
