@@ -26,26 +26,26 @@ namespace Cookbook_v2.Api.Controllers
         [HttpGet( "details/{id}" )]
         public async Task<IActionResult> GetDetails( int id )
         {
-            RecipeDetailsDto details = await _recipeService.GetRecipeDetailsDtoById(id);
-            return Ok(details);
+            RecipeDetailsDto details = await _recipeService.GetRecipeDetailsDtoById( id );
+            return Ok( details );
         }
 
         [CookbookAllowAnonymous]
         [HttpGet( "previews" )]
         public async Task<IActionResult> GetPreviews()
         {
-            IReadOnlyList<Recipe> recipes;
+            IReadOnlyList<RecipePreviewDto> recipes;
 
-            if ( TryGetUserId( out int userId ) )
+            if ( TryGetUserIdFromQuery( out int userId ) )
             {
-                recipes = await _recipeService.GetByUserId( userId );
+                recipes = await _recipeService.GetRecipePreviewDtosByUserId( userId );
             }
             else
             {
-                recipes = await _recipeService.GetAll();
+                recipes = await _recipeService.GetRecipePreviewDtos();
             }
 
-            return Ok();
+            return Ok( recipes );
         }
 
         [HttpPost( "create" )]
@@ -63,7 +63,7 @@ namespace Cookbook_v2.Api.Controllers
             return Ok();
         }
 
-        private bool TryGetUserId( out int userId )
+        private bool TryGetUserIdFromQuery( out int userId )
         {
             if ( Request.QueryString.HasValue &&
                 Request.Query[ "userId" ].Any() &&

@@ -4,13 +4,12 @@ using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
 using Cookbook_v2.Application.Services.Interfaces;
-using Cookbook_v2.Application.Settings;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.UoW.Interfaces;
-using Microsoft.Extensions.Options;
 
 namespace Cookbook_v2.Application.Services
 {
@@ -60,14 +59,20 @@ namespace Cookbook_v2.Application.Services
 
         public async Task<RecipeDetailsDto> GetRecipeDetailsDtoById( int id )
         {
-            RecipeDetailsDtoBuilder builder = new RecipeDetailsDtoBuilder( 
-                _userRepository, _recipeRepository );
-            return await builder.Build( id );
+            Recipe recipe = await GetById( id );
+            return await _recipeDetailsDtoBuilder.Build( recipe );
         }
 
-        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviews()
+        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos()
         {
+            IReadOnlyList<Recipe> recipes = await GetAll();
+            return await CreateRecipePreviewDtos( recipes.ToList() );
+        }
 
+        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtosByUserId( int id )
+        {
+            IReadOnlyList<Recipe> recipes = await GetByUserId( id );
+            return await CreateRecipePreviewDtos( recipes.ToList() );
         }
 
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )
@@ -95,11 +100,7 @@ namespace Cookbook_v2.Application.Services
 
         public async Task DeleteById( int id )
         {
-            Recipe recipe = await _recipeRepository.GetById( id );
-            if ( recipe == null )
-            {
-                throw new KeyNotFoundException( "Recipe not found" );
-            }
+            Recipe recipe = await GetById( id );
             await Delete( recipe );
         }
 
@@ -125,6 +126,17 @@ namespace Cookbook_v2.Application.Services
         public async Task DeleteLike( int userId, int recipeId )
         {
             throw new MissingMethodException( "Method not implemented" );
+        }
+
+        private async Task<IReadOnlyList<RecipePreviewDto>> CreateRecipePreviewDtos(
+            ICollection<Recipe> recipes )
+        {
+            List<RecipePreviewDto> previews = new List<RecipePreviewDto>();
+            foreach ( Recipe recipe in recipes )
+            {
+                previews.Add( await _recipePreviewDtoBuilder.Build( recipe ) );
+            }
+            return previews;
         }
 
         private async Task<string> CreateRecipeImage( string? base64Image )

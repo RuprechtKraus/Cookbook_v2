@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using System.Linq;
+using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Domain.EntitiesValidators;
 
 namespace Cookbook_v2.Infrastructure.Data.Repositories
 {
@@ -38,11 +40,13 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
-            IReadOnlyList<Recipe> recipes = ( await _context.Users
+            User user = await _context.Users
                 .Include( x => x.Recipes ).ThenInclude( x => x.RecipeSteps )
                 .Include( x => x.Recipes ).ThenInclude( x => x.IngredientsSections )
                 .Include( x => x.Recipes ).ThenInclude( x => x.Tags )
-                .SingleOrDefaultAsync( x => x.Id == id ) ).Recipes;
+                .AsSplitQuery().SingleOrDefaultAsync( x => x.Id == id );
+            user.ThrowNotFoundIfNull( "User not found" );
+            IReadOnlyList<Recipe> recipes = user.Recipes;
             return recipes;
         }
 
