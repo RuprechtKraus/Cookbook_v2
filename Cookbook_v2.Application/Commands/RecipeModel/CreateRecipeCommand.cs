@@ -14,7 +14,7 @@ namespace Cookbook_v2.Application.Commands.RecipeModel
 
         [Required( ErrorMessage = "Description required" )]
         [MaxLength( 1000, ErrorMessage = "Description maximum length is 1000" )]
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; } = "";
 
         [Required( ErrorMessage = "Cooking time required" )]
         public int CookingTimeInMinutes { get; set; }

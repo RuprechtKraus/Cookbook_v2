@@ -1,31 +1,37 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
-import { Observable } from 'rxjs';
-import { Recipe, RecipePreview } from '../interfaces/recipe';
-import { RecipeDTO } from '../dtos/recipe-dto';
+import { Observable } from "rxjs";
+import { RecipeDetailsDto } from "../dtos/recipe-details-dto";
+import { RecipePreviewDto } from "../dtos/recipe-preview-dto";
+import { RecipeCreateCommand } from "../commands/recipe-create-command";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class RecipesService {
-  constructor(
-    private _http: HttpClient
-  ) { }
+  private readonly apiUrl: string = "http://localhost:5010/api";
 
-  getRecipePreviews(queryParams?: HttpParams): Observable<RecipePreview[]> {
-    return this._http.get<RecipePreview[]>("api/recipe/GetPreviews", { params: queryParams });
-  }
-  
-  getRecipeByID(id: number): Observable<Recipe> {
-    return this._http.get<Recipe>(`api/recipe/${id}`);
+  constructor(private _http: HttpClient) {}
+
+  getRecipePreviews(queryParams?: HttpParams): Observable<RecipePreviewDto[]> {
+    return this._http.get<RecipePreviewDto[]>(
+      `${this.apiUrl}/recipe/previews`,
+      {
+        params: queryParams,
+      }
+    );
   }
 
-  createRecipe(recipe: RecipeDTO): Observable<any> {
-    return this._http.post("api/recipe", recipe);
+  getRecipeByID(id: number): Observable<RecipeDetailsDto> {
+    return this._http.get<RecipeDetailsDto>(`${this.apiUrl}/recipe/details/${id}`);
+  }
+
+  createRecipe(recipe: RecipeCreateCommand): Observable<any> {
+    return this._http.post(`${this.apiUrl}/recipe/create`, recipe);
   }
 
   deleteRecipe(id: number): Observable<any> {
-    return this._http.delete(`api/recipe/${id}`);
+    return this._http.delete(`${this.apiUrl}/recipe/delete/${id}`);
   }
 }

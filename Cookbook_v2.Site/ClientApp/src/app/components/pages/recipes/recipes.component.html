@@ -49,7 +49,7 @@
 
 <section class="recipes-list">
   <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of recipePreviews" [recipe]="recipe" 
-  routerLink="/recipes/{{ recipe.recipeID }}"></app-recipe-card>
+  routerLink="/recipes/{{ recipe.id }}"></app-recipe-card>
 </section>
 <div class="load-more-wrapper">
   <button class="button-outlined load-more-btn" type="submit">Загрузить еще</button>

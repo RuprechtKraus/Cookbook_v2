@@ -29,7 +29,8 @@ namespace Cookbook_v2.Application.Dtos.Builders
                 CookingTimeInMinutes = recipe.CookingTimeInMinutes,
                 ServingsCount = recipe.ServingsCount,
                 ImageName = recipe.ImageName,
-                AuthorUsername = authorUsername
+                AuthorUsername = authorUsername,
+                Tags = recipe.Tags.Select( x => x.Name ).ToList()
             };
         }
     }

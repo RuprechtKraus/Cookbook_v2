@@ -7,6 +7,11 @@ namespace Cookbook_v2.Api.HttpResponses
         public string Error { get; }
         public string Message { get; }
 
+        public ErrorResponse( string error )
+        {
+            Error = error;
+        }
+
         public ErrorResponse( string error, string message )
         {
             Error = error;

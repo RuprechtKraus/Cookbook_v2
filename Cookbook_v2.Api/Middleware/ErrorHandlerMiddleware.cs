@@ -60,7 +60,7 @@ namespace Cookbook_v2.Api.Middleware
                     break;
                 default:
                     response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                    errorResponse = new ErrorResponse( "Internal Server Error", exception.Message );
+                    errorResponse = new ErrorResponse( "Internal Server Error" );
                     break;
             }
 

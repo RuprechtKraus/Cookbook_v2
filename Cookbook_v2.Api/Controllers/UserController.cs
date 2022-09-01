@@ -24,7 +24,7 @@ namespace Cookbook_v2.Api.Controllers
 
         [CookbookAllowAnonymous]
         [HttpGet( "details/{id}" )]
-        public async Task<IActionResult> Details( int id )
+        public async Task<IActionResult> GetDetails( int id )
         {
             UserDetailsDto details = ( await _userService.GetById( id ) )
                 .ToDetailsDto();

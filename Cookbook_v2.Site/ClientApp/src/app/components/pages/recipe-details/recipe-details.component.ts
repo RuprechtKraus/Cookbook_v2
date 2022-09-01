@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { LocationService } from "../../../services/location.service";
 import { RecipesService } from "../../../services/recipes.service";
-import { Recipe } from "src/app/interfaces/recipe";
 import { AccountService } from "src/app/services/account.service";
-import { UserLoginDTO } from "src/app/dtos/user-login-dto";
+import { RecipeDetailsDto } from "src/app/dtos/recipe-details-dto";
+import { AuthenticatedUserDto } from "src/app/dtos/authenticated-user-dto";
 
 @Component({
   selector: "app-recipe-details",
@@ -13,20 +13,19 @@ import { UserLoginDTO } from "src/app/dtos/user-login-dto";
   styleUrls: ["./recipe-details.component.css"],
 })
 export class RecipeDetailsComponent implements OnInit {
-  user?: UserLoginDTO;
+  user?: AuthenticatedUserDto;
 
-  recipe: Recipe = {
-    recipeID: 0,
-    userID: 0,
-    name: "",
+  recipe: RecipeDetailsDto = {
+    id: 0,
+    title: "",
     description: "",
     timesLiked: 0,
     timesFavorited: 0,
     cookingTimeInMinutes: 0,
-    servingsAmount: 0,
-    user: "",
+    servingsCount: 0,
+    authorUsername: "",
     tags: [],
-    imageURL: "",
+    imageName: "",
     recipeSteps: [],
     ingredientsSections: [],
   };
@@ -63,7 +62,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   deleteRecipe(): void {
     if (confirm("Вы уверены что хотите удалить рецепт?")) {
-      this._recipeService.deleteRecipe(this.recipe.recipeID).subscribe(
+      this._recipeService.deleteRecipe(this.recipe.id).subscribe(
         (response) => {
           this._router.navigate(["/recipes"]);
         },

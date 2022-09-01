@@ -6,9 +6,9 @@ namespace Cookbook_v2.Application.Dtos.RecipeModel
     {
         [Required( ErrorMessage = "Title required" )]
         [MaxLength( 50, ErrorMessage = "Title maximum length is 50" )]
-        public string? Title { get; set; }
+        public string Title { get; set; } = "";
 
         [Required( ErrorMessage = "Ingredients list required" )]
-        public string? Ingredients { get; set; }
+        public string Ingredients { get; set; } = "";
     }
 }

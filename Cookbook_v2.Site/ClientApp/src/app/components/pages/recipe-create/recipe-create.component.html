@@ -26,7 +26,7 @@
 
   <div class="recipe-blank-right">
     <div class="recipe-form">
-      <input class="title-field blank-field" [required]="true" [(ngModel)]="recipe.name" maxlength="60"
+      <input class="title-field blank-field" [required]="true" [(ngModel)]="recipe.title" maxlength="60"
         placeholder="Название рецепта" />
       <textarea class="desc-field blank-field" [required]="true" [(ngModel)]="recipe.description" maxlength="150"
         placeholder="Краткое описание рецепта (150 символов)"></textarea>
@@ -57,7 +57,7 @@
 
         <div class="dish-info servings-info">
           <div class="time-field blank-field">
-            <select class="select-option" [(ngModel)]="recipe.servingsAmount" [required]="true">
+            <select class="select-option" [(ngModel)]="recipe.servingsCount" [required]="true">
               <option [value]="null" hidden>Порций в блюде</option>
               <option *ngFor="let option of servingOptions" [ngValue]="option.value">
                 {{ option.viewValue }}

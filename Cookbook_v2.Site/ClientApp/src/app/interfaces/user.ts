@@ -1,7 +1,7 @@
-export interface User
+export interface UserDetailsDto
 {
   name: string;
-  login: string;
+  username: string;
   about: string;
   recipesCount: number;
   likesCount: number;

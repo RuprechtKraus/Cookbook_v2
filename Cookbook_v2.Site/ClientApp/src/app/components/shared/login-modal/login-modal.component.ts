@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { AccountService } from 'src/app/services/account.service';
-import { ModalWindowComponent } from '../modal-window/modal-window.component';
-import { ModalWindowService } from '../modal-window/modal-window.service';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { first } from "rxjs/operators";
+import { AccountService } from "src/app/services/account.service";
+import { ModalWindowComponent } from "../modal-window/modal-window.component";
+import { ModalWindowService } from "../modal-window/modal-window.service";
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.component.html',
-  styleUrls: ['./login-modal.component.css'],
+  selector: "app-login-modal",
+  templateUrl: "./login-modal.component.html",
+  styleUrls: ["./login-modal.component.css"],
 })
 export class LoginModalComponent implements OnInit {
   @ViewChild(ModalWindowComponent) modal: ModalWindowComponent;
@@ -25,8 +25,8 @@ export class LoginModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
-      login: ['', Validators.required],
-      password: ['', Validators.required],
+      username: ["", Validators.required],
+      password: ["", Validators.required],
     });
   }
 
@@ -36,22 +36,23 @@ export class LoginModalComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    
+
     if (this.loginForm.invalid) {
       return;
     }
-    
+
     this.loading = true;
     this._accountService
-      .login(this.FormControls.login.value, this.FormControls.password.value)
+      .login(this.FormControls.username.value, this.FormControls.password.value)
       .pipe(first())
       .subscribe(
-        (data) => {
+        () => {
           this.close();
         },
         (badRequest) => {
           this.resetFormStatus();
-          alert(badRequest.error.message);
+          console.log(badRequest);
+          alert(badRequest.error.Message);
         }
       );
   }

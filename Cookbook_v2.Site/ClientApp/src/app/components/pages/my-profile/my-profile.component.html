@@ -21,7 +21,7 @@
 
       <mat-form-field class="blank-field">
         <mat-label class="input-label">Логин</mat-label>
-        <input class="input mat-override" matInput maxlength="20" [(ngModel)]="user.login">
+        <input class="input mat-override" matInput maxlength="20" [(ngModel)]="user.username">
       </mat-form-field>
 
       <div class="blank-field pass-field">
@@ -78,5 +78,5 @@
 <div class="my-recipes">
   <div class="my-recipes_title">Мои рецепты</div>
   <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of myRecipes" [recipe]="recipe" 
-    routerLink="/recipes/{{ recipe.recipeID }}"></app-recipe-card>
+    routerLink="/recipes/{{ recipe.id }}"></app-recipe-card>
 </div>

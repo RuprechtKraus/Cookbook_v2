@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IngredientsSection } from 'src/app/interfaces/ingredients-section';
+import { RecipeIngredientSectionDto } from 'src/app/dtos/recipe-ingredient-section-dto';
 
 @Component({
   selector: 'app-ingredients-blank',
@@ -8,8 +8,8 @@ import { IngredientsSection } from 'src/app/interfaces/ingredients-section';
 })
 export class IngredientsBlankComponent implements OnInit {
   @Input() removable: boolean = false;
-  @Input() section: IngredientsSection;
-  @Output() remove = new EventEmitter<IngredientsSection>();
+  @Input() section: RecipeIngredientSectionDto;
+  @Output() remove = new EventEmitter<RecipeIngredientSectionDto>();
 
   constructor( ) { 
     

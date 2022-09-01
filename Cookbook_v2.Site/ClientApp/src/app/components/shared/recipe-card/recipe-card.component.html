@@ -1,8 +1,8 @@
 <div class="recipe-card">
   <div class="recipe-card_pic-container">
-    <img class="recipe-card_pic" [src]="recipe.imageURL" [alt]="recipe.name">
+    <img class="recipe-card_pic" [src]="'../../../../assets/recipe images/' + recipe.imageName" [alt]="recipe.title">
     <div class="recipe-card_author">
-      <div class="ellipsis-text">@{{ recipe.user }}</div>
+      <div class="ellipsis-text">@{{ recipe.authorUsername }}</div>
     </div>
   </div>
   <div class="recipe-card-right">
@@ -15,18 +15,20 @@
       </div>
       <div class="recipe-card_btns">
         <button class="button-outlined recipe-card_btn">
-          <object class="recipe-card_btn_icon" data="../../assets/icons/star-inactive.svg" type="image/svg+xml"></object>
+          <object class="recipe-card_btn_icon" data="../../assets/icons/star-inactive.svg"
+            type="image/svg+xml"></object>
           <div class="favs-count">{{ recipe.timesFavorited }}</div>
         </button>
         <button class="button-outlined recipe-card_btn">
-          <object class="recipe-card_btn_icon" data="../../assets/icons/heart-inactive.svg" type="image/svg+xml"></object>
+          <object class="recipe-card_btn_icon" data="../../assets/icons/heart-inactive.svg"
+            type="image/svg+xml"></object>
           <div class="favs-count">{{ recipe.timesLiked }}</div>
         </button>
       </div>
     </div>
 
     <div class="recipe-card_desc">
-      <h1 *ngIf="onDetailPage" class="recipe-card_title">{{ recipe.name }}</h1>
+      <h1 *ngIf="onDetailPage" class="recipe-card_title">{{ recipe.title }}</h1>
       <p class="recipe-card_main-text">{{ recipe.description }}</p>
     </div>
 
@@ -42,7 +44,7 @@
         <object class="recipe-card_info_icon" data="../../assets/icons/ic-persons.svg" type="image/svg+xml"></object>
         <div>
           <div class="recipe-card_info_title">Рецепт на:</div>
-          <div class="recipe-card_info_main">{{ recipe.servingsAmount }} персон</div>
+          <div class="recipe-card_info_main">{{ recipe.servingsCount }} персон</div>
         </div>
       </div>
     </div>

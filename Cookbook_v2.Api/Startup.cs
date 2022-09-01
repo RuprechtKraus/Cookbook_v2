@@ -33,7 +33,10 @@ namespace Cookbook_v2.Api
                 options.AddPolicy( "AllowSpecificOrigins",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:5000");
+                        policy
+                        .WithOrigins( "http://localhost:5000" )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                     } );
             } );
         }

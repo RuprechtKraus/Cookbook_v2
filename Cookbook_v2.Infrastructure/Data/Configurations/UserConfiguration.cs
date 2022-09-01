@@ -22,7 +22,9 @@ namespace Cookbook_v2.Infrastructure.Data.Configurations
                 .IsRequired();
 
             builder.Property( x => x.About )
-                .HasMaxLength( 1000 );
+                .HasMaxLength( 1000 )
+                .HasDefaultValue( "" )
+                .IsRequired();
 
             builder.Property( x => x.PasswordHash )
                 .IsRequired();

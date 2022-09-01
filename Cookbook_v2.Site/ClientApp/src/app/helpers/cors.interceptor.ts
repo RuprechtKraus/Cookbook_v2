@@ -5,10 +5,11 @@ import { Observable } from "rxjs";
 @Injectable()
 export class CorsInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const isApiUrl = req.url.startsWith("http://localhost:5010/api");
+    const apiUrl: string = "http://localhost:5010/api";
+    const isApiUrl: boolean = req.url.startsWith(apiUrl);
 
     if (isApiUrl) {
-      req.headers.set("Access-Control-Allow-Origin", "http://localhost:5010/api");
+      req.headers.set("Access-Control-Allow-Origin", `${apiUrl}`);
     }
 
     return next.handle(req);

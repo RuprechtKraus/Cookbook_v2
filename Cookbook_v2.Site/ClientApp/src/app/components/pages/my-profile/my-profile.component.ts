@@ -1,7 +1,7 @@
 import { HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { RecipePreview } from "src/app/interfaces/recipe";
-import { User } from "src/app/interfaces/user";
+import { RecipePreviewDto } from "src/app/dtos/recipe-preview-dto";
+import { UserDetailsDto } from "src/app/interfaces/user";
 import { AccountService } from "src/app/services/account.service";
 
 import { LocationService } from "../../../services/location.service";
@@ -14,10 +14,10 @@ import { RecipesService } from "../../../services/recipes.service";
 })
 export class MyProfileComponent implements OnInit {
   hidePass: boolean = true;
-  myRecipes: RecipePreview[] = [];
-  user: User = {
+  myRecipes: RecipePreviewDto[] = [];
+  user: UserDetailsDto = {
     name: "",
-    login: "",
+    username: "",
     about: "",
     recipesCount: 0,
     likesCount: 0,
@@ -41,7 +41,7 @@ export class MyProfileComponent implements OnInit {
 
   loadUserData(): void {
     this._accountService
-      .getByID(this._accountService.userValue.userID)
+      .getByID(this._accountService.userValue.id)
       .subscribe((response) => {
         this.user = response;
       });
@@ -50,7 +50,7 @@ export class MyProfileComponent implements OnInit {
   loadRecipes(): void {
     this._recipesService
       .getRecipePreviews(
-        new HttpParams().set("userID", this._accountService.userValue.userID)
+        new HttpParams().set("userId", this._accountService.userValue.id)
       )
       .subscribe((recipes) => (this.myRecipes = recipes));
   }

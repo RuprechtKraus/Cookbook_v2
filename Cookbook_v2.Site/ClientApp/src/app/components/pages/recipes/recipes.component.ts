@@ -5,10 +5,10 @@ import { CategoryDto } from "../../../dtos/category-dto";
 import { CategoriesService } from "../../../services/categories.service";
 import { RecipesService } from "../../../services/recipes.service";
 import { LocationService } from "../../../services/location.service";
-import { RecipePreview } from "src/app/interfaces/recipe";
 import { AccountService } from "src/app/services/account.service";
 import { Router } from "@angular/router";
 import { ModalWindowService } from "../../shared/modal-window/modal-window.service";
+import { RecipePreviewDto } from "src/app/dtos/recipe-preview-dto";
 
 @Component({
   selector: "app-recipes",
@@ -17,7 +17,7 @@ import { ModalWindowService } from "../../shared/modal-window/modal-window.servi
 })
 export class RecipesComponent implements OnInit {
   categories: CategoryDto[] = [];
-  recipePreviews: RecipePreview[] = [];
+  recipePreviews: RecipePreviewDto[] = [];
   searchForm = this._formBuilder.group({
     searchText: "",
   });
@@ -38,7 +38,7 @@ export class RecipesComponent implements OnInit {
       .subscribe((categories: CategoryDto[]) => (this.categories = categories));
     this._recipesService
       .getRecipePreviews()
-      .subscribe((recipes: RecipePreview[]) => (this.recipePreviews = recipes));
+      .subscribe((recipes: RecipePreviewDto[]) => (this.recipePreviews = recipes));
   }
 
   onSubmit(): void {}

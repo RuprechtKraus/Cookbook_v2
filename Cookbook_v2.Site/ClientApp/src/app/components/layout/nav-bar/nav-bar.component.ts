@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserLoginDTO } from 'src/app/dtos/user-login-dto';
+import { AuthenticatedUserDto } from 'src/app/dtos/authenticated-user-dto';
 import { AccountService } from 'src/app/services/account.service';
 import { ModalWindowService } from '../../shared/modal-window/modal-window.service';
 
@@ -9,7 +9,7 @@ import { ModalWindowService } from '../../shared/modal-window/modal-window.servi
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  user?: UserLoginDTO;
+  user?: AuthenticatedUserDto;
   
   constructor(
     private _modalService: ModalWindowService,

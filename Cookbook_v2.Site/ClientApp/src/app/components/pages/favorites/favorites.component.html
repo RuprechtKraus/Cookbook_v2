@@ -12,7 +12,7 @@
 
 <div *ngIf="favRecipes.length !== 0; else noFavs">
   <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of favRecipes" [recipe]="recipe"
-    routerLink="/details/{{ recipe.recipeID }}"></app-recipe-card>
+    routerLink="/details/{{ recipe.id }}"></app-recipe-card>
 </div>
 <ng-template #noFavs>
   <div class="no-favs-message">

@@ -11,5 +11,6 @@ namespace Cookbook_v2.Application.Dtos.RecipeModel
         public int ServingsCount { get; set; }
         public string ImageName { get; set; } = "";
         public string AuthorUsername { get; set; } = "";
+        public ICollection<string> Tags { get; set; } = new List<string>();
     }
 }

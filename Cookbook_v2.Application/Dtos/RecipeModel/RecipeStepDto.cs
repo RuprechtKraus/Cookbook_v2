@@ -9,6 +9,6 @@ namespace Cookbook_v2.Application.Dtos.RecipeModel
 
         [Required( ErrorMessage = "Description required" )]
         [MaxLength( 500, ErrorMessage = "Description maximum length is 500" )]
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; } = "";
     }
 }

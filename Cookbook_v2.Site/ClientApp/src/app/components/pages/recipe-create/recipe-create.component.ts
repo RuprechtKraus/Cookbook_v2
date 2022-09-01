@@ -5,13 +5,13 @@ import { TimeOption } from "../../../interfaces/time-option";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { ServingOption } from "../../../interfaces/serving-options";
 import { LocationService } from "../../../services/location.service";
-import { IngredientsSection } from "src/app/interfaces/ingredients-section";
-import { RecipeDTO } from "src/app/dtos/recipe-dto";
 import { AccountService } from "src/app/services/account.service";
 import { ImageService } from "src/app/services/image.service";
 import { RecipesService } from "src/app/services/recipes.service";
-import { RecipeStep } from "src/app/interfaces/recipe-step";
 import { Router } from "@angular/router";
+import { RecipeCreateCommand } from "src/app/commands/recipe-create-command";
+import { RecipeIngredientSectionDto } from "src/app/dtos/recipe-ingredient-section-dto";
+import { RecipeStepDto } from "src/app/dtos/recipe-step-dto";
 
 @Component({
   selector: "app-recipe-create",
@@ -41,22 +41,20 @@ export class RecipeCreateComponent implements OnInit {
     { value: 6, viewValue: "6 " },
   ];
 
-  recipe: RecipeDTO = {
-    name: "",
+  recipe: RecipeCreateCommand = {
+    userId: this._accountService.userValue.id,
+    title: "",
     description: "",
     cookingTimeInMinutes: null,
-    servingsAmount: null,
-    userID: this._accountService.userValue.userID,
-    user: this._accountService.userValue.login,
-    ingredientsSections: [{ name: "", products: "" }],
+    servingsCount: null,
+    ingredientsSections: [{ title: "", ingredients: "" }],
     recipeSteps: [
       {
-        stepIndex: 1,
+        index: 1,
         description: "",
       },
     ],
     tags: [],
-    imageBase64: "",
   };
 
   constructor(
@@ -86,25 +84,25 @@ export class RecipeCreateComponent implements OnInit {
 
   addIngredientsSection(): void {
     this.recipe.ingredientsSections.push({
-      name: "",
-      products: "",
+      title: "",
+      ingredients: "",
     });
   }
 
-  removeIngredientsSection(ingToRemove: IngredientsSection): void {
-    const index = this.recipe.ingredientsSections.indexOf(ingToRemove);
+  removeIngredientsSection(sectionToRemove: RecipeIngredientSectionDto): void {
+    const index = this.recipe.ingredientsSections.indexOf(sectionToRemove);
     if (index >= 0) {
       this.recipe.ingredientsSections.splice(index, 1);
     }
   }
 
   addStep(): void {
-    this.recipe.recipeSteps.push({ stepIndex: 0, description: "" });
+    this.recipe.recipeSteps.push({ index: 0, description: "" });
     this.canRemoveStep = true;
     this.adjustStepIndices();
   }
 
-  removeStep(step: RecipeStep): void {
+  removeStep(step: RecipeStepDto): void {
     const index = this.recipe.recipeSteps.indexOf(step);
     if (index >= 0) {
       this.recipe.recipeSteps.splice(index, 1);
@@ -117,15 +115,20 @@ export class RecipeCreateComponent implements OnInit {
 
   private adjustStepIndices(): void {
     for (let i: number = 0; i < this.recipe.recipeSteps.length; i++) {
-      this.recipe.recipeSteps[i].stepIndex = i + 1;
+      this.recipe.recipeSteps[i].index = i + 1;
     }
   }
 
   onSubmit(): void {
-    this._recipeSerivce.createRecipe(this.recipe).subscribe((recipeID) => {
-      alert("Рецепт успешно создан!");
-      this._router.navigate([`/recipes/${recipeID}`]);
-    });
+    this._recipeSerivce.createRecipe(this.recipe).subscribe(
+      (recipeId) => {
+        alert("Рецепт успешно создан!");
+        this._router.navigate([`/recipes/${recipeId}`]);
+      },
+      (badRequest) => {
+        alert(badRequest.error.Message);
+      }
+    );
   }
 
   async onImageUploaded(fileInput: any): Promise<void> {
