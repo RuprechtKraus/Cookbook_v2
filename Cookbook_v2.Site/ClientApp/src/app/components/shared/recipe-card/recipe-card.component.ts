@@ -14,6 +14,11 @@ export class RecipeCardComponent implements OnInit {
   constructor(public _router: Router) {}
 
   ngOnInit(): void {
-    this.onDetailPage = this._router.url === "/recipes";
+    this.onDetailPage = this.IsOnDetailsPage();
+  }
+
+  private IsOnDetailsPage(): boolean {
+    var pattern = new RegExp("^\/recipes\/details\/[0-9]+$");
+    return this.onDetailPage = pattern.test(this._router.url);
   }
 }

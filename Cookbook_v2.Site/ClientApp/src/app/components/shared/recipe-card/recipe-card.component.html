@@ -28,7 +28,7 @@
     </div>
 
     <div class="recipe-card_desc">
-      <h1 *ngIf="onDetailPage" class="recipe-card_title">{{ recipe.title }}</h1>
+      <h1 *ngIf="!onDetailPage" class="recipe-card_title">{{ recipe.title }}</h1>
       <p class="recipe-card_main-text">{{ recipe.description }}</p>
     </div>
 
