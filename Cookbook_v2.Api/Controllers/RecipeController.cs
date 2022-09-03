@@ -24,6 +24,7 @@ namespace Cookbook_v2.Api.Controllers
             [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
+
             return Ok( recipe.Id );
         }
 
@@ -31,6 +32,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> DeleteRecipe( int id )
         {
             await _recipeService.DeleteById( id );
+
             return Ok();
         }
     }
