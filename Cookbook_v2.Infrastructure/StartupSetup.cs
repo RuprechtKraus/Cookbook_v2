@@ -5,6 +5,8 @@ using Cookbook_v2.Infrastructure.UoW;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Infrastructure.Data.Repositories;
 using Cookbook_v2.Domain.UoW.Interfaces;
+using Cookbook_v2.Infrastructure.Data.Search.RecipeModel;
+using Cookbook_v2.Domain.Search.Interfaces;
 
 namespace Cookbook_v2.Infrastructure
 {
@@ -36,6 +38,7 @@ namespace Cookbook_v2.Infrastructure
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IRecipeSearchRepository, RecipeSearchRepository>();
             return services;
         }
 

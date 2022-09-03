@@ -1,6 +1,5 @@
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
-using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 
 namespace Cookbook_v2.Application.Dtos.Builders
@@ -9,7 +8,7 @@ namespace Cookbook_v2.Application.Dtos.Builders
     {
         private readonly IUserRepository _userRepository;
 
-        public RecipePreviewDtoBuilder( 
+        public RecipePreviewDtoBuilder(
             IUserRepository userRepository )
         {
             _userRepository = userRepository;
@@ -32,6 +31,18 @@ namespace Cookbook_v2.Application.Dtos.Builders
                 AuthorUsername = authorUsername,
                 Tags = recipe.Tags.Select( x => x.Name ).ToList()
             };
+        }
+
+        public async Task<ICollection<RecipePreviewDto>> Build( IEnumerable<Recipe> recipes )
+        {
+            ICollection<RecipePreviewDto> result = new List<RecipePreviewDto>();
+
+            foreach ( Recipe recipe in recipes )
+            {
+                result.Add( await Build( recipe ) );
+            }
+
+            return result;
         }
     }
 }

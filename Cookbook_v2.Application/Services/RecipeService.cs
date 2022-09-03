@@ -7,8 +7,9 @@ using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Entities.UserModel;
-using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
+using Cookbook_v2.Domain.Search.Interfaces;
+using Cookbook_v2.Domain.Search.RecipeModel;
 using Cookbook_v2.Domain.UoW.Interfaces;
 
 namespace Cookbook_v2.Application.Services
@@ -16,15 +17,16 @@ namespace Cookbook_v2.Application.Services
     public class RecipeService : IRecipeService
     {
         private readonly IRecipeRepository _recipeRepository;
+        private readonly IRecipeSearchRepository _searchRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
-        private readonly RecipeDetailsDtoBuilder _recipeDetailsDtoBuilder;
         private readonly RecipePreviewDtoBuilder _recipePreviewDtoBuilder;
 
         public RecipeService(
             IRecipeRepository recipeRepository,
+            IRecipeSearchRepository searchRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
@@ -33,11 +35,11 @@ namespace Cookbook_v2.Application.Services
             RecipePreviewDtoBuilder recipePreviewDtoBuilder )
         {
             _recipeRepository = recipeRepository;
+            _searchRepository = searchRepository;
             _userRepository = userRepository;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _imageService = imageService;
-            _recipeDetailsDtoBuilder = recipeDetailsDtoBuilder;
             _recipePreviewDtoBuilder = recipePreviewDtoBuilder;
         }
 
@@ -57,12 +59,6 @@ namespace Cookbook_v2.Application.Services
             return await _recipeRepository.GetByUserId( id );
         }
 
-        public async Task<RecipeDetailsDto> GetRecipeDetailsDtoById( int id )
-        {
-            Recipe recipe = await GetById( id );
-            return await _recipeDetailsDtoBuilder.Build( recipe );
-        }
-
         public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos()
         {
             IReadOnlyList<Recipe> recipes = await GetAll();
@@ -73,6 +69,11 @@ namespace Cookbook_v2.Application.Services
         {
             IReadOnlyList<Recipe> recipes = await GetByUserId( id );
             return await CreateRecipePreviewDtos( recipes.ToList() );
+        }
+
+        public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
+        {
+            return await _searchRepository.Search( searchFilters );
         }
 
         public async Task<Recipe> Create( CreateRecipeCommand createCommand )

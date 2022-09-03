@@ -1,6 +1,7 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Domain.Search.RecipeModel;
 
 namespace Cookbook_v2.Application.Services.Interfaces
 {
@@ -9,9 +10,9 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUserId( int id );
-        Task<RecipeDetailsDto> GetRecipeDetailsDtoById( int id );
         Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos();
         Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtosByUserId( int id );
+        Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );
