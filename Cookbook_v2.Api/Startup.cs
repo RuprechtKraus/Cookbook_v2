@@ -30,7 +30,7 @@ namespace Cookbook_v2.Api
 
             services.AddCors( options =>
             {
-                options.AddPolicy( "AllowSpecificOrigins",
+                options.AddPolicy( "CookbookOrigin",
                     policy =>
                     {
                         policy
@@ -56,7 +56,7 @@ namespace Cookbook_v2.Api
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseMiddleware<JwtMiddleware>();
-            app.UseCors( "AllowSpecificOrigins" );
+            app.UseCors( "CookbookOrigin" );
 
             app.UseEndpoints( endpoints =>
             {
