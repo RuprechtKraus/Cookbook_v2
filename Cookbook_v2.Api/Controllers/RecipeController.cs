@@ -61,7 +61,7 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        [HttpGet( "search" )]
+        [HttpPost( "search" )]
         public async Task<IActionResult> Search( [FromBody] RecipeSearchFilters searchFilters )
         {
             RecipeSearchResult searchResult = await _recipeService.Search( searchFilters );
