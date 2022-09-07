@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { UntypedFormBuilder, Validators } from "@angular/forms";
 
-import { CategoriesService } from '../../../services/categories.service';
-import { CategoryDto } from '../../../dtos/category-dto';
-import { ModalWindowService } from '../../shared/modal-window/modal-window.service';
-import { AccountService } from 'src/app/services/account.service';
-import { Router } from '@angular/router';
+import { CategoriesService } from "../../../services/categories.service";
+import { CategoryDto } from "../../../dtos/category-dto";
+import { ModalWindowService } from "../../shared/modal-window/modal-window.service";
+import { AccountService } from "src/app/services/account.service";
+import { Router } from "@angular/router";
+import { CustomValidators } from "src/app/helpers/validators";
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css'],
+  selector: "app-main",
+  templateUrl: "./main.component.html",
+  styleUrls: ["./main.component.css"],
 })
 export class MainComponent implements OnInit {
   categories?: CategoryDto[] = [];
   searchForm = this._formBuilder.group({
-    searchText: '',
+    searchText: [
+      "",
+      [
+        Validators.pattern(/^[а-яА-Я1-9\s,]+$/),
+        Validators.required,
+        CustomValidators.NotWhiteSpaceString,
+      ],
+    ],
   });
   isLoggedIn: boolean = false;
 
@@ -33,7 +41,17 @@ export class MainComponent implements OnInit {
     this.loadCategories();
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    const searchText: string = this.searchForm.get("searchText").value;
+
+    if (this.searchForm.invalid) {
+      console.error("Invalid search format");
+      return;
+    }
+
+    const params = { queryParams: { tags: searchText.split(", ") } };
+    this._router.navigate(["/recipes"], params);
+  }
 
   openModal(id: string) {
     this._modalService.open(id);
@@ -41,9 +59,9 @@ export class MainComponent implements OnInit {
 
   goToRecipeCreationPage(): void {
     if (this._accountService.userValue) {
-      this._router.navigate(['/create-recipe']);
+      this._router.navigate(["/create-recipe"]);
     } else {
-      this.openModal('unauthorized-modal');
+      this.openModal("unauthorized-modal");
     }
   }
 

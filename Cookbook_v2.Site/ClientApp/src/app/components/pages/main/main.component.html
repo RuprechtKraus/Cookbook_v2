@@ -18,7 +18,7 @@
     <button class="button-filled add-recipe-btn" (click)="goToRecipeCreationPage()">
       <div class="add-recipe-btn_inner">
         <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="#FFFFFF"/>
+          <path d="M14 8H8V14H6V8H0V6H6V0H8V6H14V8Z" fill="#FFFFFF" />
         </svg>
         Добавить рецепт
       </div>
@@ -35,12 +35,14 @@
 <section class="smart-sort">
 
   <h1 class="smart-sort_title">Умная сортировка по тегам</h1>
-  <p class="smart-sort_text">Добавляй рецепты и указывай наиболее популярные теги. Это позволит быстро находить любые категории.</p>
+  <p class="smart-sort_text">Добавляй рецепты и указывай наиболее популярные теги. Это позволит быстро находить любые
+    категории.</p>
 
   <div class="categories-list">
 
     <div class="category" *ngFor="let category of categories">
-      <div class="category_icon" [style.background-image]="'url(../../../../assets/icons/' + category.iconName + ')'"></div>
+      <div class="category_icon" [style.background-image]="'url(../../../../assets/icons/' + category.iconName + ')'">
+      </div>
       <h2 class="category_title">{{ category.name }}</h2>
       <p class="category_desc">{{ category.description }}</p>
     </div>
@@ -54,8 +56,9 @@
 
     <div class="recipe-of-the-day_image-container">
 
-      <img class="recipe-of-the-day_image" src="../../../../assets/static images/recipe-of-the-day.jpg" alt="Recipe of the day">
-      
+      <img class="recipe-of-the-day_image" src="../../../../assets/static images/recipe-of-the-day.jpg"
+        alt="Recipe of the day">
+
       <div class="recipe-of-the-day_author">
         @glazest
       </div>
@@ -67,12 +70,12 @@
       <div class="recipe-of-the-day_top-bar">
 
         <span class="info-element likes">
-          <div class="recipe-of-the-day_top-bar_icon likes_icon"></div> 
+          <div class="recipe-of-the-day_top-bar_icon likes_icon"></div>
           356
         </span>
 
         <span class="info-element cooking-time">
-          <div class="recipe-of-the-day_top-bar_icon timer_icon"></div> 
+          <div class="recipe-of-the-day_top-bar_icon timer_icon"></div>
           35 минут
         </span>
 
@@ -83,7 +86,8 @@
       </div>
 
       <h1 class="recipe-of-the-day_title">Тыквенный супчик на кокосовом молоке</h1>
-      <p class="recipe-of-the-day_desc">Если у вас осталась тыква, и вы не знаете что с ней сделать, то это решение для вас! Ароматный, согревающий суп-пюре на кокосовом молоке. Можно даже в Пост!</p>
+      <p class="recipe-of-the-day_desc">Если у вас осталась тыква, и вы не знаете что с ней сделать, то это решение для
+        вас! Ароматный, согревающий суп-пюре на кокосовом молоке. Можно даже в Пост!</p>
 
     </div>
 
@@ -98,7 +102,8 @@
   <div class="search-form-container">
 
     <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <input id="search" class="search-field" type="search" maxlength="256" placeholder="Название блюда..." formControlName="searchText">
+      <input id="search" class="search-field" type="text" maxlength="256" placeholder="Название блюда..."
+        formControlName="searchText">
       <button class="search-btn" type="submit">Поиск</button>
     </form>
 

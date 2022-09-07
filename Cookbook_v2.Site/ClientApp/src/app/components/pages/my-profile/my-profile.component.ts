@@ -1,8 +1,8 @@
-import { HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { RecipePreviewDto } from "src/app/dtos/recipe-preview-dto";
 import { UserDetailsDto } from "src/app/interfaces/user";
 import { AccountService } from "src/app/services/account.service";
+import { RecipeSearchFilters } from "src/app/interfaces/recipe-search-filters";
 
 import { LocationService } from "../../../services/location.service";
 import { RecipesService } from "../../../services/recipes.service";
@@ -49,10 +49,8 @@ export class MyProfileComponent implements OnInit {
 
   loadRecipes(): void {
     this._recipesService
-      .getRecipePreviews(
-        new HttpParams().set("userId", this._accountService.userValue.id)
-      )
-      .subscribe((recipes) => (this.myRecipes = recipes));
+      .search({ userId: this._accountService.userValue.id })
+      .subscribe((recipes) => (this.myRecipes = recipes.result));
   }
 
   onGoBackClick(): void {

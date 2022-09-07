@@ -23,7 +23,8 @@
 <section class="categories-section">
   <div class="categories-list">
     <div class="category" *ngFor="let category of categories">
-      <div class="category_icon" [style.background-image]="'url(../../../../assets/icons/' + category.iconName + ')'"></div>
+      <div class="category_icon" [style.background-image]="'url(../../../../assets/icons/' + category.iconName + ')'">
+      </div>
       <h2 class="category_title">{{ category.name }}</h2>
     </div>
   </div>
@@ -33,9 +34,11 @@
   <h1 class="recipe-search_title">Поиск рецепта</h1>
   <div class="search-form_wrapper">
     <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <input id="search" class="search-field" type="search" maxlength="256" placeholder="Название блюда...." formControlName="searchText">
+      <input id="search" class="search-field" type="search" maxlength="256" placeholder="Название блюда...."
+        formControlName="searchText">
       <button class="search-btn" type="submit">Поиск</button>
     </form>
+
     <div class="tags">
       <a class="tag">Мясо</a>
       <a class="tag">Деликатесы</a>
@@ -48,8 +51,8 @@
 </section>
 
 <section class="recipes-list">
-  <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of recipePreviews" [recipe]="recipe" 
-  routerLink="/recipes/details/{{ recipe.id }}"></app-recipe-card>
+  <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of recipePreviews" [recipe]="recipe"
+    routerLink="/recipes/details/{{ recipe.id }}"></app-recipe-card>
 </section>
 <div class="load-more-wrapper">
   <button class="button-outlined load-more-btn" type="submit">Загрузить еще</button>

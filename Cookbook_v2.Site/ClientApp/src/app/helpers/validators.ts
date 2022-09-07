@@ -17,4 +17,9 @@ export class CustomValidators {
       return null;
     };
   };
-}
+
+  static NotWhiteSpaceString(control: AbstractControl) : ValidationErrors | null {
+      const isWhiteSpaceOnly: boolean = (control.value || '').trim().length === 0;
+      return isWhiteSpaceOnly ? { whitespace: true } : null;
+    };
+  };

@@ -51,7 +51,6 @@ export class LoginModalComponent implements OnInit {
         },
         (badRequest) => {
           this.resetFormStatus();
-          console.log(badRequest);
           alert(badRequest.error.Message);
         }
       );
