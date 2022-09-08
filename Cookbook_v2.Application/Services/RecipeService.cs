@@ -36,6 +36,7 @@ namespace Cookbook_v2.Application.Services
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _recipeRepository.GetById( id );
+
             return recipe ?? throw new KeyNotFoundException( "Recipe not found" );
         }
 
@@ -105,6 +106,7 @@ namespace Cookbook_v2.Application.Services
                 return await ImageService.CreateAndSaveImageFromBase64( base64Image,
                     _imagesSettings.RecipeImagesDirectory );
             }
+
             return "default_recipe_image.jpg";
         }
 
@@ -113,6 +115,7 @@ namespace Cookbook_v2.Application.Services
             List<Tag> recipeTags = tags.Select( x => new Tag( x ) ).ToList();
             List<Tag> result = ( await _tagRepository.GetAllByNames( tags.ToList() ) ).ToList();
             result.AddRange( recipeTags.Except( result ) );
+
             return result.ToList();
         }
 
