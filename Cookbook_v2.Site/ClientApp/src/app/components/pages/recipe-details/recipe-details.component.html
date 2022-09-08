@@ -1,0 +1,50 @@
+<div class="back-button-container">
+  <span class="back-button" (click)="onGoBackClick()">
+    <object class="ic-back" data="../../assets/icons/left-arrow.svg" type="image/svg+xml"></object>
+    Назад
+  </span>
+</div>
+
+<div class="page-header">
+  <h1 class="page-header_title">
+    {{ recipe.name }}
+  </h1>
+  <div class="page-header_buttons">
+    <button *ngIf="user && user.userID == recipe.userID" class="button-outlined delete-recipe-btn" (click)="deleteRecipe()">
+      <object class="delete-icon" data="../../assets/icons/ic-trash.svg" type="image/svg+xml"></object>
+    </button>
+    <button class="button-filled page-header_main-button">
+      <object class="page-header_main-button-icon" data="../../assets/icons/ic-pencil.svg" type="image/svg+xml"></object>
+      Редактировать
+    </button>
+  </div>
+</div>
+
+<div *ngIf="recipe">
+  <app-recipe-card [recipe]="recipe"></app-recipe-card>
+  <div *ngIf="recipe" class="recipe-container">
+    <div class="recipe-details_ingredients">
+      <div class="ingredients_title">Ингридиенты</div>
+      <div *ngFor="let section of recipe.ingredientsSections" class="ingredients_category">
+        <div class="ingredients_category_title">
+          {{ section.name }}
+        </div>
+        <div class="ingredients_category_list">
+          <div class="ingredients_item" [innerText]="section.products">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-details_steps">
+      <div *ngFor="let step of recipe.recipeSteps" class="step">
+        <div class="step-number">
+          Шаг {{ step.stepIndex }}
+        </div>
+        <p class="step-desc">
+          {{ step.description }}
+        </p>
+      </div>
+      <div class="bon-appetit">Приятного аппетита!</div>
+    </div>
+  </div>
+</div>

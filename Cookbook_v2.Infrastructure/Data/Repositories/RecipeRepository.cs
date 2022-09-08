@@ -27,6 +27,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             IReadOnlyList<Recipe> recipes = ( await _context.Users
                 .Include( x => x.Recipes ).ThenInclude( x => x.RecipeSteps )
                 .Include( x => x.Recipes ).ThenInclude( x => x.IngredientsSections )
+                .Include( x => x.Recipes ).ThenInclude( x => x.Tags )
                 .SingleOrDefaultAsync( x => x.Username == username ) ).Recipes;
             return recipes;
         }

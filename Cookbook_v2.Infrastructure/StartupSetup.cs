@@ -35,6 +35,7 @@ namespace Cookbook_v2.Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
             return services;
         }
 

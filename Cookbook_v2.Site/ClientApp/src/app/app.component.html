@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <div class="container">
+    <app-nav-bar id="nav-bar"></app-nav-bar>
+    <div class="content">
+      <router-outlet (activate)="onRouteActivate()" (deactivate)="onRouteDeactivate()"></router-outlet>
+    </div>
+  </div>
+  <app-footer class="footer"></app-footer>
+</div>

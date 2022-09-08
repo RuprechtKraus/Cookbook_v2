@@ -38,6 +38,10 @@ namespace Cookbook_v2.Api.Middleware
 
             switch ( exception )
             {
+                case ImageFormatException:
+                    response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    errorResponse = new ErrorResponse( "Image Format Error", exception.Message );
+                    break;
                 case RegistrationException:
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse( "Registration Error", exception.Message );

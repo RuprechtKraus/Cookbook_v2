@@ -1,0 +1,27 @@
+<div class="header_left">
+  <a routerLink="" class="header_title">Recipes</a>
+  <div class="nav-bar">
+    <a id="main-page-link" routerLink="" class="nav-bar_link">Главная</a>
+    <a id="recipes-page-link" routerLink="/recipes" class="nav-bar_link">Рецепты</a>
+    <a *ngIf="user" id="favorites-page-link" routerLink="/favorites" class="nav-bar_link">Избранное</a>
+  </div>
+</div>
+
+<div class="auth-container">
+  <div class="auth-container_icon"></div>
+  <a *ngIf="!user; else userActions" class="auth-container__login" (click)="openModal('login-modal')">Войти</a>
+  <ng-template #userActions>
+    <div class="auth-container__actions">
+      <a class="auth-container__page" routerLink="/my-profile">Привет, {{user.name}}</a>
+      <div class="auth-container__separator"></div>
+      <button class="auth-container__btn-logout" title="Выход" (click)="logout()">
+        <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7.09 12.59L8.5 14L13.5 9L8.5 4L7.09 5.41L9.67 8H0V10H9.67L7.09 12.59ZM16 0H2C0.89 0 0 0.9 0 2V6H2V2H16V16H2V12H0V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V2C18 0.9 17.1 0 16 0Z"/>
+        </svg>          
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<app-login-modal></app-login-modal>
+<app-registration-modal></app-registration-modal>

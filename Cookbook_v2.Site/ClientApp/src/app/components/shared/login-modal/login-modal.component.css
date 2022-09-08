@@ -1,0 +1,92 @@
+:host
+{
+    display: none;
+}
+
+.login__header
+{
+    margin-bottom: 50px;
+    
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    
+    color: #25292D;
+}
+
+.login__input-group
+{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.login__input
+{  
+    width: 580px;
+    height: 50px;
+
+    padding-left: 26px;
+
+    border: 1px solid rgba(145, 150, 161, 0.4);
+    border-radius: 16px;
+    box-sizing: border-box;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+
+    color: rgba(37, 41, 45, 0.5)
+}
+
+.login__input:focus
+{
+    outline: none;
+}
+
+.input_invalid 
+{
+    border-color: #dc3545;
+}
+
+.login__btn-group
+{
+    display: flex;
+    gap: 22px;
+    margin-bottom: 40px;
+}
+
+.login__btn
+{
+    width: 100%;
+}
+
+.login__no-account
+{
+    text-align: center;
+    
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+
+    color: #FDB100;
+}
+
+.login__register
+{
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: 1px;
+}
+
+.login__register:hover
+{
+    text-decoration-style: solid;
+}

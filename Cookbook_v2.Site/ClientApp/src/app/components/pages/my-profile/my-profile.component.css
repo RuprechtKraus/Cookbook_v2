@@ -1,0 +1,248 @@
+/* About form */
+
+.form-about
+{
+  max-height: 311px;
+  height: 100%;
+  width: 100%;
+
+  margin-bottom: 40px;
+
+  position: relative;
+
+  background: #FFFFFF;
+  box-shadow: 0px 16px 72px rgba(34, 39, 47, 0.05);
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+
+.form-about_icon
+{
+  position: absolute;
+  top: 23px;
+  right: 23px;
+}
+
+.form-about_icon:hover
+{
+  filter: brightness(0.5);
+}
+
+.form-about_fields
+{
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+
+  padding: 60px 70px;
+  box-sizing: border-box;
+}
+
+/* Left column */
+
+.left-col
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  max-width: 542px;
+  width: 100%;
+  height: 190px;
+}
+
+.blank-field
+{
+  padding: 0 24px 10px 24px;
+  height: 50px;
+}
+
+.pass-field
+{
+  padding: 10px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pass
+{
+  width: 100%;
+
+  border-style: none;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+
+  color: #4A525A;
+}
+
+.pass:focus
+{
+  outline: none;
+}
+
+.ic-show-pass
+{
+  height: 19px;
+  width: 22px;
+
+  background-image: url("../../../../assets/icons/ic-show-pass.svg");
+  background-repeat: no-repeat;
+
+  border-style: none;
+}
+
+.ic-show-pass:hover
+{
+  filter: brightness(0.5);
+}
+
+.input-label
+{
+  color: rgba(37, 41, 45, 0.5);
+}
+
+.input
+{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 28px;
+
+  color: #4A525A;
+  caret-color: rgba(37, 41, 45, 0.5);
+}
+
+/* Right column */
+
+.about-me-field
+{
+  padding: 11px 33px;
+  height: 100%;
+  width: 472px;
+
+  resize: none;
+}
+
+/* Form-field override */
+
+::ng-deep .mat-override + .mat-form-field-label-wrapper
+{
+  padding-top: 0;
+  top: -1.5em;
+  overflow: visible !important;
+  height: 30px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float 
+  .mat-form-field-label
+{
+  transform: translateY(-0.6em) scale(0.75) !important;
+}
+
+::ng-deep .mat-form-field-infix
+{
+  border-top: none;
+}
+
+::ng-deep .mat-form-field-flex
+{
+  padding-top: .85em;
+}
+
+::ng-deep .mat-form-field-underline
+{
+  display: none;
+}
+
+/* User activity */
+
+.user-activity
+{
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 40px;
+}
+
+.activity-card
+{
+  width: 378px;
+  height: 151px;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 31px 29px 31px 22px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 16px 72px rgba(34, 39, 47, 0.05);
+  border-radius: 24px;
+  box-sizing: border-box;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 30px;
+
+  color: #25292D;
+}
+
+.activity-card_ic-container
+{
+  height: 46px;
+  width: 46px;
+
+  margin-bottom: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #FFEFCC;
+  border-radius: 12px;
+}
+
+.activity-card_right
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-card_count
+{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 107px;
+  line-height: 30px;
+  
+  display: flex;
+  align-items: center;
+  text-align: right;
+  
+  color: #FDB100;
+}
+
+/* My recipes */
+
+.my-recipes_title
+{
+  margin-bottom: 40px;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+
+  color: #25292D;
+}

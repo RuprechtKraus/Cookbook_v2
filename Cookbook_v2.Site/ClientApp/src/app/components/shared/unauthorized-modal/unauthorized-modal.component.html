@@ -1,0 +1,8 @@
+<app-modal-window id="unauthorized-modal">
+  <h4 class="unauthorized__header">Войдите в профиль</h4>
+  <p class="unauthorized__text">Добавлять рецепты могут только зарегистрированные пользователи.</p>
+  <div class="unauthorized__btn-group">
+    <button class="button-filled unauthorized__btn" (click)="openModal('login-modal')">Войти</button>
+    <button class="button-outlined unauthorized__btn" (click)="openModal('registration-modal')">Регистрация</button>
+  </div>
+</app-modal-window>

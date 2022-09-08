@@ -1,0 +1,26 @@
+<app-modal-window id="registration-modal" (modalClosed)="clearForm()">
+    <h4 class="registration__header">Регистрация</h4>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="registration__input-group">
+            <input class="registration__input" type="text" placeholder="Имя"
+            [ngClass]="{ 'input_invalid': submitted && FormControls.name.errors }" formControlName="name">
+            <input class="registration__input" type="text" placeholder="Логин"
+            [ngClass]="{ 'input_invalid': submitted && FormControls.login.errors }" formControlName="login">
+        </div>
+        <div class="registration__pwd-group">
+            <input [type]="'password'" class="registration__input registration__pwd-input" type="text" placeholder="Пароль"
+            [ngClass]="{ 'input_invalid': submitted && FormControls.password.errors }" formControlName="password">
+            <input [type]="'password'" class="registration__input registration__pwd-input" type="text" placeholder="Повторите пароль"
+            [ngClass]="{ 'input_invalid': submitted && FormControls.confirm.errors }" formControlName="confirm">
+        </div>
+        <div class="registration__min-len">Минимум 8 символов</div>
+        <div class="registration__btn-group">
+            <button [disabled]="loading" [ngClass]="{ 'btn_disabled': loading }" 
+            type="submit" class="button-filled registration__btn">Зарегистрироваться</button>
+            <button type="button" class="button-outlined registration__btn" (click)="close()">Отмена</button>
+        </div>
+        <div class="registration__have-account">
+            <a class="registration__login" (click)="openLoginModal()">У меня уже есть аккаунт</a>
+        </div>
+    </form>
+</app-modal-window>

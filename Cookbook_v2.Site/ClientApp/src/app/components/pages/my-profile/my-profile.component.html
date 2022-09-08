@@ -1,0 +1,82 @@
+<div class="back-button-container">
+  <span class="back-button" (click)="onGoBackClick()">
+    <object class="ic-back" data="../../assets/icons/left-arrow.svg" type="image/svg+xml"></object>
+    Назад</span>
+</div>
+
+<div class="page-header">
+  <h1 class="page-header_title">
+    Мой профиль
+  </h1>
+</div>
+
+<div class="form-about">
+  <object class="form-about_icon" data="../../assets/icons/ic-pencil.svg" type="image/svg+xml"></object>
+  <div class="form-about_fields">
+    <div class="left-col">
+      <mat-form-field class="blank-field">
+        <mat-label class="input-label">Имя</mat-label>
+        <input class="input mat-override" matInput maxlength="50" [(ngModel)]="user.name">
+      </mat-form-field>
+
+      <mat-form-field class="blank-field">
+        <mat-label class="input-label">Логин</mat-label>
+        <input class="input mat-override" matInput maxlength="20" [(ngModel)]="user.login">
+      </mat-form-field>
+
+      <div class="blank-field pass-field">
+        <input [type]="hidePass ? 'password' : 'text'" class="pass" maxlength="20" placeholder="Пароль">
+        <img class="ic-show-pass" src="../../assets/icons/ic-show-pass.svg" (click)="switchPassField()">
+      </div>
+    </div>
+
+    <div class="right-col">
+      <textarea class="blank-field about-me-field" maxlength="1000" placeholder="Напишите немного о себе" 
+      [(ngModel)]="user.about"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="user-activity">
+  <div class="activity-card">
+    <div class="activity-card_left">
+      <div class="activity-card_ic-container">
+        <object data="../../assets/icons/ic-menu.svg" type="image/svg+xml"></object>
+      </div>
+      Всего рецептов
+    </div>
+    <div class="activity-card_right">
+      <span class="activity-card_count">{{user.recipesCount}}</span>
+    </div>
+  </div>
+
+  <div class="activity-card">
+    <div class="activity-card_left">
+      <div class="activity-card_ic-container">
+        <object data="../../assets/icons/ic-menu.svg" type="image/svg+xml"></object>
+      </div>
+      Всего лайков
+    </div>
+    <div class="activity-card_right">
+      <span class="activity-card_count">{{user.likesCount}}</span>
+    </div>
+  </div>
+
+  <div class="activity-card">
+    <div class="activity-card_left">
+      <div class="activity-card_ic-container">
+        <object data="../../assets/icons/ic-menu.svg" type="image/svg+xml"></object>
+      </div>
+      В избранных
+    </div>
+    <div class="activity-card_right">
+      <span class="activity-card_count">{{user.favoritesCount}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="my-recipes">
+  <div class="my-recipes_title">Мои рецепты</div>
+  <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of myRecipes" [recipe]="recipe" 
+    routerLink="/recipes/{{ recipe.recipeID }}"></app-recipe-card>
+</div>
