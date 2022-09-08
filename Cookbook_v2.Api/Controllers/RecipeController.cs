@@ -81,20 +81,38 @@ namespace Cookbook_v2.Api.Controllers
             return Ok();
         }
 
-        [HttpPost( "{recipeId}/like/add" )]
+        [HttpPost( "{recipeId}/likes/add" )]
         public async Task<IActionResult> AddLike( int recipeId )
         {
             User activeUser = Request.GetActiveUser();
-            await _recipeService.AddLike( activeUser.Id, recipeId );
+            await _recipeService.AddUserLike( activeUser.Id, recipeId );
 
             return Ok();
         }
 
-        [HttpDelete( "{recipeId}/like/delete" )]
+        [HttpDelete( "{recipeId}/likes/delete" )]
         public async Task<IActionResult> DeleteLike( int recipeId )
         {
             User activeUser = Request.GetActiveUser();
-            await _recipeService.DeleteLike( activeUser.Id, recipeId );
+            await _recipeService.DeleteUserLike( activeUser.Id, recipeId );
+
+            return Ok();
+        }
+
+        [HttpPost( "{recipeId}/favorites/add" )]
+        public async Task<IActionResult> AddToFavorites( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.AddToUserFavorites( activeUser.Id, recipeId );
+
+            return Ok();
+        }
+
+        [HttpDelete( "{recipeId}/favorites/remove" )]
+        public async Task<IActionResult> RemoveFromFavorites( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.RemoveFromUserFavorites( activeUser.Id, recipeId );
 
             return Ok();
         }

@@ -16,6 +16,7 @@ namespace Cookbook_v2.Api.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IRecipeService _recipeService;
 
         public UserController( IUserService userService )
         {

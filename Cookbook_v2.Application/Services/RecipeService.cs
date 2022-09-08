@@ -110,19 +110,23 @@ namespace Cookbook_v2.Application.Services
             _imageService.DeleteImage( imageName );
         }
 
-        public async Task AddLike( int userId, int recipeId )
+        public async Task<RecipeLike> AddUserLike( int userId, int recipeId )
         {
-            if ( await _recipeRepository.HasLike( userId, recipeId ) )
+            if ( await HasUserLike( userId, recipeId ) )
             {
                 throw new EntityAlreadyExistsException( "Like already exists" );
             }
 
-            await _recipeRepository.AddLike( new RecipeLike( userId, recipeId ) );
+            RecipeLike recipeLike = new RecipeLike( userId, recipeId );
+
+            await _recipeRepository.AddRecipeLike( recipeLike );
             await IncrementRecipeLikeCount( recipeId );
             await _unitOfWork.SaveAsync();
+
+            return recipeLike;
         }
 
-        public async Task DeleteLike( int userId, int recipeId )
+        public async Task DeleteUserLike( int userId, int recipeId )
         {
             RecipeLike recipeLike = await _recipeRepository.GetRecipeLike( userId, recipeId );
 
@@ -131,9 +135,50 @@ namespace Cookbook_v2.Application.Services
                 throw new KeyNotFoundException( "Like doesn't exist" );
             }
 
-            await _recipeRepository.DeleteLike( recipeLike );
+            await _recipeRepository.DeleteRecipeLike( recipeLike );
             await DecrementRecipeLikeCount( recipeId );
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<bool> HasUserLike( int userId, int recipeId )
+        {
+            return await _recipeRepository.GetRecipeLike( userId, recipeId ) != null;
+        }
+
+        public async Task<FavoriteRecipe> AddToUserFavorites( int userId, int recipeId )
+        {
+            if ( await IsFavoritedByUser( userId, recipeId ) )
+            {
+                throw new EntityAlreadyExistsException( "Favorite recipe already exists" );
+            }
+
+            FavoriteRecipe favoriteRecipe = new FavoriteRecipe( userId, recipeId );
+
+            await _recipeRepository.AddFavoriteRecipe( favoriteRecipe );
+            await IncrementRecipeFavoritedCount( recipeId );
+            await _unitOfWork.SaveAsync();
+
+            return favoriteRecipe;
+        }
+
+        public async Task RemoveFromUserFavorites( int userId, int recipeId )
+        {
+            FavoriteRecipe favoriteRecipe = await _recipeRepository
+                .GetFavoriteRecipe( userId, recipeId );
+
+            if ( favoriteRecipe == null )
+            {
+                throw new KeyNotFoundException( "Favorite recipe doesn't exist" );
+            }
+
+            await _recipeRepository.RemoveFavoriteRecipe( favoriteRecipe );
+            await DecrementRecipeFavoritedCount( recipeId );
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<bool> IsFavoritedByUser( int userId, int recipeId )
+        {
+            return await _recipeRepository.GetFavoriteRecipe( userId, recipeId ) != null;
         }
 
         private async Task<IReadOnlyList<RecipePreviewDto>> CreateRecipePreviewDtos(
@@ -195,6 +240,20 @@ namespace Cookbook_v2.Application.Services
         {
             Recipe recipe = await GetById( recipeId );
             recipe.TimesLiked--;
+            await _recipeRepository.Update( recipe );
+        }
+
+        private async Task IncrementRecipeFavoritedCount( int recipeId )
+        {
+            Recipe recipe = await _recipeRepository.GetById( recipeId );
+            recipe.TimesFavorited++;
+            await _recipeRepository.Update( recipe );
+        }
+
+        private async Task DecrementRecipeFavoritedCount( int recipeId )
+        {
+            Recipe recipe = await _recipeRepository.GetById( recipeId );
+            recipe.TimesFavorited--;
             await _recipeRepository.Update( recipe );
         }
     }

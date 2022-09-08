@@ -39,16 +39,5 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             _context.Users.Update( user );
             return Task.CompletedTask;
         }
-
-        public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
-        {
-            await _context.FavoriteRecipes.AddAsync( favoriteRecipe );
-        }
-
-        public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
-        {
-            _context.FavoriteRecipes.Remove( favoriteRecipe );
-            return Task.CompletedTask;
-        }
     }
 }

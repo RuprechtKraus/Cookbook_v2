@@ -73,29 +73,38 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task AddLike( RecipeLike recipeLike )
+        public async Task AddRecipeLike( RecipeLike recipeLike )
         {
             await _context.RecipeLikes.AddAsync( recipeLike );
         }
 
-        public Task DeleteLike( RecipeLike recipeLike )
+        public Task DeleteRecipeLike( RecipeLike recipeLike )
         {
             _context.RecipeLikes.Remove( recipeLike );
 
             return Task.CompletedTask;
         }
 
-        public async Task<bool> HasLike( int userId, int recipeId )
-        {
-            RecipeLike recipeLike = await _context.RecipeLikes.
-                SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
-
-            return recipeLike != null;
-        }
-
         public async Task<RecipeLike> GetRecipeLike( int userId, int recipeId )
         {
             return await _context.RecipeLikes
+                .SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
+        }
+
+        public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
+        {
+            await _context.FavoriteRecipes.AddAsync( favoriteRecipe );
+        }
+
+        public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
+        {
+            _context.FavoriteRecipes.Remove( favoriteRecipe );
+            return Task.CompletedTask;
+        }
+
+        public async Task<FavoriteRecipe> GetFavoriteRecipe( int userId, int recipeId )
+        {
+            return await _context.FavoriteRecipes
                 .SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
         }
     }

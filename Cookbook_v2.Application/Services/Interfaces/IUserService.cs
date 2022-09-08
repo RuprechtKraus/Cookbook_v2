@@ -7,12 +7,10 @@ namespace Cookbook_v2.Application.Services.Interfaces
 {
     public interface IUserService : IService<User>
     {
-        public Task<User> GetById( int id );
-        public Task<User> GetByUsername( string username );
-        public Task AddFavoriteRecipe( FavoriteRecipe favRecipe );
-        public Task RemoveFavoriteRecipe( FavoriteRecipe favRecipe );
-        public Task<User> RegisterUser( RegisterUserCommand registerCommand );
-        public Task<AuthenticateUserResponse> AuthenticateUser( 
+        Task<User> GetById( int id );
+        Task<User> GetByUsername( string username );
+        Task<User> RegisterUser( RegisterUserCommand registerCommand );
+        Task<AuthenticateUserResponse> AuthenticateUser( 
             AuthenticateUserCommand authenticateCommand );
     }
 }

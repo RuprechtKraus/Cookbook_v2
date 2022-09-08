@@ -13,9 +13,11 @@ namespace Cookbook_v2.Domain.Repositories.Interfaces
         Task Add( Recipe recipe );
         Task Delete( Recipe recipe );
         Task Update( Recipe recipe );
-        Task AddLike( RecipeLike recipeLike );
-        Task DeleteLike( RecipeLike recipeLike );
-        Task<bool> HasLike( int userId, int recipeId );
+        Task AddRecipeLike( RecipeLike recipeLike );
+        Task DeleteRecipeLike( RecipeLike recipeLike );
         Task<RecipeLike> GetRecipeLike( int userId, int recipeId );
+        Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe );
+        Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe );
+        Task<FavoriteRecipe> GetFavoriteRecipe( int userId, int recipeId );
     }
 }
