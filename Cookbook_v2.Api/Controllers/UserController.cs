@@ -37,6 +37,7 @@ namespace Cookbook_v2.Api.Controllers
             [FromBody] RegisterUserCommand registerCommand )
         {
             User user = await _userService.RegisterUser( registerCommand );
+
             return Ok( user.Id );
         }
 
@@ -45,8 +46,9 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> AuthenticateUser(
             [FromBody] AuthenticateUserCommand authenticateCommand )
         {
-            AuthenticateUserResponse authenticatedUser =
+            AuthenticateUserResponse authenticatedUser = 
                 await _userService.AuthenticateUser( authenticateCommand );
+
             return Ok( authenticatedUser );
         }
     }

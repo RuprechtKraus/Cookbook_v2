@@ -26,7 +26,6 @@ namespace Cookbook_v2.Api
             services.AddAppliactionServices();
             ConfigureApplication( services );
             ConfigureDatabase( services );
-
             services.AddCors( options =>
             {
                 options.AddPolicy( "AllowSpecificOrigins",

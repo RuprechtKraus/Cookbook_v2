@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Repositories.Interfaces;
@@ -24,6 +25,12 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
         {
             return await _context.Tags
                 .SingleOrDefaultAsync( x => x.Name == name );
+        }
+
+        public async Task<IReadOnlyList<Tag>> GetAllByNames( IReadOnlyList<string> names )
+        {
+            return await _context.Tags
+                .Where( x => names.Contains( x.Name ) ).ToListAsync();
         }
     }
 }

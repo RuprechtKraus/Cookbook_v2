@@ -23,7 +23,7 @@ namespace Cookbook_v2.Application.Services
             string imageFormat = GetImageFormat( base64 );
             string imageName = Path.ChangeExtension(
                 Path.GetRandomFileName(), imageFormat );
-            string imagePath = GetRecipeImagePath( imageName );
+            string imagePath = GetRecipeImagePath( imageName ).ToLower();
 
             using var fs = new FileStream( imagePath, FileMode.Create );
             await fs.WriteAsync( bytes );

@@ -38,12 +38,13 @@ namespace Cookbook_v2.Api.Controllers
 
             return Ok();
         }
-
+        
         [HttpPost( "create" )]
         public async Task<IActionResult> CreateRecipe(
             [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
+
             return Ok( recipe.Id );
         }
 
@@ -51,6 +52,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> DeleteRecipe( int id )
         {
             await _recipeService.DeleteById( id );
+            
             return Ok();
         }
 
@@ -64,6 +66,8 @@ namespace Cookbook_v2.Api.Controllers
             }
             userId = 0;
             return false;
+
+            return Ok();
         }
     }
 }
