@@ -7,10 +7,12 @@ using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Entities.UserModel;
+using Cookbook_v2.Domain.EntitiesValidators;
 using Cookbook_v2.Domain.Repositories.Interfaces;
 using Cookbook_v2.Domain.Search.Interfaces;
 using Cookbook_v2.Domain.Search.RecipeModel;
 using Cookbook_v2.Domain.UoW.Interfaces;
+using Cookbook_v2.Toolkit.Exceptions;
 
 namespace Cookbook_v2.Application.Services
 {
@@ -51,6 +53,7 @@ namespace Cookbook_v2.Application.Services
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _recipeRepository.GetById( id );
+
             return recipe ?? throw new KeyNotFoundException( "Recipe not found" );
         }
 
@@ -62,12 +65,14 @@ namespace Cookbook_v2.Application.Services
         public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos()
         {
             IReadOnlyList<Recipe> recipes = await GetAll();
+
             return await CreateRecipePreviewDtos( recipes.ToList() );
         }
 
         public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtosByUserId( int id )
         {
             IReadOnlyList<Recipe> recipes = await GetByUserId( id );
+
             return await CreateRecipePreviewDtos( recipes.ToList() );
         }
 
@@ -121,12 +126,28 @@ namespace Cookbook_v2.Application.Services
 
         public async Task AddLike( int userId, int recipeId )
         {
-            throw new MissingMethodException( "Method not implemented" );
+            if ( await _recipeRepository.HasLike( userId, recipeId ) )
+            {
+                throw new EntityAlreadyExistsException( "Like already exists" );
+            }
+
+            await _recipeRepository.AddLike( new RecipeLike( userId, recipeId ) );
+            await IncrementRecipeLikeCount( recipeId );
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task DeleteLike( int userId, int recipeId )
         {
-            throw new MissingMethodException( "Method not implemented" );
+            RecipeLike recipeLike = await _recipeRepository.GetRecipeLike( userId, recipeId );
+
+            if ( recipeLike == null )
+            {
+                throw new KeyNotFoundException( "Like doesn't exist" );
+            }
+
+            await _recipeRepository.DeleteLike( recipeLike );
+            await DecrementRecipeLikeCount( recipeId );
+            await _unitOfWork.SaveAsync();
         }
 
         private async Task<IReadOnlyList<RecipePreviewDto>> CreateRecipePreviewDtos(
@@ -137,6 +158,7 @@ namespace Cookbook_v2.Application.Services
             {
                 previews.Add( await _recipePreviewDtoBuilder.Build( recipe ) );
             }
+
             return previews;
         }
 
@@ -146,6 +168,7 @@ namespace Cookbook_v2.Application.Services
             {
                 return await _imageService.CreateAndSaveImageFromBase64( base64Image );
             }
+
             return "default_recipe_image.jpg";
         }
 
@@ -155,12 +178,14 @@ namespace Cookbook_v2.Application.Services
             List<Tag> recipeTags = tags.Select( x => new Tag( x ) ).ToList();
             List<Tag> result = tagsInDb.Intersect( recipeTags ).ToList();
             result.AddRange( recipeTags.Except( result ) );
+
             return result;
         }
 
         private async Task IncrementUserRecipeCount( int userId )
         {
             User user = await _userRepository.GetById( userId );
+            user.ThrowNotFoundIfNull( "User not found" );
             user.RecipesCount++;
             await _userRepository.Update( user );
         }
@@ -168,8 +193,23 @@ namespace Cookbook_v2.Application.Services
         private async Task DecrementUserRecipeCount( int userId )
         {
             User user = await _userRepository.GetById( userId );
+            user.ThrowNotFoundIfNull( "User not found" );
             user.RecipesCount--;
             await _userRepository.Update( user );
+        }
+
+        private async Task IncrementRecipeLikeCount( int recipeId )
+        {
+            Recipe recipe = await GetById( recipeId );
+            recipe.TimesLiked++;
+            await _recipeRepository.Update( recipe );
+        }
+
+        private async Task DecrementRecipeLikeCount( int recipeId )
+        {
+            Recipe recipe = await GetById( recipeId );
+            recipe.TimesLiked--;
+            await _recipeRepository.Update( recipe );
         }
     }
 }

@@ -50,6 +50,10 @@ namespace Cookbook_v2.Api.Middleware
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse( "Authentication Error", exception.Message );
                     break;
+                case EntityException:
+                    response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    errorResponse = new ErrorResponse( "Entity Error", exception.Message );
+                    break;
                 case AppException:
                     response.StatusCode = (int) HttpStatusCode.BadRequest;
                     errorResponse = new ErrorResponse( "Application Error", exception.Message );

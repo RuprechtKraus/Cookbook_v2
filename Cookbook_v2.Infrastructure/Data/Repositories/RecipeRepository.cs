@@ -20,11 +20,13 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Recipe>> GetAll()
         {
-            return await _context.Recipes
+            IReadOnlyList<Recipe> recipes = await _context.Recipes
                 .Include( x => x.IngredientsSections )
                 .Include( x => x.RecipeSteps )
                 .Include( x => x.Tags )
                 .AsSplitQuery().ToListAsync();
+
+            return recipes;
         }
 
         public async Task<Recipe> GetById( int id )
@@ -35,6 +37,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
                 .Include( x => x.Tags )
                 .AsSplitQuery()
                 .SingleOrDefaultAsync( x => x.Id == id );
+
             return recipe;
         }
 
@@ -47,6 +50,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
                 .AsSplitQuery().SingleOrDefaultAsync( x => x.Id == id );
             user.ThrowNotFoundIfNull( "User not found" );
             IReadOnlyList<Recipe> recipes = user.Recipes;
+
             return recipes;
         }
 
@@ -58,6 +62,14 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
         public Task Delete( Recipe recipe )
         {
             _context.Recipes.Remove( recipe );
+
+            return Task.CompletedTask;
+        }
+
+        public Task Update( Recipe recipe )
+        {
+            _context.Recipes.Update( recipe );
+
             return Task.CompletedTask;
         }
 
@@ -69,7 +81,22 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
         public Task DeleteLike( RecipeLike recipeLike )
         {
             _context.RecipeLikes.Remove( recipeLike );
+
             return Task.CompletedTask;
+        }
+
+        public async Task<bool> HasLike( int userId, int recipeId )
+        {
+            RecipeLike recipeLike = await _context.RecipeLikes.
+                SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
+
+            return recipeLike != null;
+        }
+
+        public async Task<RecipeLike> GetRecipeLike( int userId, int recipeId )
+        {
+            return await _context.RecipeLikes
+                .SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
         }
     }
 }

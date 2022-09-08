@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Cookbook_v2.Api.Authorization.Attributes;
 using Cookbook_v2.Application.Commands.RecipeModel;
 using Cookbook_v2.Application.Dtos.Builders;
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Services.Interfaces;
+using Cookbook_v2.Domain.Entities.UserModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Search;
 using Cookbook_v2.Domain.Search.RecipeModel;
-using Microsoft.AspNetCore.Mvc;
+using Cookbook_v2.Api.Extensions;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -77,6 +79,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> CreateRecipe( [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
+
             return Ok( recipe.Id );
         }
 
@@ -84,6 +87,25 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> DeleteRecipe( int id )
         {
             await _recipeService.DeleteById( id );
+
+            return Ok();
+        }
+
+        [HttpPost( "{recipeId}/like/add" )]
+        public async Task<IActionResult> AddLike( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.AddLike( activeUser.Id, recipeId );
+
+            return Ok();
+        }
+
+        [HttpDelete( "{recipeId}/like/delete" )]
+        public async Task<IActionResult> DeleteLike( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.DeleteLike( activeUser.Id, recipeId );
+
             return Ok();
         }
 
@@ -96,6 +118,7 @@ namespace Cookbook_v2.Api.Controllers
                 return true;
             }
             userId = 0;
+
             return false;
         }
     }
