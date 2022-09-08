@@ -13,16 +13,19 @@ namespace Cookbook_v2.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRecipeRepository _recipeRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IJwtUtils<User> _jwtUtils;
 
         public UserService(
             IUnitOfWork unitOfWork,
             IUserRepository userRepository,
+            IRecipeRepository recipeRepository,
             IJwtUtils<User> jwtUtils )
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _recipeRepository = recipeRepository;
             _jwtUtils = jwtUtils;
         }
 
@@ -36,16 +39,6 @@ namespace Cookbook_v2.Application.Services
         {
             User user = await _userRepository.GetByUsername( username );
             return user ?? throw new KeyNotFoundException( "User not found" );
-        }
-
-        public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
-        {
-            await _userRepository.AddFavoriteRecipe( favoriteRecipe );
-        }
-
-        public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
-        {
-            return _userRepository.RemoveFavoriteRecipe( favoriteRecipe );
         }
 
         public async Task<User> RegisterUser( RegisterUserCommand registerCommand )
@@ -67,13 +60,13 @@ namespace Cookbook_v2.Application.Services
             return user;
         }
 
-        public async Task<AuthenticateUserResponse> AuthenticateUser( 
+        public async Task<AuthenticateUserResponse> AuthenticateUser(
             AuthenticateUserCommand authenticateCommand )
         {
             User user = await _userRepository.GetByUsername( authenticateCommand.Username );
 
-            if ( user == null || !BCrypt.Net.BCrypt.Verify( 
-                authenticateCommand.Password, 
+            if ( user == null || !BCrypt.Net.BCrypt.Verify(
+                authenticateCommand.Password,
                 user.PasswordHash ) )
             {
                 throw new AuthenticationException( "Incorrect username or password" );

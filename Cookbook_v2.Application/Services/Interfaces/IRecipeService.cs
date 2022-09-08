@@ -16,7 +16,11 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );
-        Task AddLike( int userId, int recipeId );
-        Task DeleteLike( int userId, int recipeID );
+        Task<RecipeLike> AddUserLike( int userId, int recipeId );
+        Task DeleteUserLike( int userId, int recipeId );
+        Task<bool> HasUserLike( int userId, int recipeId );
+        Task<FavoriteRecipe> AddToUserFavorites( int userId, int recipeId );
+        Task RemoveFromUserFavorites( int userId, int recipeId );
+        Task<bool> IsFavoritedByUser( int userId, int recipeId );
     }
 }
