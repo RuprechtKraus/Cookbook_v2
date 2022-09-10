@@ -38,38 +38,22 @@ namespace Cookbook_v2.Api.Controllers
         [HttpGet( "details/{id}" )]
         public async Task<IActionResult> GetDetails( int id )
         {
+            User activeUser = Request.GetActiveUser();
             Recipe recipe = await _recipeService.GetById( id );
-            RecipeDetailsDto details = await _recipeDetailsDtoBuilder.Build( recipe );
+            RecipeDetailsDto details = await _recipeDetailsDtoBuilder.Build( recipe, activeUser );
 
             return Ok( details );
-        }
-
-        [CookbookAllowAnonymous]
-        [HttpGet( "previews" )]
-        public async Task<IActionResult> GetPreviews()
-        {
-            IReadOnlyList<RecipePreviewDto> recipes;
-
-            if ( TryGetUserIdFromQuery( out int userId ) )
-            {
-                recipes = await _recipeService.GetRecipePreviewDtosByUserId( userId );
-            }
-            else
-            {
-                recipes = await _recipeService.GetRecipePreviewDtos();
-            }
-
-            return Ok( recipes );
         }
 
         [CookbookAllowAnonymous]
         [HttpPost( "search" )]
         public async Task<IActionResult> Search( [FromBody] RecipeSearchFilters searchFilters )
         {
+            User activeUser = Request.GetActiveUser();
             RecipeSearchResult searchResult = await _recipeService.Search( searchFilters );
             SearchResult<RecipePreviewDto> searchPreviewResult = new SearchResult<RecipePreviewDto>()
             {
-                Result = await _recipePreviewDtoBuilder.Build( searchResult.Result )
+                Result = await _recipePreviewDtoBuilder.Build( searchResult.Result, activeUser )
             };
 
             return Ok( searchPreviewResult );
@@ -125,19 +109,6 @@ namespace Cookbook_v2.Api.Controllers
             await _recipeService.RemoveFromUserFavorites( activeUser.Id, recipeId );
 
             return Ok();
-        }
-
-        private bool TryGetUserIdFromQuery( out int userId )
-        {
-            if ( Request.QueryString.HasValue &&
-                Request.Query[ "userId" ].Any() &&
-                int.TryParse( Request.Query[ "userId" ], out userId ) )
-            {
-                return true;
-            }
-            userId = 0;
-
-            return false;
         }
     }
 }

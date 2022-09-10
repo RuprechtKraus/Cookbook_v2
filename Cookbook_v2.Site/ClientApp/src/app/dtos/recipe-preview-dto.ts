@@ -8,5 +8,7 @@ export interface RecipePreviewDto {
   servingsCount: number;
   imageName: string;
   authorUsername: string;
+  isLikedByActiveUser: boolean;
+  isFavoritedByActiveUser: boolean;
   tags: string[];
 }

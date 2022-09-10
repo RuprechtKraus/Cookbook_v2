@@ -24,6 +24,8 @@ export class RecipeDetailsComponent implements OnInit {
     cookingTimeInMinutes: 0,
     servingsCount: 0,
     authorUsername: "",
+    isLikedByActiveUser: false,
+    isFavoritedByActiveUser: false,
     tags: [],
     imageName: "",
     recipeSteps: [],

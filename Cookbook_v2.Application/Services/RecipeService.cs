@@ -24,7 +24,6 @@ namespace Cookbook_v2.Application.Services
         private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
-        private readonly RecipePreviewDtoBuilder _recipePreviewDtoBuilder;
 
         public RecipeService(
             IRecipeRepository recipeRepository,
@@ -32,9 +31,7 @@ namespace Cookbook_v2.Application.Services
             IUserRepository userRepository,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
-            IImageService imageService,
-            RecipeDetailsDtoBuilder recipeDetailsDtoBuilder,
-            RecipePreviewDtoBuilder recipePreviewDtoBuilder )
+            IImageService imageService )
         {
             _recipeRepository = recipeRepository;
             _searchRepository = searchRepository;
@@ -42,7 +39,6 @@ namespace Cookbook_v2.Application.Services
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
             _imageService = imageService;
-            _recipePreviewDtoBuilder = recipePreviewDtoBuilder;
         }
 
         public async Task<IReadOnlyList<Recipe>> GetAll()
@@ -60,20 +56,6 @@ namespace Cookbook_v2.Application.Services
         public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
             return await _recipeRepository.GetByUserId( id );
-        }
-
-        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos()
-        {
-            IReadOnlyList<Recipe> recipes = await GetAll();
-
-            return await CreateRecipePreviewDtos( recipes.ToList() );
-        }
-
-        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtosByUserId( int id )
-        {
-            IReadOnlyList<Recipe> recipes = await GetByUserId( id );
-
-            return await CreateRecipePreviewDtos( recipes.ToList() );
         }
 
         public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
@@ -193,18 +175,6 @@ namespace Cookbook_v2.Application.Services
         public async Task<bool> IsFavoritedByUser( int userId, int recipeId )
         {
             return await _recipeRepository.GetFavoriteRecipe( userId, recipeId ) != null;
-        }
-
-        private async Task<IReadOnlyList<RecipePreviewDto>> CreateRecipePreviewDtos(
-            ICollection<Recipe> recipes )
-        {
-            List<RecipePreviewDto> previews = new List<RecipePreviewDto>();
-            foreach ( Recipe recipe in recipes )
-            {
-                previews.Add( await _recipePreviewDtoBuilder.Build( recipe ) );
-            }
-
-            return previews;
         }
 
         private async Task<string> CreateRecipeImage( string? base64Image )
