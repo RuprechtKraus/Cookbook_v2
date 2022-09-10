@@ -84,8 +84,8 @@ namespace Cookbook_v2.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete( "{recipeId}/likes/delete" )]
-        public async Task<IActionResult> DeleteLike( int recipeId )
+        [HttpDelete( "{recipeId}/likes/remove" )]
+        public async Task<IActionResult> RemoveLike( int recipeId )
         {
             User activeUser = Request.GetActiveUser();
             await _recipeService.DeleteUserLike( activeUser.Id, recipeId );
