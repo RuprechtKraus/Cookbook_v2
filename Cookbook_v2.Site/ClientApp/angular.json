@@ -44,7 +44,9 @@
               "optimization": {
                 "scripts": true,
                 "styles": true,
-                "fonts": false
+                "fonts": {
+                  "inline": false
+                }
               },
               "outputHashing": "all",
               "sourceMap": false,
@@ -64,6 +66,15 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "development": {
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": {
+                  "inline": false
+                }
+              }
             }
           }
         },
