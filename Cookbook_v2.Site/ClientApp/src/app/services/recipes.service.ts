@@ -17,12 +17,21 @@ export class RecipesService {
   constructor(private _http: HttpClient) {}
 
   search(filters: RecipeSearchFilters): Observable<RecipeSearchResult> {
-    return this._http.post<RecipeSearchResult>(`${this.apiUrl}/recipe/search`, filters);
+    return this._http.post<RecipeSearchResult>(
+      `${this.apiUrl}/recipe/search`,
+      filters
+    );
   }
 
-  getRecipeDetailsByID(id: number): Observable<RecipeDetailsDto> {
+  getRecipeDetailsById(id: number): Observable<RecipeDetailsDto> {
     return this._http.get<RecipeDetailsDto>(
       `${this.apiUrl}/recipe/details/${id}`
+    );
+  }
+
+  getFavoriteRecipes(): Observable<RecipePreviewDto[]> {
+    return this._http.get<RecipePreviewDto[]>(
+      `${this.apiUrl}/recipe/favorites`
     );
   }
 
@@ -47,6 +56,9 @@ export class RecipesService {
   }
 
   removeRecipeFromFavorites(id: number): Observable<any> {
-    return this._http.delete(`${this.apiUrl}/recipe/${id}/favorites/remove`, {});
+    return this._http.delete(
+      `${this.apiUrl}/recipe/${id}/favorites/remove`,
+      {}
+    );
   }
 }

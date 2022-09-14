@@ -58,6 +58,13 @@ namespace Cookbook_v2.Application.Services
             return await _recipeRepository.GetByUserId( id );
         }
 
+        public async Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id )
+        {
+            IReadOnlyList<Recipe> recipes = await _recipeRepository.GetFavoritesByUserId( id );
+
+            return recipes;
+        }
+
         public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
         {
             return await _searchRepository.Search( searchFilters );

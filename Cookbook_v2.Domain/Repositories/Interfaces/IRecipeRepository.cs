@@ -10,6 +10,7 @@ namespace Cookbook_v2.Domain.Repositories.Interfaces
         Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUserId( int id );
+        Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id );
         Task Add( Recipe recipe );
         Task Delete( Recipe recipe );
         Task Update( Recipe recipe );

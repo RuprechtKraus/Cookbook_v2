@@ -45,6 +45,18 @@ namespace Cookbook_v2.Api.Controllers
             return Ok( details );
         }
 
+        [HttpGet( "favorites" )]
+        public async Task<IActionResult> GetFavorites()
+        {
+            User activeUser = Request.GetActiveUser();
+            IReadOnlyList<Recipe> recipes =
+                await _recipeService.GetFavoritesByUserId( activeUser.Id );
+            IReadOnlyList<RecipePreviewDto> previewDtos =
+                ( await _recipePreviewDtoBuilder.Build( recipes, activeUser ) ).ToList();
+
+            return Ok( previewDtos );
+        }
+
         [CookbookAllowAnonymous]
         [HttpPost( "search" )]
         public async Task<IActionResult> Search( [FromBody] RecipeSearchFilters searchFilters )
