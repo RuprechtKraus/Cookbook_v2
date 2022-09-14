@@ -54,6 +54,22 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             return recipes;
         }
 
+        public async Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id )
+        {
+            IReadOnlyList<Recipe> recipes = await _context.FavoriteRecipes
+                .Where( x => x.UserId == id )
+                .Join(
+                _context.Recipes
+                    .Include( x => x.IngredientsSections )
+                    .Include( x => x.RecipeSteps )
+                    .Include( x => x.Tags ).AsSplitQuery(),
+                f => f.RecipeId,
+                r => r.Id,
+                ( f, r ) => r ).ToListAsync();
+
+            return recipes;
+        }
+
         public async Task Add( Recipe recipe )
         {
             await _context.Recipes.AddAsync( recipe );

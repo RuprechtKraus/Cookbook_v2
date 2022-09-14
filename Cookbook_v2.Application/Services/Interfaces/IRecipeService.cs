@@ -10,6 +10,7 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<IReadOnlyList<Recipe>> GetAll();
         Task<Recipe> GetById( int id );
         Task<IReadOnlyList<Recipe>> GetByUserId( int id );
+        Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id );
         Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
         Task DeleteById( int id );

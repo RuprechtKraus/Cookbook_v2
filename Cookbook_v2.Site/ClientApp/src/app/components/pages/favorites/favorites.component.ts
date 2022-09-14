@@ -10,14 +10,19 @@ import { RecipePreviewDto } from "src/app/dtos/recipe-preview-dto";
   styleUrls: ["./favorites.component.css"],
 })
 export class FavoritesComponent implements OnInit {
-  favRecipes: RecipePreviewDto[] = [];
+  favoriteRecipes: RecipePreviewDto[] = [];
 
   constructor(
     private _recipesService: RecipesService,
     private _locationService: LocationService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._recipesService.getFavoriteRecipes().subscribe(
+      (response) => (this.favoriteRecipes = response),
+      (error) => console.log(error)
+    );
+  }
 
   onGoBackClick(): void {
     this._locationService.goBack();
