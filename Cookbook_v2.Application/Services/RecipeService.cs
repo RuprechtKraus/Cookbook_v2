@@ -36,6 +36,7 @@ namespace Cookbook_v2.Application.Services
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _recipeRepository.GetById( id );
+              
             return recipe ?? throw new KeyNotFoundException( "Recipe not found" );
         }
 
@@ -83,6 +84,7 @@ namespace Cookbook_v2.Application.Services
             {
                 throw new ArgumentNullException( nameof( recipe ) );
             }
+            
             await _recipeRepository.Delete( recipe );
             _imageService.DeleteImage( recipe.ImageName );
             await DecrementUserRecipeCount( recipe.UserId );
@@ -105,16 +107,17 @@ namespace Cookbook_v2.Application.Services
             {
                 return await _imageService.CreateAndSaveImageFromBase64( base64Image );
             }
+            
             return "default_recipe_image.jpg";
         }
 
         private async Task<List<Tag>> CreateRecipeTagList( ICollection<string> tags )
         {
-            List<Tag> tagsInDb = ( await _tagRepository.GetAll() ).ToList();
             List<Tag> recipeTags = tags.Select( x => new Tag( x ) ).ToList();
-            List<Tag> result = tagsInDb.Intersect( recipeTags ).ToList();
+            List<Tag> result = ( await _tagRepository.GetAllByNames( tags.ToList() ) ).ToList();
             result.AddRange( recipeTags.Except( result ) );
-            return result;
+
+            return result.ToList();
         }
 
         private async Task IncrementUserRecipeCount( int userId )
