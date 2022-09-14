@@ -1,11 +1,20 @@
+using Cookbook_v2.Application.Services.Interfaces;
+using Cookbook_v2.Application.Settings;
 using Cookbook_v2.Toolkit.Exceptions;
+using Microsoft.Extensions.Options;
 
 namespace Cookbook_v2.Application.Services
 {
-    public static class ImageService
+    public class ImageService : IImageService
     {
-        /// <returns>Имя сохраненного изображения</returns>
-        public static async Task<string> CreateAndSaveImageFromBase64( string base64, string path )
+        private readonly ImagesSettings _imagesSettings;
+
+        public ImageService( IOptions<ImagesSettings> imagesSettings )
+        {
+            _imagesSettings = imagesSettings.Value;
+        }
+
+        public async Task<string> CreateAndSaveImageFromBase64( string base64 )
         {
             // Удаление base64 хедера с mime информацией
             base64 = base64[ ( base64.IndexOf( "," ) + 1 ).. ];
@@ -13,8 +22,8 @@ namespace Cookbook_v2.Application.Services
             byte[] bytes = Convert.FromBase64String( base64 );
             string imageFormat = GetImageFormat( base64 );
             string imageName = Path.ChangeExtension(
-                Path.GetRandomFileName(), imageFormat ).ToLower();
-            string imagePath = Path.Combine( path, imageName );
+                Path.GetRandomFileName(), imageFormat );
+            string imagePath = GetRecipeImagePath( imageName );
 
             using var fs = new FileStream( imagePath, FileMode.Create );
             await fs.WriteAsync( bytes );
@@ -23,12 +32,18 @@ namespace Cookbook_v2.Application.Services
             return imageName;
         }
 
-        public static void DeleteImage( string path )
+        public void DeleteImage( string imageName )
         {
+            string path = GetRecipeImagePath( imageName );
             if ( File.Exists( path ) )
             {
                 File.Delete( path );
             }
+        }
+        
+        public string GetRecipeImagePath( string imageName )
+        {
+            return Path.Combine( _imagesSettings.RecipeImagesDirectory, imageName );
         }
 
         public static string GetImageFormat( string base64 )

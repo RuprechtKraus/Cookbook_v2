@@ -17,26 +17,26 @@ namespace Cookbook_v2.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ImagesSettings _imagesSettings;
+        private readonly IImageService _imageService;
 
         public RecipeService(
             IRecipeRepository recipeRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
-            IOptions<ImagesSettings> imagesSettings )
+            IImageService imageService )
         {
             _recipeRepository = recipeRepository;
             _userRepository = userRepository;
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
-            _imagesSettings = imagesSettings.Value;
+            _imageService = imageService;
         }
 
         public async Task<Recipe> GetById( int id )
         {
             Recipe recipe = await _recipeRepository.GetById( id );
-
+              
             return recipe ?? throw new KeyNotFoundException( "Recipe not found" );
         }
 
@@ -84,7 +84,9 @@ namespace Cookbook_v2.Application.Services
             {
                 throw new ArgumentNullException( nameof( recipe ) );
             }
+            
             await _recipeRepository.Delete( recipe );
+            _imageService.DeleteImage( recipe.ImageName );
             await DecrementUserRecipeCount( recipe.UserId );
             await _unitOfWork.SaveAsync();
         }
@@ -103,10 +105,9 @@ namespace Cookbook_v2.Application.Services
         {
             if ( base64Image != null )
             {
-                return await ImageService.CreateAndSaveImageFromBase64( base64Image,
-                    _imagesSettings.RecipeImagesDirectory );
+                return await _imageService.CreateAndSaveImageFromBase64( base64Image );
             }
-
+            
             return "default_recipe_image.jpg";
         }
 

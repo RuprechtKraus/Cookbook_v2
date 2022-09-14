@@ -17,6 +17,7 @@ namespace Cookbook_v2.Application
             return services
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IRecipeService, RecipeService>()
+                .AddSingleton<IImageService, ImageService>()
                 .AddSingleton<IJwtUtils<User>, JwtUtils>();
         }
 

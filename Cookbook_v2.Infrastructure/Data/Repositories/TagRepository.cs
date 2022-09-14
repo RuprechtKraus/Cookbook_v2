@@ -26,7 +26,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
             return await _context.Tags
                 .SingleOrDefaultAsync( x => x.Name == name );
         }
-
+        
         public async Task<IReadOnlyList<Tag>> GetAllByNames( IReadOnlyList<string> names )
         {
             return await _context.Tags
