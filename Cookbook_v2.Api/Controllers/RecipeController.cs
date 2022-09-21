@@ -43,8 +43,8 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        [HttpGet( "by_user_id/{id}" )]
-        public async Task<IActionResult> GetByUserId( int id )
+        [HttpGet( "previews" )]
+        public async Task<IActionResult> GetPreviews()
         {
             IReadOnlyList<Recipe> recipes = await _recipeService.GetByUserId( id );
             List<RecipePreviewDto> previews = ( await _recipePreviewDtoBuilder.Build( recipes ) ).ToList();
@@ -69,6 +69,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> CreateRecipe( [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
+
             return Ok( recipe.Id );
         }
 
@@ -76,6 +77,25 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> DeleteRecipe( int id )
         {
             await _recipeService.DeleteById( id );
+
+            return Ok();
+        }
+
+        [HttpPost( "{recipeId}/like/add" )]
+        public async Task<IActionResult> AddLike( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.AddLike( activeUser.Id, recipeId );
+
+            return Ok();
+        }
+
+        [HttpDelete( "{recipeId}/like/delete" )]
+        public async Task<IActionResult> DeleteLike( int recipeId )
+        {
+            User activeUser = Request.GetActiveUser();
+            await _recipeService.DeleteLike( activeUser.Id, recipeId );
+
             return Ok();
         }
     }
