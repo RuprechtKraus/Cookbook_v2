@@ -43,21 +43,13 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        [HttpGet( "previews" )]
-        public async Task<IActionResult> GetPreviews()
+        [HttpGet( "search/by_user/{id}" )]
+        public async Task<IActionResult> GetByUserId( int id )
         {
-            IReadOnlyList<RecipePreviewDto> recipes;
+            IReadOnlyList<Recipe> recipes = await _recipeService.GetByUserId( id );
+            List<RecipePreviewDto> previews = ( await _recipePreviewDtoBuilder.Build( recipes ) ).ToList();
 
-            if ( TryGetUserIdFromQuery( out int userId ) )
-            {
-                recipes = await _recipeService.GetRecipePreviewDtosByUserId( userId );
-            }
-            else
-            {
-                recipes = await _recipeService.GetRecipePreviewDtos();
-            }
-
-            return Ok( recipes );
+            return Ok( previews );
         }
 
         [CookbookAllowAnonymous]
@@ -85,18 +77,6 @@ namespace Cookbook_v2.Api.Controllers
         {
             await _recipeService.DeleteById( id );
             return Ok();
-        }
-
-        private bool TryGetUserIdFromQuery( out int userId )
-        {
-            if ( Request.QueryString.HasValue &&
-                Request.Query[ "userId" ].Any() &&
-                int.TryParse( Request.Query[ "userId" ], out userId ) )
-            {
-                return true;
-            }
-            userId = 0;
-            return false;
         }
     }
 }

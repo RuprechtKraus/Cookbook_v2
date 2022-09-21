@@ -21,11 +21,6 @@ namespace Cookbook_v2.Infrastructure.Data.Search.RecipeModel
         {
             IQueryable<Recipe> query = _context.Recipes;
 
-            if ( searchFilters.UserId != null )
-            {
-                query = query.Where( x => x.UserId == searchFilters.UserId );
-            }
-
             if ( searchFilters.Tags != null && searchFilters.Tags.Any() )
             {
                 query = query.Where( x => x.Tags.Select( x => x.Name )

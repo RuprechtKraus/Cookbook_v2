@@ -59,18 +59,6 @@ namespace Cookbook_v2.Application.Services
             return await _recipeRepository.GetByUserId( id );
         }
 
-        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtos()
-        {
-            IReadOnlyList<Recipe> recipes = await GetAll();
-            return await CreateRecipePreviewDtos( recipes.ToList() );
-        }
-
-        public async Task<IReadOnlyList<RecipePreviewDto>> GetRecipePreviewDtosByUserId( int id )
-        {
-            IReadOnlyList<Recipe> recipes = await GetByUserId( id );
-            return await CreateRecipePreviewDtos( recipes.ToList() );
-        }
-
         public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
         {
             return await _searchRepository.Search( searchFilters );
