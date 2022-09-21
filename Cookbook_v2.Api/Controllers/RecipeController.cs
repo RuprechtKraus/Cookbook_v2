@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cookbook_v2.Api.Authorization.Attributes;
+using Cookbook_v2.Api.Extensions;
 using Cookbook_v2.Application.Commands.RecipeModel;
 using Cookbook_v2.Application.Dtos.Builders;
 using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.RecipeModel;
+using Cookbook_v2.Domain.Entities.UserModel;
 using Cookbook_v2.Domain.Search;
 using Cookbook_v2.Domain.Search.RecipeModel;
 using Microsoft.AspNetCore.Mvc;
@@ -43,8 +45,8 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        [HttpGet( "previews" )]
-        public async Task<IActionResult> GetPreviews()
+        [HttpGet( "by_user_id/{id}" )]
+        public async Task<IActionResult> GetByUserId( int id )
         {
             IReadOnlyList<Recipe> recipes = await _recipeService.GetByUserId( id );
             List<RecipePreviewDto> previews = ( await _recipePreviewDtoBuilder.Build( recipes ) ).ToList();
