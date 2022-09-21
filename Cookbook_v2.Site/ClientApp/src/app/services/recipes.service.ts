@@ -29,16 +29,7 @@ export class RecipesService {
     );
   }
 
-  getRecipePreviews(queryParams?: HttpParams): Observable<RecipePreviewDto[]> {
-    return this._http.get<RecipePreviewDto[]>(
-      `${this.apiUrl}/recipe/previews`,
-      {
-        params: queryParams,
-      }
-    );
-  }
-
-  getRecipeByID(id: number): Observable<RecipeDetailsDto> {
+  getRecipeDetailsByID(id: number): Observable<RecipeDetailsDto> {
     return this._http.get<RecipeDetailsDto>(
       `${this.apiUrl}/recipe/details/${id}`
     );
@@ -50,5 +41,21 @@ export class RecipesService {
 
   deleteRecipe(id: number): Observable<any> {
     return this._http.delete(`${this.apiUrl}/recipe/delete/${id}`);
+  }
+
+  addLikeToRecipe(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/recipe/${id}/likes/add`, {});
+  }
+
+  removeLikeFromRecipe(id: number): Observable<any> {
+    return this._http.delete(`${this.apiUrl}/recipe/${id}/likes/remove`, {});
+  }
+
+  addRecipeToFavorites(id: number): Observable<any> {
+    return this._http.post(`${this.apiUrl}/recipe/${id}/favorites/add`, {});
+  }
+
+  removeRecipeFromFavorites(id: number): Observable<any> {
+    return this._http.delete(`${this.apiUrl}/recipe/${id}/favorites/remove`, {});
   }
 }

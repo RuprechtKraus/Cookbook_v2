@@ -13,5 +13,7 @@ export interface RecipeDetailsDto {
   authorUsername: string;
   tags: string[];
   recipeSteps: RecipeStepDto[];
+  isLikedByActiveUser: boolean;
+  isFavoritedByActiveUser: boolean;
   ingredientsSections: RecipeIngredientSectionDto[];
 }

@@ -24,6 +24,8 @@ export class RecipeDetailsComponent implements OnInit {
     cookingTimeInMinutes: 0,
     servingsCount: 0,
     authorUsername: "",
+    isLikedByActiveUser: false,
+    isFavoritedByActiveUser: false,
     tags: [],
     imageName: "",
     recipeSteps: [],
@@ -46,7 +48,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   loadRecipe(): void {
     const id = Number(this._route.snapshot.paramMap.get("id"));
-    this._recipeService.getRecipeByID(id).subscribe(
+    this._recipeService.getRecipeDetailsByID(id).subscribe(
       (response) => {
         this.recipe = response;
       },

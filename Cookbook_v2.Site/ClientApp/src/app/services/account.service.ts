@@ -55,4 +55,8 @@ export class AccountService {
   getByID(id: number): Observable<UserDetailsDto> {
     return this._http.get<UserDetailsDto>(`${this.apiUrl}/user/details/${id}`);
   }
+
+  isAuthenticated(): boolean {
+    return this.userValue !== null;
+  }
 }
