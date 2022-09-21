@@ -49,8 +49,7 @@ export class MainComponent implements OnInit {
       return;
     }
 
-    const params = { queryParams: { tags: searchText.split(", ") } };
-    this._router.navigate(["/recipes"], params);
+    this._router.navigate(["/recipes"], { queryParams: { q: searchText } });
   }
 
   openModal(id: string) {

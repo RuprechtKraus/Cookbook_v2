@@ -12,6 +12,7 @@ import { RecipePreviewDto } from "src/app/dtos/recipe-preview-dto";
 import { RecipeSearchFilters } from "src/app/interfaces/recipe-search-filters";
 import { RecipeSearchResult } from "src/app/interfaces/recipe-search-result";
 import { CustomValidators } from "src/app/helpers/validators";
+import { Observable, Subject } from "rxjs";
 
 @Component({
   selector: "app-recipes",
@@ -44,6 +45,9 @@ export class RecipesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this._route.queryParamMap.subscribe((params) => {
+      this.searchForm.controls["searchText"].setValue(params.get("q"));
+    });
     this.loadCategories();
     this.loadRecipes();
   }
@@ -57,13 +61,14 @@ export class RecipesComponent implements OnInit {
   loadRecipes(): void {
     const searchFilers: RecipeSearchFilters = {};
     this._route.queryParamMap.subscribe((params) => {
-      searchFilers.tags = params.getAll("tags");
+      searchFilers.searchString = params.get("q");
+      this._recipesService
+        .search(searchFilers)
+        .subscribe(
+          (recipes: RecipeSearchResult) =>
+            (this.recipePreviews = recipes.result)
+        );
     });
-    this._recipesService
-      .search(searchFilers)
-      .subscribe(
-        (recipes: RecipeSearchResult) => (this.recipePreviews = recipes.result)
-      );
   }
 
   onSubmit(): void {
@@ -74,8 +79,9 @@ export class RecipesComponent implements OnInit {
       return;
     }
 
-    const params = { queryParams: { tags: searchText.split(", ") } };
-    this._router.navigate(["/recipes"], params).then(() => this.loadRecipes());
+    this._router
+      .navigate(["/recipes"], { queryParams: { q: searchText } })
+      .then(() => this.loadRecipes());
   }
 
   onGoBackClick(): void {

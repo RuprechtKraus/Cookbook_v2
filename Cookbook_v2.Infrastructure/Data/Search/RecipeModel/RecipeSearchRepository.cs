@@ -1,9 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cookbook_v2.Domain.Entities.RecipeModel;
-using Cookbook_v2.Domain.Entities.TagModel;
 using Cookbook_v2.Domain.Search.Interfaces;
 using Cookbook_v2.Domain.Search.RecipeModel;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cookbook_v2.Infrastructure.Data.Search.RecipeModel
@@ -19,12 +21,22 @@ namespace Cookbook_v2.Infrastructure.Data.Search.RecipeModel
 
         public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
         {
-            IQueryable<Recipe> query = _context.Recipes;
+            IQueryable<Recipe> query = _context.Recipes.AsExpandable();
 
-            if ( searchFilters.Tags != null && searchFilters.Tags.Any() )
+            if ( !string.IsNullOrWhiteSpace( searchFilters.SearchString ) )
             {
-                query = query.Where( x => x.Tags.Select( x => x.Name )
-                    .Any( t => searchFilters.Tags.Contains( t ) ) );
+                IEnumerable<string> keywords = searchFilters.SearchString
+                    .Split( ',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries );
+
+                ExpressionStarter<Recipe> predicate = PredicateBuilder.New<Recipe>()
+                    .Or( x => x.Tags.Select( x => x.Name ).Any( t => keywords.Contains( t ) ) );
+
+                foreach ( string word in keywords )
+                {
+                    predicate = predicate.Or( x => x.Title.Contains( word ) );
+                }
+
+                query = query.Where( predicate );
             }
 
             return new RecipeSearchResult

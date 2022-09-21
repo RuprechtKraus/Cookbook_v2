@@ -1,3 +1,3 @@
 export interface RecipeSearchFilters {
-  tags?: string[];
+  searchString?: string;
 }
