@@ -77,6 +77,5 @@
 
 <div class="my-recipes">
   <div class="my-recipes_title">Мои рецепты</div>
-  <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of myRecipes" [recipe]="recipe" 
-    routerLink="/recipes/details/{{ recipe.id }}"></app-recipe-card>
+  <app-recipe-card class="recipe-card__clickable" *ngFor="let recipe of myRecipes" [recipe]="recipe"></app-recipe-card>
 </div>

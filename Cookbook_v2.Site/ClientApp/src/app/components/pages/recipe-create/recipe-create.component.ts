@@ -123,7 +123,7 @@ export class RecipeCreateComponent implements OnInit {
     this._recipeSerivce.createRecipe(this.recipe).subscribe(
       (recipeId) => {
         alert("Рецепт успешно создан!");
-        this._router.navigate([`/recipes/${recipeId}`]);
+        this._router.navigate([`/recipes/details/${recipeId}`]);
       },
       (badRequest) => {
         alert(badRequest.error.Message);
