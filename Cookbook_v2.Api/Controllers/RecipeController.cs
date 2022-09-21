@@ -57,7 +57,6 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        
         [HttpPost( "search" )]
         public async Task<IActionResult> Search( [FromBody] RecipeSearchFilters searchFilters )
         {
