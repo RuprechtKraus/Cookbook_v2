@@ -16,8 +16,17 @@ export class RecipesService {
 
   constructor(private _http: HttpClient) {}
 
+  getByUserId(id: number): Observable<RecipePreviewDto[]> {
+    return this._http.get<RecipePreviewDto[]>(
+      `${this.apiUrl}/recipe/by_user_id/${id}`
+    );
+  }
+
   search(filters: RecipeSearchFilters): Observable<RecipeSearchResult> {
-    return this._http.post<RecipeSearchResult>(`${this.apiUrl}/recipe/search`, filters);
+    return this._http.post<RecipeSearchResult>(
+      `${this.apiUrl}/recipe/search`,
+      filters
+    );
   }
 
   getRecipePreviews(queryParams?: HttpParams): Observable<RecipePreviewDto[]> {

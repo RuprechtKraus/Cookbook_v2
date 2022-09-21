@@ -43,7 +43,7 @@ namespace Cookbook_v2.Api.Controllers
         }
 
         [CookbookAllowAnonymous]
-        [HttpGet( "search/by_user/{id}" )]
+        [HttpGet( "by_user_id/{id}" )]
         public async Task<IActionResult> GetByUserId( int id )
         {
             IReadOnlyList<Recipe> recipes = await _recipeService.GetByUserId( id );

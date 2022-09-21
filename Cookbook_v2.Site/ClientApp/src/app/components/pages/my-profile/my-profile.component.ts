@@ -49,8 +49,8 @@ export class MyProfileComponent implements OnInit {
 
   loadRecipes(): void {
     this._recipesService
-      .search({ userId: this._accountService.userValue.id })
-      .subscribe((recipes) => (this.myRecipes = recipes.result));
+      .getByUserId(this._accountService.userValue.id)
+      .subscribe((recipes) => (this.myRecipes = recipes));
   }
 
   onGoBackClick(): void {
