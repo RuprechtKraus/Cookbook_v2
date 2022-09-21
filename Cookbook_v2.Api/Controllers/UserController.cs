@@ -7,6 +7,7 @@ using Cookbook_v2.Application.Services.Interfaces;
 using Cookbook_v2.Domain.Entities.UserModel;
 using Cookbook_v2.Application.Dtos.UserModel;
 using Cookbook_v2.Application.Helpers.Converters;
+using Cookbook_v2.Domain.UoW.Interfaces;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -16,11 +17,12 @@ namespace Cookbook_v2.Api.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IRecipeService _recipeService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserController( IUserService userService )
+        public UserController( IUserService userService, IUnitOfWork unitOfWork )
         {
             _userService = userService;
+            _unitOfWork = unitOfWork;
         }
 
         [CookbookAllowAnonymous]
@@ -38,6 +40,8 @@ namespace Cookbook_v2.Api.Controllers
             [FromBody] RegisterUserCommand registerCommand )
         {
             User user = await _userService.RegisterUser( registerCommand );
+            await _unitOfWork.SaveAsync();
+
             return Ok( user.Id );
         }
 

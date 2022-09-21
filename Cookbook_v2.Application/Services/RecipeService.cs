@@ -1,6 +1,4 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
-using Cookbook_v2.Application.Dtos.Builders;
-using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Application.Extensions;
 using Cookbook_v2.Application.Helpers.Converters;
 using Cookbook_v2.Application.Services.Interfaces;
@@ -22,7 +20,6 @@ namespace Cookbook_v2.Application.Services
         private readonly IRecipeSearchRepository _searchRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IImageService _imageService;
 
         public RecipeService(
@@ -30,14 +27,12 @@ namespace Cookbook_v2.Application.Services
             IRecipeSearchRepository searchRepository,
             IUserRepository userRepository,
             ITagRepository tagRepository,
-            IUnitOfWork unitOfWork,
             IImageService imageService )
         {
             _recipeRepository = recipeRepository;
             _searchRepository = searchRepository;
             _userRepository = userRepository;
             _tagRepository = tagRepository;
-            _unitOfWork = unitOfWork;
             _imageService = imageService;
         }
 
@@ -88,7 +83,6 @@ namespace Cookbook_v2.Application.Services
 
             await IncrementUserRecipeCount( createCommand.UserId );
             await _recipeRepository.Add( recipe );
-            await _unitOfWork.SaveAsync();
 
             return recipe;
         }
@@ -109,7 +103,6 @@ namespace Cookbook_v2.Application.Services
             string imageName = recipe.ImageName;
             await _recipeRepository.Delete( recipe );
             await DecrementUserRecipeCount( recipe.UserId );
-            await _unitOfWork.SaveAsync();
             _imageService.DeleteImage( imageName );
         }
 
@@ -124,7 +117,6 @@ namespace Cookbook_v2.Application.Services
 
             await _recipeRepository.AddRecipeLike( recipeLike );
             await IncrementRecipeLikeCount( recipeId );
-            await _unitOfWork.SaveAsync();
 
             return recipeLike;
         }
@@ -140,7 +132,6 @@ namespace Cookbook_v2.Application.Services
 
             await _recipeRepository.DeleteRecipeLike( recipeLike );
             await DecrementRecipeLikeCount( recipeId );
-            await _unitOfWork.SaveAsync();
         }
 
         public async Task<bool> HasUserLike( int userId, int recipeId )
@@ -159,7 +150,6 @@ namespace Cookbook_v2.Application.Services
 
             await _recipeRepository.AddFavoriteRecipe( favoriteRecipe );
             await IncrementRecipeFavoritedCount( recipeId );
-            await _unitOfWork.SaveAsync();
 
             return favoriteRecipe;
         }
@@ -176,7 +166,6 @@ namespace Cookbook_v2.Application.Services
 
             await _recipeRepository.RemoveFavoriteRecipe( favoriteRecipe );
             await DecrementRecipeFavoritedCount( recipeId );
-            await _unitOfWork.SaveAsync();
         }
 
         public async Task<bool> IsFavoritedByUser( int userId, int recipeId )

@@ -13,19 +13,13 @@ namespace Cookbook_v2.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IRecipeRepository _recipeRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IJwtUtils<User> _jwtUtils;
 
         public UserService(
-            IUnitOfWork unitOfWork,
             IUserRepository userRepository,
-            IRecipeRepository recipeRepository,
             IJwtUtils<User> jwtUtils )
         {
-            _unitOfWork = unitOfWork;
             _userRepository = userRepository;
-            _recipeRepository = recipeRepository;
             _jwtUtils = jwtUtils;
         }
 
@@ -55,7 +49,6 @@ namespace Cookbook_v2.Application.Services
                     registerCommand.Password );
 
             await _userRepository.Add( user );
-            await _unitOfWork.SaveAsync();
 
             return user;
         }

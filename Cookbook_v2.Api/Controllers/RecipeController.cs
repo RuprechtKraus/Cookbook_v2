@@ -12,6 +12,7 @@ using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Search;
 using Cookbook_v2.Domain.Search.RecipeModel;
 using Cookbook_v2.Api.Extensions;
+using Cookbook_v2.Domain.UoW.Interfaces;
 
 namespace Cookbook_v2.Api.Controllers
 {
@@ -21,15 +22,18 @@ namespace Cookbook_v2.Api.Controllers
     public class RecipeController : Controller
     {
         private readonly IRecipeService _recipeService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly RecipeDetailsDtoBuilder _recipeDetailsDtoBuilder;
         private readonly RecipePreviewDtoBuilder _recipePreviewDtoBuilder;
 
         public RecipeController(
             IRecipeService recipeService,
+            IUnitOfWork unitOfWork,
             RecipeDetailsDtoBuilder recipeDetailsDtoBuilder,
             RecipePreviewDtoBuilder recipePreviewDtoBuilder )
         {
             _recipeService = recipeService;
+            _unitOfWork = unitOfWork;
             _recipeDetailsDtoBuilder = recipeDetailsDtoBuilder;
             _recipePreviewDtoBuilder = recipePreviewDtoBuilder;
         }
@@ -86,6 +90,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> CreateRecipe( [FromBody] CreateRecipeCommand createCommand )
         {
             Recipe recipe = await _recipeService.Create( createCommand );
+            await _unitOfWork.SaveAsync();
 
             return Ok( recipe.Id );
         }
@@ -94,6 +99,7 @@ namespace Cookbook_v2.Api.Controllers
         public async Task<IActionResult> DeleteRecipe( int id )
         {
             await _recipeService.DeleteById( id );
+            await _unitOfWork.SaveAsync();
 
             return Ok();
         }
@@ -103,6 +109,7 @@ namespace Cookbook_v2.Api.Controllers
         {
             User activeUser = Request.GetActiveUser();
             await _recipeService.AddUserLike( activeUser.Id, recipeId );
+            await _unitOfWork.SaveAsync();
 
             return Ok();
         }
@@ -112,6 +119,7 @@ namespace Cookbook_v2.Api.Controllers
         {
             User activeUser = Request.GetActiveUser();
             await _recipeService.DeleteUserLike( activeUser.Id, recipeId );
+            await _unitOfWork.SaveAsync();
 
             return Ok();
         }
@@ -121,6 +129,7 @@ namespace Cookbook_v2.Api.Controllers
         {
             User activeUser = Request.GetActiveUser();
             await _recipeService.AddToUserFavorites( activeUser.Id, recipeId );
+            await _unitOfWork.SaveAsync();
 
             return Ok();
         }
@@ -130,6 +139,7 @@ namespace Cookbook_v2.Api.Controllers
         {
             User activeUser = Request.GetActiveUser();
             await _recipeService.RemoveFromUserFavorites( activeUser.Id, recipeId );
+            await _unitOfWork.SaveAsync();
 
             return Ok();
         }
