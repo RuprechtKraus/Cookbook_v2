@@ -1,7 +1,8 @@
 <div class="recipe-card">
   <div class="recipe-card_pic-container">
-    <img class="recipe-card_pic" [src]="'../../../../assets/recipe images/' + recipe.imageName" [alt]="recipe.title"
-      [routerLink]="'/recipes/details/' + recipe.id">
+    <div class="recipe-card_pic"
+      [ngStyle]="{ 'background-image': 'url(../../../../assets/recipe_images/' + recipe.imageName + ')'}"
+      [routerLink]="'/recipes/details/' + recipe.id"></div>
     <div class="recipe-card_author">
       <div class="ellipsis-text">@{{ recipe.authorUsername }}</div>
     </div>

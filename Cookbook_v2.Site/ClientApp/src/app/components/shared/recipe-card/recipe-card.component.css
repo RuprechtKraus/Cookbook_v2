@@ -32,7 +32,8 @@
   height: 430px;
 
   border-radius: 72px 0px;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 
 .recipe-card_author
