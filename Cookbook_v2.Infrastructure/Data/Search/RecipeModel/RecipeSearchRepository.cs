@@ -13,15 +13,17 @@ namespace Cookbook_v2.Infrastructure.Data.Search.RecipeModel
     public class RecipeSearchRepository : IRecipeSearchRepository
     {
         private readonly CookbookContext _context;
+        private readonly DbSet<Recipe> _recipes;
 
         public RecipeSearchRepository( CookbookContext context )
         {
             _context = context;
+            _recipes = _context.Set<Recipe>();
         }
 
         public async Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters )
         {
-            IQueryable<Recipe> query = _context.Recipes.AsExpandable();
+            IQueryable<Recipe> query = _recipes.AsExpandable();
 
             if ( !string.IsNullOrWhiteSpace( searchFilters.SearchString ) )
             {

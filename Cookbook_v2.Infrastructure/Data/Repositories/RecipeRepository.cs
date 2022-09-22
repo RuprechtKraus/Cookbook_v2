@@ -12,15 +12,23 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
     public class RecipeRepository : IRecipeRepository
     {
         private readonly CookbookContext _context;
+        private readonly DbSet<Recipe> _recipes;
+        private readonly DbSet<User> _users;
+        private readonly DbSet<RecipeLike> _recipeLikes;
+        private readonly DbSet<FavoriteRecipe> _favoriteRecipes;
 
         public RecipeRepository( CookbookContext context )
         {
             _context = context;
+            _recipes = _context.Set<Recipe>();
+            _users = _context.Set<User>();
+            _recipeLikes = _context.Set<RecipeLike>();
+            _favoriteRecipes = _context.Set<FavoriteRecipe>();
         }
 
         public async Task<IReadOnlyList<Recipe>> GetAll()
         {
-            IReadOnlyList<Recipe> recipes = await _context.Recipes
+            IReadOnlyList<Recipe> recipes = await _recipes
                 .Include( x => x.IngredientsSections )
                 .Include( x => x.RecipeSteps )
                 .Include( x => x.Tags )
@@ -31,7 +39,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task<Recipe> GetById( int id )
         {
-            Recipe recipe = await _context.Recipes
+            Recipe recipe = await _recipes
                 .Include( x => x.IngredientsSections )
                 .Include( x => x.RecipeSteps )
                 .Include( x => x.Tags )
@@ -43,7 +51,7 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Recipe>> GetByUserId( int id )
         {
-            User user = await _context.Users
+            User user = await _users
                 .Include( x => x.Recipes ).ThenInclude( x => x.RecipeSteps )
                 .Include( x => x.Recipes ).ThenInclude( x => x.IngredientsSections )
                 .Include( x => x.Recipes ).ThenInclude( x => x.Tags )
@@ -56,10 +64,10 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id )
         {
-            IReadOnlyList<Recipe> recipes = await _context.FavoriteRecipes
+            IReadOnlyList<Recipe> recipes = await _favoriteRecipes
                 .Where( x => x.UserId == id )
                 .Join(
-                _context.Recipes
+                _recipes
                     .Include( x => x.IngredientsSections )
                     .Include( x => x.RecipeSteps )
                     .Include( x => x.Tags ).AsSplitQuery(),
@@ -72,55 +80,55 @@ namespace Cookbook_v2.Infrastructure.Data.Repositories
 
         public async Task Add( Recipe recipe )
         {
-            await _context.Recipes.AddAsync( recipe );
+            await _recipes.AddAsync( recipe );
         }
 
         public Task Delete( Recipe recipe )
         {
-            _context.Recipes.Remove( recipe );
+            _recipes.Remove( recipe );
 
             return Task.CompletedTask;
         }
 
         public Task Update( Recipe recipe )
         {
-            _context.Recipes.Update( recipe );
+            _recipes.Update( recipe );
 
             return Task.CompletedTask;
         }
 
         public async Task AddRecipeLike( RecipeLike recipeLike )
         {
-            await _context.RecipeLikes.AddAsync( recipeLike );
+            await _recipeLikes.AddAsync( recipeLike );
         }
 
         public Task DeleteRecipeLike( RecipeLike recipeLike )
         {
-            _context.RecipeLikes.Remove( recipeLike );
+            _recipeLikes.Remove( recipeLike );
 
             return Task.CompletedTask;
         }
 
         public async Task<RecipeLike> GetRecipeLike( int userId, int recipeId )
         {
-            return await _context.RecipeLikes
+            return await _recipeLikes
                 .SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
         }
 
         public async Task AddFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            await _context.FavoriteRecipes.AddAsync( favoriteRecipe );
+            await _favoriteRecipes.AddAsync( favoriteRecipe );
         }
 
         public Task RemoveFavoriteRecipe( FavoriteRecipe favoriteRecipe )
         {
-            _context.FavoriteRecipes.Remove( favoriteRecipe );
+            _favoriteRecipes.Remove( favoriteRecipe );
             return Task.CompletedTask;
         }
 
         public async Task<FavoriteRecipe> GetFavoriteRecipe( int userId, int recipeId )
         {
-            return await _context.FavoriteRecipes
+            return await _favoriteRecipes
                 .SingleOrDefaultAsync( x => x.UserId == userId && x.RecipeId == recipeId );
         }
     }
