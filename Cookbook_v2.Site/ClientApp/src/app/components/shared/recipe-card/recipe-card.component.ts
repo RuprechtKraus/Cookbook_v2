@@ -11,7 +11,6 @@ import { RecipesService } from "src/app/services/recipes.service";
 })
 export class RecipeCardComponent implements OnInit {
   @Input() recipe: RecipePreviewDto;
-  @Input() isClickable: boolean;
   onDetailPage: boolean;
 
   unauthenticatedMessage: string = "Войдите в свой аккаунт, чтобы оставлять лайки и добавлять рецепты в избранное";
@@ -24,16 +23,6 @@ export class RecipeCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.onDetailPage = this.IsOnDetailsPage();
-  }
-
-  onClick(event: Event): void {
-    if (this.isClickable) {
-      const target = event.target as any;
-
-      if (!(target.type === "button" || this.IsElementButtonChild(target))) {
-        this._router.navigate([`/recipes/details/${this.recipe.id}`]);
-      }
-    }
   }
 
   onLikeClick(): void {
@@ -89,18 +78,5 @@ export class RecipeCardComponent implements OnInit {
   private IsOnDetailsPage(): boolean {
     var pattern = new RegExp("^/recipes/details/[0-9]+$");
     return (this.onDetailPage = pattern.test(this._router.url));
-  }
-
-  private IsElementButtonChild(element: any): boolean {
-    let parent: any | null = element.parentElement;
-
-    while (parent !== null) {
-      if (parent.type === "button") {
-        return true;
-      }
-      parent = parent.parentElement;
-    }
-
-    return false;
   }
 }

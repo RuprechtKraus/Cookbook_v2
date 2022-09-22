@@ -1,6 +1,7 @@
-<div class="recipe-card" (click)="onClick($event)">
+<div class="recipe-card">
   <div class="recipe-card_pic-container">
-    <img class="recipe-card_pic" [src]="'../../../../assets/recipe images/' + recipe.imageName" [alt]="recipe.title">
+    <img class="recipe-card_pic" [src]="'../../../../assets/recipe images/' + recipe.imageName" [alt]="recipe.title"
+      [routerLink]="'/recipes/details/' + recipe.id">
     <div class="recipe-card_author">
       <div class="ellipsis-text">@{{ recipe.authorUsername }}</div>
     </div>
@@ -31,7 +32,8 @@
     </div>
 
     <div class="recipe-card_desc">
-      <h1 *ngIf="!onDetailPage" class="recipe-card_title">{{ recipe.title }}</h1>
+      <h1 *ngIf="!onDetailPage" [routerLink]="'/recipes/details/' + recipe.id" class="recipe-card_title">{{ recipe.title
+        }}</h1>
       <p class="recipe-card_main-text">{{ recipe.description }}</p>
     </div>
 
