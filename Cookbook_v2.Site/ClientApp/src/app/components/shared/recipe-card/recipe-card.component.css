@@ -173,6 +173,7 @@
 .recipe-card_title
 {
   margin-bottom: 16px;
+  width: fit-content;
 
   font-family: 'Montserrat';
   font-style: normal;

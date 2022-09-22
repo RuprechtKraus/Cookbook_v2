@@ -65,7 +65,7 @@ namespace Cookbook_v2.Api.Controllers
         [HttpGet( "by_user_id/{id}" )]
         public async Task<IActionResult> GetByUserId( int id )
         {
-        	User activeUser = Request.GetActiveUser();
+            User activeUser = Request.GetActiveUser();
             IReadOnlyList<Recipe> recipes = await _recipeService.GetByUserId( id );
             List<RecipePreviewDto> previews = ( await _recipePreviewDtoBuilder.Build( recipes, activeUser ) ).ToList();
 
@@ -110,8 +110,9 @@ namespace Cookbook_v2.Api.Controllers
             User activeUser = Request.GetActiveUser();
             await _recipeService.AddUserLike( activeUser.Id, recipeId );
             await _unitOfWork.SaveAsync();
+            int likeCount = await _recipeService.GetLikeCount( recipeId );
 
-            return Ok();
+            return Ok( likeCount );
         }
 
         [HttpDelete( "{recipeId}/likes/remove" )]
@@ -120,8 +121,9 @@ namespace Cookbook_v2.Api.Controllers
             User activeUser = Request.GetActiveUser();
             await _recipeService.DeleteUserLike( activeUser.Id, recipeId );
             await _unitOfWork.SaveAsync();
+            int likeCount = await _recipeService.GetLikeCount( recipeId );
 
-            return Ok();
+            return Ok( likeCount );
         }
 
         [HttpPost( "{recipeId}/favorites/add" )]
@@ -130,8 +132,9 @@ namespace Cookbook_v2.Api.Controllers
             User activeUser = Request.GetActiveUser();
             await _recipeService.AddToUserFavorites( activeUser.Id, recipeId );
             await _unitOfWork.SaveAsync();
+            int favoriteCount = await _recipeService.GetFavoriteCount( recipeId );
 
-            return Ok();
+            return Ok( favoriteCount );
         }
 
         [HttpDelete( "{recipeId}/favorites/remove" )]
@@ -140,8 +143,9 @@ namespace Cookbook_v2.Api.Controllers
             User activeUser = Request.GetActiveUser();
             await _recipeService.RemoveFromUserFavorites( activeUser.Id, recipeId );
             await _unitOfWork.SaveAsync();
+            int favoriteCount = await _recipeService.GetFavoriteCount( recipeId );
 
-            return Ok();
+            return Ok( favoriteCount );
         }
     }
 }

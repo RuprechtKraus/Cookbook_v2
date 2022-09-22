@@ -13,7 +13,8 @@ export class RecipeCardComponent implements OnInit {
   @Input() recipe: RecipePreviewDto;
   onDetailPage: boolean;
 
-  unauthenticatedMessage: string = "Войдите в свой аккаунт, чтобы оставлять лайки и добавлять рецепты в избранное";
+  unauthenticatedMessage: string =
+    "Войдите в свой аккаунт, чтобы оставлять лайки и добавлять рецепты в избранное";
 
   constructor(
     public _router: Router,
@@ -30,7 +31,7 @@ export class RecipeCardComponent implements OnInit {
       alert(this.unauthenticatedMessage);
       return;
     }
-    
+
     if (!this.recipe.isLikedByActiveUser) {
       this.AddLike();
     } else {
@@ -43,7 +44,7 @@ export class RecipeCardComponent implements OnInit {
       alert(this.unauthenticatedMessage);
       return;
     }
-    
+
     if (!this.recipe.isFavoritedByActiveUser) {
       this.AddFavorite();
     } else {
@@ -52,27 +53,39 @@ export class RecipeCardComponent implements OnInit {
   }
 
   private AddLike(): void {
-    this.recipe.isLikedByActiveUser = true;
-    this.recipe.timesLiked++;
-    this._recipeService.addLikeToRecipe(this.recipe.id).subscribe();
+    this._recipeService
+      .addLikeToRecipe(this.recipe.id)
+      .subscribe((likeCount) => {
+        this.recipe.timesLiked = likeCount;
+        this.recipe.isLikedByActiveUser = true;
+      });
   }
 
   private RemoveLike() {
-    this.recipe.isLikedByActiveUser = false;
-    this.recipe.timesLiked--;
-    this._recipeService.removeLikeFromRecipe(this.recipe.id).subscribe();
+    this._recipeService
+      .removeLikeFromRecipe(this.recipe.id)
+      .subscribe((likeCount) => {
+        this.recipe.timesLiked = likeCount;
+        this.recipe.isLikedByActiveUser = false;
+      });
   }
 
   private AddFavorite(): void {
-    this.recipe.isFavoritedByActiveUser = true;
-    this.recipe.timesFavorited++;
-    this._recipeService.addRecipeToFavorites(this.recipe.id).subscribe();
+    this._recipeService
+      .addRecipeToFavorites(this.recipe.id)
+      .subscribe((favoriteCount) => {
+        this.recipe.timesFavorited = favoriteCount;
+        this.recipe.isFavoritedByActiveUser = true;
+      });
   }
 
   private RemoveFavorite(): void {
-    this.recipe.isFavoritedByActiveUser = false;
-    this.recipe.timesFavorited--;
-    this._recipeService.removeRecipeFromFavorites(this.recipe.id).subscribe();
+    this._recipeService
+      .removeRecipeFromFavorites(this.recipe.id)
+      .subscribe((favoriteCount) => {
+        this.recipe.timesFavorited = favoriteCount;
+        this.recipe.isFavoritedByActiveUser = false;
+      });
   }
 
   private IsOnDetailsPage(): boolean {

@@ -49,20 +49,26 @@ export class RecipesService {
     return this._http.delete(`${this.apiUrl}/recipe/delete/${id}`);
   }
 
-  addLikeToRecipe(id: number): Observable<any> {
-    return this._http.post(`${this.apiUrl}/recipe/${id}/likes/add`, {});
+  addLikeToRecipe(id: number): Observable<number> {
+    return this._http.post<number>(`${this.apiUrl}/recipe/${id}/likes/add`, {});
   }
 
-  removeLikeFromRecipe(id: number): Observable<any> {
-    return this._http.delete(`${this.apiUrl}/recipe/${id}/likes/remove`, {});
+  removeLikeFromRecipe(id: number): Observable<number> {
+    return this._http.delete<number>(
+      `${this.apiUrl}/recipe/${id}/likes/remove`,
+      {}
+    );
   }
 
-  addRecipeToFavorites(id: number): Observable<any> {
-    return this._http.post(`${this.apiUrl}/recipe/${id}/favorites/add`, {});
+  addRecipeToFavorites(id: number): Observable<number> {
+    return this._http.post<number>(
+      `${this.apiUrl}/recipe/${id}/favorites/add`,
+      {}
+    );
   }
 
-  removeRecipeFromFavorites(id: number): Observable<any> {
-    return this._http.delete(
+  removeRecipeFromFavorites(id: number): Observable<number> {
+    return this._http.delete<number>(
       `${this.apiUrl}/recipe/${id}/favorites/remove`,
       {}
     );

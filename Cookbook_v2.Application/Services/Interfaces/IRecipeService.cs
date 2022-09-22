@@ -18,8 +18,10 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<RecipeLike> AddUserLike( int userId, int recipeId );
         Task DeleteUserLike( int userId, int recipeId );
         Task<bool> HasUserLike( int userId, int recipeId );
+        Task<int> GetLikeCount( int id );
         Task<FavoriteRecipe> AddToUserFavorites( int userId, int recipeId );
         Task RemoveFromUserFavorites( int userId, int recipeId );
         Task<bool> IsFavoritedByUser( int userId, int recipeId );
+        Task<int> GetFavoriteCount( int id );
     }
 }

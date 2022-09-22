@@ -192,6 +192,16 @@ namespace Cookbook_v2.Application.Services
             return result;
         }
 
+        public async Task<int> GetLikeCount( int id )
+        {
+            return ( await _recipeRepository.GetById( id ) ).TimesLiked;
+        }
+
+        public async Task<int> GetFavoriteCount( int id )
+        {
+            return ( await _recipeRepository.GetById( id ) ).TimesFavorited;
+        }
+
         private async Task IncrementUserRecipeCount( int userId )
         {
             User user = await _userRepository.GetById( userId );
