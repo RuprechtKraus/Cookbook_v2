@@ -17,16 +17,16 @@
       </div>
       <div class="recipe-card_btns">
         <button type="button" class="button-outlined recipe-card_btn" (click)="onFavoriteClick()">
-          <object class="recipe-card_btn_icon" [data]="recipe.isFavoritedByActiveUser ? 
-            ('../../assets/icons/star-active.svg' | safe:'resourceUrl') 
-            : ('../../assets/icons/star-inactive.svg' | safe: 'resourceUrl')" type="image/svg+xml"></object>
+          <div class="recipe-card_btn_icon"
+            [ngClass]="{'star-icon__active': recipe.isFavoritedByActiveUser, 'star-icon__inactive': !recipe.isFavoritedByActiveUser}">
+          </div>
           <div class="favs-count">{{ recipe.timesFavorited }}</div>
         </button>
 
         <button type="button" class="button-outlined recipe-card_btn" (click)="onLikeClick()">
-          <object class="recipe-card_btn_icon" [data]="recipe.isLikedByActiveUser ? 
-            ('../../assets/icons/heart-active.svg' | safe:'resourceUrl') 
-            : ('../../assets/icons/heart-inactive.svg' | safe: 'resourceUrl')" type="image/svg+xml"></object>
+          <div class="recipe-card_btn_icon"
+            [ngClass]="{'heart-icon__active': recipe.isLikedByActiveUser, 'heart-icon__inactive': !recipe.isLikedByActiveUser}">
+          </div>
           <div class="favs-count">{{ recipe.timesLiked }}</div>
         </button>
       </div>
@@ -40,14 +40,14 @@
 
     <div class="recipe-card_bottom">
       <div class="recipe-card_info">
-        <object class="recipe-card_info_icon" data="../../assets/icons/ic-timer-big.svg" type="image/svg+xml"></object>
+        <div class="recipe-card_info_icon timer-icon"></div>
         <div>
           <div class="recipe-card_info_title">Время приготовления</div>
           <div class="recipe-card_info_main">{{ recipe.cookingTimeInMinutes }} мин</div>
         </div>
       </div>
       <div class="recipe-card_info">
-        <object class="recipe-card_info_icon" data="../../assets/icons/ic-persons.svg" type="image/svg+xml"></object>
+        <div class="recipe-card_info_icon person-icon"></div>
         <div>
           <div class="recipe-card_info_title">Рецепт на:</div>
           <div class="recipe-card_info_main">{{ recipe.servingsCount }} персон</div>

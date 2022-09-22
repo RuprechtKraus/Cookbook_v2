@@ -137,6 +137,26 @@
   filter: brightness(0) invert(1);
 }
 
+.star-icon__active
+{
+  background-image: url("../../../../assets/icons/star-active.svg");
+}
+
+.star-icon__inactive
+{
+  background-image: url("../../../../assets/icons/star-inactive.svg");
+}
+
+.heart-icon__active
+{
+  background-image: url("../../../../assets/icons/heart-active.svg");
+}
+
+.heart-icon__inactive
+{
+  background-image: url("../../../../assets/icons/heart-inactive.svg");
+}
+
 /* Description text */
 
 .recipe-card_desc
@@ -195,6 +215,20 @@
 .recipe-card_info_icon
 {
   margin-right: 20px;
+  height: 60px;
+  width: 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.timer-icon
+{
+  background-image: url("../../../../assets/icons/ic-timer-big.svg");
+}
+
+.person-icon
+{
+  background-image: url("../../../../assets/icons/ic-persons.svg");
 }
 
 .recipe-card_info_title
