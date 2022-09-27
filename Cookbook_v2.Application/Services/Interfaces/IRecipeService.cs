@@ -1,5 +1,4 @@
 using Cookbook_v2.Application.Commands.RecipeModel;
-using Cookbook_v2.Application.Dtos.RecipeModel;
 using Cookbook_v2.Domain.Entities.RecipeModel;
 using Cookbook_v2.Domain.Search.RecipeModel;
 
@@ -13,6 +12,7 @@ namespace Cookbook_v2.Application.Services.Interfaces
         Task<IReadOnlyList<Recipe>> GetFavoritesByUserId( int id );
         Task<RecipeSearchResult> Search( RecipeSearchFilters searchFilters );
         Task<Recipe> Create( CreateRecipeCommand createCommand );
+        Task Update( Recipe recipe, UpdateRecipeCommand updateCommand );
         Task DeleteById( int id );
         Task Delete( Recipe recipe );
         Task<RecipeLike> AddUserLike( int userId, int recipeId );

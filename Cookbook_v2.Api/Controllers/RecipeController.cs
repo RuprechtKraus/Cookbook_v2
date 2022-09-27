@@ -95,6 +95,23 @@ namespace Cookbook_v2.Api.Controllers
             return Ok( recipe.Id );
         }
 
+        [HttpPost( "update/{id}" )]
+        public async Task<IActionResult> UpdateRecipe( int id, [FromBody] UpdateRecipeCommand updateCommand )
+        {
+            User activeUser = Request.GetActiveUser();
+            Recipe recipe = await _recipeService.GetById( id );
+
+            if (recipe.UserId != activeUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            await _recipeService.Update( recipe, updateCommand );
+            await _unitOfWork.SaveAsync();
+
+            return Ok();
+        }
+
         [HttpDelete( "delete/{id}" )]
         public async Task<IActionResult> DeleteRecipe( int id )
         {

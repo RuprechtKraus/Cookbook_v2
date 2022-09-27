@@ -87,6 +87,22 @@ namespace Cookbook_v2.Application.Services
             return recipe;
         }
 
+        public async Task Update( Recipe recipe, UpdateRecipeCommand updateCommand )
+        {
+            string imageName = await CreateRecipeImage( updateCommand.ImageBase64 );
+
+            recipe.Title = updateCommand.Title;
+            recipe.Description = updateCommand.Description;
+            recipe.CookingTimeInMinutes = updateCommand.CookingTimeInMinutes;
+            recipe.ServingsCount = updateCommand.ServingsCount;
+            recipe.ImageName = imageName;
+            recipe.RecipeSteps = updateCommand.RecipeSteps.ToRecipeStepList();
+            recipe.IngredientsSections = updateCommand.IngredientsSections.ToIngredientsSectionList();
+            recipe.Tags = await CreateRecipeTagList( updateCommand.Tags );
+
+            await _recipeRepository.Update( recipe );
+        }
+
         public async Task DeleteById( int id )
         {
             Recipe recipe = await GetById( id );
