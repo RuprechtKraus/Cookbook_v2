@@ -4,6 +4,7 @@ namespace Cookbook_v2.Application.Services.Interfaces
     {
         /// <returns>Имя сохраненного изображения</returns>
         Task<string> CreateAndSaveImageFromBase64( string base64 );
+        Task<string> EncodeImageToBase64( string imageName );
         void DeleteImage( string imageName );
 
         /// <summary>

@@ -10,11 +10,10 @@
     {{ recipe.title }}
   </h1>
   <div class="page-header_buttons">
-    <button *ngIf="user && user.username == recipe.authorUsername" class="button-outlined delete-recipe-btn"
-      (click)="deleteRecipe()">
+    <button *ngIf="doesRecipeBelongToActiveUser()" class="button-outlined delete-recipe-btn" (click)="deleteRecipe()">
       <object class="delete-icon" data="../../assets/icons/ic-trash.svg" type="image/svg+xml"></object>
     </button>
-    <button class="button-filled page-header_main-button">
+    <button *ngIf="doesRecipeBelongToActiveUser()" class="button-filled page-header_main-button" (click)="editRecipe()">
       <object class="page-header_main-button-icon" data="../../assets/icons/ic-pencil.svg"
         type="image/svg+xml"></object>
       Редактировать

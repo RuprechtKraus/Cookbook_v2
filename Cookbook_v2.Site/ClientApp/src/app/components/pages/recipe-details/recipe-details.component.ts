@@ -65,7 +65,7 @@ export class RecipeDetailsComponent implements OnInit {
   deleteRecipe(): void {
     if (confirm("Вы уверены что хотите удалить рецепт?")) {
       this._recipeService.deleteRecipe(this.recipe.id).subscribe(
-        (response) => {
+        () => {
           this._router.navigate(["/recipes"]);
         },
         (error) => {
@@ -73,5 +73,13 @@ export class RecipeDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  editRecipe(): void {
+    this._router.navigate([`/edit-recipe/${this.recipe.id}`]);
+  }
+
+  doesRecipeBelongToActiveUser(): boolean {
+    return this.user && this.user.username == this.recipe.authorUsername;
   }
 }

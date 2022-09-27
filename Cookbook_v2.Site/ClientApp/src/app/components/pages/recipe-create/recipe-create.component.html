@@ -8,7 +8,7 @@
   <h1 class="page-header_title">Добавить новый рецепт</h1>
   <div class="page-header_buttons">
     <button class="button-filled page-header_main-button" (click)="onSubmit()">
-      Опубликовать
+      {{ isEditMode() ? "Сохранить" : "Опубликовать" }}
     </button>
   </div>
 </div>

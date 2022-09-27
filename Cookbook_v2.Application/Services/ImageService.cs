@@ -32,6 +32,12 @@ namespace Cookbook_v2.Application.Services
             return imageName;
         }
 
+        public async Task<string> EncodeImageToBase64( string imageName )
+        {
+            byte[] bytes = await File.ReadAllBytesAsync( GetRecipeImagePath( imageName ) );
+            return Convert.ToBase64String( bytes );
+        }
+
         public void DeleteImage( string imageName )
         {
             string path = GetRecipeImagePath( imageName );

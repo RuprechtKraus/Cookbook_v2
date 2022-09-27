@@ -36,7 +36,8 @@ namespace Cookbook_v2.Application
         {
             return services
                 .AddScoped<RecipeDetailsDtoBuilder>()
-                .AddScoped<RecipePreviewDtoBuilder>();
+                .AddScoped<RecipePreviewDtoBuilder>()
+                .AddScoped<RecipeEditorDtoBuilder>();
         }
     }
 }

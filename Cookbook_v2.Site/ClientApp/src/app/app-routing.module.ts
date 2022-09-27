@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/details/:id', component: RecipeDetailsComponent },
   { path: 'create-recipe', component: RecipeCreateComponent, canActivate: [AuthGuard] },
+  { path: 'edit-recipe/:id', component: RecipeCreateComponent, canActivate: [AuthGuard] },
   { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
   { path: 'favorites', component: FavoritesComponent, canActivate: [AuthGuard] },
   { path: "**", redirectTo: "/" }

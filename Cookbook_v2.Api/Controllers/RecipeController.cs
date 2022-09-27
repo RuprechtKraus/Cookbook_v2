@@ -25,17 +25,20 @@ namespace Cookbook_v2.Api.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly RecipeDetailsDtoBuilder _recipeDetailsDtoBuilder;
         private readonly RecipePreviewDtoBuilder _recipePreviewDtoBuilder;
+        private readonly RecipeEditorDtoBuilder _recipeEditorDtoBuilder;
 
         public RecipeController(
             IRecipeService recipeService,
             IUnitOfWork unitOfWork,
             RecipeDetailsDtoBuilder recipeDetailsDtoBuilder,
-            RecipePreviewDtoBuilder recipePreviewDtoBuilder )
+            RecipePreviewDtoBuilder recipePreviewDtoBuilder,
+            RecipeEditorDtoBuilder recipeEditorDtoBuilder )
         {
             _recipeService = recipeService;
             _unitOfWork = unitOfWork;
             _recipeDetailsDtoBuilder = recipeDetailsDtoBuilder;
             _recipePreviewDtoBuilder = recipePreviewDtoBuilder;
+            _recipeEditorDtoBuilder = recipeEditorDtoBuilder;
         }
 
         [CookbookAllowAnonymous]
@@ -95,13 +98,13 @@ namespace Cookbook_v2.Api.Controllers
             return Ok( recipe.Id );
         }
 
-        [HttpPost( "update" )]
-        public async Task<IActionResult> UpdateRecipe( [FromBody] UpdateRecipeCommand updateCommand )
+        [HttpPost( "update/{id}" )]
+        public async Task<IActionResult> UpdateRecipe( int id, [FromBody] UpdateRecipeCommand updateCommand )
         {
             User activeUser = Request.GetActiveUser();
-            Recipe recipe = await _recipeService.GetById( updateCommand.RecipeId );
+            Recipe recipe = await _recipeService.GetById( id );
 
-            if (recipe.UserId != activeUser.Id)
+            if ( recipe.UserId != activeUser.Id )
             {
                 return Unauthorized();
             }
@@ -110,6 +113,22 @@ namespace Cookbook_v2.Api.Controllers
             await _unitOfWork.SaveAsync();
 
             return Ok();
+        }
+
+        [HttpGet( "editor/{id}" )]
+        public async Task<IActionResult> GetRecipeEditor( int id )
+        {
+            User activeUser = Request.GetActiveUser();
+            Recipe recipe = await _recipeService.GetById( id );
+
+            if ( recipe.UserId != activeUser.Id )
+            {
+                return Unauthorized();
+            }
+
+            RecipeEditorDto editorDto = await _recipeEditorDtoBuilder.Build( recipe );
+
+            return Ok( editorDto );
         }
 
         [HttpDelete( "delete/{id}" )]

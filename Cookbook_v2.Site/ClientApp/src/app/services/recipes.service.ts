@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 import { Observable } from "rxjs";
 import { RecipeDetailsDto } from "../dtos/recipe-details-dto";
@@ -7,6 +7,7 @@ import { RecipePreviewDto } from "../dtos/recipe-preview-dto";
 import { RecipeCreateCommand } from "../commands/recipe-create-command";
 import { RecipeSearchFilters } from "../interfaces/recipe-search-filters";
 import { RecipeSearchResult } from "../interfaces/recipe-search-result";
+import { RecipeEditorDto } from "../dtos/recipe-editor-dto";
 
 @Injectable({
   providedIn: "root",
@@ -35,6 +36,12 @@ export class RecipesService {
     );
   }
 
+  getRecipeEditor(id: number): Observable<RecipeEditorDto> {
+    return this._http.get<RecipeEditorDto>(
+      `${this.apiUrl}/recipe/editor/${id}`
+    );
+  }
+
   getFavoriteRecipes(): Observable<RecipePreviewDto[]> {
     return this._http.get<RecipePreviewDto[]>(
       `${this.apiUrl}/recipe/favorites`
@@ -43,6 +50,10 @@ export class RecipesService {
 
   createRecipe(recipe: RecipeCreateCommand): Observable<any> {
     return this._http.post(`${this.apiUrl}/recipe/create`, recipe);
+  }
+
+  updateRecipe(id: number, recipe: RecipeCreateCommand): Observable<any> {
+    return this._http.post(`${this.apiUrl}/recipe/update/${id}`, recipe);
   }
 
   deleteRecipe(id: number): Observable<any> {
