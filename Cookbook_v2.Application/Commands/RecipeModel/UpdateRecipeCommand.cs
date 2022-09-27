@@ -5,6 +5,9 @@ namespace Cookbook_v2.Application.Commands.RecipeModel
 {
     public class UpdateRecipeCommand
     {
+        [Required( ErrorMessage = "Recipe id required" )]
+        public int RecipeId { get; set; }
+
         [Required( ErrorMessage = "User id required" )]
         public int UserId { get; set; }
 

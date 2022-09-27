@@ -95,11 +95,11 @@ namespace Cookbook_v2.Api.Controllers
             return Ok( recipe.Id );
         }
 
-        [HttpPost( "update/{id}" )]
-        public async Task<IActionResult> UpdateRecipe( int id, [FromBody] UpdateRecipeCommand updateCommand )
+        [HttpPost( "update" )]
+        public async Task<IActionResult> UpdateRecipe( [FromBody] UpdateRecipeCommand updateCommand )
         {
             User activeUser = Request.GetActiveUser();
-            Recipe recipe = await _recipeService.GetById( id );
+            Recipe recipe = await _recipeService.GetById( updateCommand.RecipeId );
 
             if (recipe.UserId != activeUser.Id)
             {
